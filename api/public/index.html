@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semana Acadêmica 2026 — M1: Grade de Atividades</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <h1>Semana Acadêmica 2026</h1>
+      <p class="subtitle">M1 — Gestão da Grade de Atividades</p>
+      <div class="user-bar">
+        <label for="usuario-select">Usuário:</label>
+        <select id="usuario-select">
+          <option value="org-ana">Ana Beatriz (Organização)</option>
+          <option value="org-bruno">Bruno Tavares (Organização)</option>
+          <option value="p-carla">Carla Mendes (Participante)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Seção Organização: Formulário de Criação -->
+    <section id="org-section" class="card org-card">
+      <h2>Painel da Organização — Criar Atividade</h2>
+      <form id="form-criar-atividade">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" required placeholder="Ex: Palestra Magna">
+          </div>
+          <div class="form-group">
+            <label for="tipo">Tipo:</label>
+            <select id="tipo">
+              <option value="palestra">Palestra (1 encontro)</option>
+              <option value="minicurso">Minicurso (2-5 encontros)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="salaId">Sala:</label>
+            <select id="salaId">
+              <option value="auditorio">Auditório Central (200 vagas)</option>
+              <option value="sala-101">Sala 101 (40 vagas)</option>
+              <option value="sala-102">Sala 102 (40 vagas)</option>
+              <option value="lab-3">Laboratório 3 (20 vagas)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="vagas">Vagas:</label>
+            <input type="number" id="vagas" min="1" value="30" required>
+          </div>
+        </div>
+
+        <div class="encontros-container">
+          <h3>Encontros (Eventos de 19/10/2026 a 23/10/2026)</h3>
+          <div id="encontros-lista">
+            <div class="encontro-item">
+              <div class="form-group">
+                <label>Início (ISO com fuso):</label>
+                <input type="datetime-local" class="enc-inicio" value="2026-10-19T09:00" required>
+              </div>
+              <div class="form-group">
+                <label>Fim (ISO com fuso):</label>
+                <input type="datetime-local" class="enc-fim" value="2026-10-19T11:00" required>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="btn-add-encontro" class="btn secondary">Adicionar Encontro</button>
+        </div>
+
+        <div id="api-error-alert" class="alert error hidden"></div>
+        <div id="api-success-alert" class="alert success hidden"></div>
+
+        <button type="submit" class="btn primary">Cadastrar Atividade</button>
+      </form>
+    </section>
+
+    <!-- Seção Consulta: Filtros e Grade -->
+    <section class="card grade-card">
+      <div class="grade-header">
+        <h2>Programação da Semana Acadêmica</h2>
+        <div class="filters">
+          <div class="form-group">
+            <label for="filtro-dia">Dia:</label>
+            <input type="date" id="filtro-dia" min="2026-10-19" max="2026-10-23">
+          </div>
+          <div class="form-group">
+            <label for="filtro-tipo">Tipo:</label>
+            <select id="filtro-tipo">
+              <option value="">Todos os tipos</option>
+              <option value="palestra">Palestra</option>
+              <option value="minicurso">Minicurso</option>
+            </select>
+          </div>
+          <button id="btn-filtrar" class="btn secondary">Filtrar</button>
+          <button id="btn-limpar-filtros" class="btn">Limpar</button>
+        </div>
+      </div>
+
+      <div id="atividades-grid" class="atividades-grid">
+        <p class="loading">Carregando atividades...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de Detalhes da Atividade -->
+  <div id="modal-detalhe" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div id="modal-body">
+        <!-- Detalhes injetados via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
