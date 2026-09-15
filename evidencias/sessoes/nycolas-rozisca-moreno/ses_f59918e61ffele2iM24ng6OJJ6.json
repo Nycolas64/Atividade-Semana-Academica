@@ -1,0 +1,1885 @@
+{
+ "info": {
+  "id": "ses_f59918e61ffele2iM24ng6OJJ6",
+  "slug": "gentle-orchid",
+  "projectID": "57b68b5c94ca89d129e1987fd676355944c7371f",
+  "directory": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+  "path": "",
+  "title": "TDD para rotas GET em specs/M1-grade.md",
+  "agent": "build",
+  "model": {
+   "id": "gemini-3.6-flash",
+   "providerID": "google"
+  },
+  "version": "1.18.31",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0.16055955000000002,
+  "tokens": {
+   "input": 148408,
+   "output": 682,
+   "reasoning": 6402,
+   "cache": {
+    "read": 302514,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1789498651038,
+   "updated": 1789499584889
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1789498651131
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "google",
+     "modelID": "gemini-3.6-flash"
+    },
+    "summary": {
+     "diffs": [
+      {
+       "file": "api/package.json",
+       "patch": "Index: api/package.json\n===================================================================\n--- api/package.json\t\n+++ api/package.json\t\n@@ -0,0 +1,13 @@\n+{\n+  \"name\": \"semana-academica-api\",\n+  \"version\": \"1.0.0\",\n+  \"type\": \"module\",\n+  \"main\": \"src/index.js\",\n+  \"scripts\": {\n+    \"start\": \"node src/index.js\",\n+    \"test\": \"node --test ../verificacoes/*.spec.js\"\n+  },\n+  \"dependencies\": {\n+    \"express\": \"^4.21.2\"\n+  }\n+}\n",
+       "additions": 13,
+       "deletions": 0,
+       "status": "added"
+      },
+      {
+       "file": "package.json",
+       "patch": "Index: package.json\n===================================================================\n--- package.json\t\n+++ package.json\t\n@@ -0,0 +1,8 @@\n+{\n+  \"name\": \"semana-academica-root\",\n+  \"version\": \"1.0.0\",\n+  \"type\": \"module\",\n+  \"scripts\": {\n+    \"test\": \"node --test verificacoes/*.spec.js\"\n+  }\n+}\n",
+       "additions": 8,
+       "deletions": 0,
+       "status": "added"
+      }
+     ]
+    },
+    "id": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "use a skill tdd e implemente só a fatia 1 de specs/M1-grade.md, um teste por vez, escreva o teste primeiro, mostre ele falhando e só então faça o código, a fatia 1 contempla a consulta de salas e atividades nas rotas GET /salas, GET /atividades e GET /atividades/:id ",
+     "id": "prt_0a66e7203001t4o0frK0BNX3In",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66e71fb001TYLFoh2rOJiA5p"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.007917,
+    "tokens": {
+     "total": 9868,
+     "input": 9696,
+     "output": 14,
+     "reasoning": 158,
+     "cache": {
+      "write": 0,
+      "read": 0
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498651216,
+     "completed": 1789498690336
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a66e7250001BP3JYQaVnDNGXv",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a66f06b90012LulF1If8zkBQg",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66e7250001BP3JYQaVnDNGXv"
+    },
+    {
+     "type": "tool",
+     "tool": "skill",
+     "callID": "ycg18DedyU8GtLdp",
+     "state": {
+      "status": "completed",
+      "input": {
+       "name": "tdd"
+      },
+      "output": "<skill_content name=\"tdd\">\n# Skill: tdd\n\n# Teste primeiro, uma fatia por vez\r\n\r\nO ciclo é: **um teste que falha → o código mínimo que faz ele passar → a próxima fatia.**\r\nNada de escrever a suíte inteira e depois o código inteiro.\r\n\r\nVocê precisa de uma spec com regras numeradas. Sem ela, pare: você vai acabar testando o\r\nque você mesmo inventou. Sem contrato, verde não significa nada.\r\n\r\n## Onde o teste mora\r\n\r\nTeste verifica **comportamento pela interface pública**, nunca implementação. Aqui a\r\ninterface é HTTP: suba o servidor com `criarServidor()` e fale por `fetch`. Não importe\r\nserviço nem repositório no teste — se importar, o teste quebra quando você refatorar\r\nsem que o comportamento tenha mudado.\r\n\r\nPadrão do projeto: `node --test`, `node:assert/strict`, um arquivo em `verificacoes/`,\r\nespelhando `verificacoes/livros.spec.js`. Sem framework, sem dependência, sem mock.\r\n\r\n## O ciclo, por fatia\r\n\r\nPara cada fatia da spec, nesta ordem:\r\n\r\n1. Escreva **um** teste que prova **um** critério de aceite. O nome do teste é a regra\r\n   em português: `it('recusa o quarto empréstimo ativo do mesmo leitor')`.\r\n2. Rode. **Ele tem que falhar.** Teste que passa antes do código existir não está\r\n   testando nada — descubra por quê antes de seguir.\r\n3. Escreva o mínimo de código que faz ele passar. Nada de já implementar a regra\r\n   seguinte \"que eu vou precisar mesmo\".\r\n4. Rode a suíte inteira. Verde? Próxima fatia.\r\n\r\nSó passe para a fatia seguinte com a suíte inteira verde.\r\n\r\n## A regra que não se quebra\r\n\r\n**Quando o teste falha, o suspeito é o código.**\r\n\r\nSe você mudar um teste para ele passar, você trocou o contrato pela sua implementação e\r\no verde virou enfeite. Só se altera um teste quando a **spec** mudou — e aí você diz, em\r\nvoz alta, qual regra da spec mudou e por quê.\r\n\r\nVale para o valor esperado, para o status HTTP e para o cenário. Trocar\r\n`assert.equal(dias, 14)` por `assert.equal(dias, 7)` porque o código deu 7 é a forma mais\r\ncomum de mentir sozinho.\r\n\r\n## Três testes que não valem nada\r\n\r\n- **Acoplado à implementação** — chama serviço ou repositório direto, ou confere o dado\r\n  espiando o `Map` em vez de pedir pela API. Quebra em refatoração, não em regressão.\r\n- **Tautológico** — o esperado é calculado do mesmo jeito que o código calcula\r\n  (`assert.equal(multa, dias * 1.5)`). Passa por construção, nunca discorda do código.\r\n  O valor esperado vem da spec, escrito na mão: `assert.equal(multa, 4.5)`.\r\n- **Frouxo** — confere só o status e ignora o corpo. `201` com o prazo errado passa.\r\n\r\n## Fechamento\r\n\r\nTerminada a última fatia, rode a suíte inteira uma vez e relate o número real que\r\napareceu na saída. Não estime, não arredonde, não repita um número de outra rodada.\n\nBase directory for this skill: C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\.opencode\\skills\\tdd\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n\n</skill_files>\n</skill_content>",
+      "metadata": {
+       "name": "tdd",
+       "dir": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\.opencode\\skills\\tdd",
+       "truncated": false
+      },
+      "title": "Loaded skill: tdd",
+      "time": {
+       "start": 1789498689255,
+       "end": 1789498689373
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EvUFCvIFARFNMg9Kr9VlRw57PFoCCfj8DA0eJJcBja0QOzkn5lmZBUj5Zv7XPHSwwZ1G2n4GRQYI+bWNsCD4jErgs5RmAivzwj8Bnzl917vN0MhzD3rgVLQhFVP4yrwKBKUZN+typNUxcNvjP7B4wAGk1OXsFt/Q9YlR0y/qqDVbeNMKF+zD5Vz/rpFB2fAwXPiJa9uvaP0+5Go4X/qqENfJoiw4NmRsw6ep1xZOKi+GNTKBpX4PH1jwcYn+Qi33KNw/82DhOyPLiTVS9rllC7sdqECBaOpl3NIc1UpZeY3Q2fxCeIbpS5UIFGFsod7A65HaJo5XynaoQmul3WQeG2KK04wfjuW3PORUd53BRfnqYIH60qVyoCWRjPZSWO19D85S/5a3Q+zMYrcajj+hk16zxnbwAikzFVjQSdOlA97V1LDbjS08ZSzN1zZ41dOaRpozGGfFHWzvOEXF1NJO9QRFZnGKFivyzaw71ANsu8+ooRp0TArgPeOZdJqZsHjsZc8654orM1zY9AckeDf/uh72qr1AVAFB+ldrK9rGrfLWOva5abgT0aiWeQG4A/nOCwyI26trsqMgYjl8xQJbS9JCJSfWtM1W6A7B5hVvllHHdFdvkIgCugaUNThNvVfK59QeGC/XFv1KLbmu07Gef7MN6Wu0rZMIiNhGljEY/4rllytood5Lg07ljL3ip03kxkjhCa+HZh2ohgZ+59P/7Xk9rKBLTDLhkLZFWxKLX51GlvtgH3lepqjifPrFrJzXB2dAzyq7h4vEVlH1S3MKNia3lC6ytGpBnmSDaNjgaeatXypXxZg+NruQpz+z9+f+zkTrW4qS0NjjO+ydqSyXUlpfHcBpdB8RVguDgVvhj31HqyhRnx2CZauVsGpSYWxxjkQZPQsew8QTTQ+Fs2W88+6keBQEwxBNqNJIT7N366/lKNZrnjRZiWP3PUA5h8vsUVMhtAW4S/cDDxZtj0Xy07uC0LP3KLakJeoL8JgFCQZjfYN7z1OL4Q=="
+      }
+     },
+     "id": "prt_0a66f06c9001JX0kym5QnFWwnw",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66e7250001BP3JYQaVnDNGXv"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 9868,
+      "input": 9696,
+      "output": 14,
+      "reasoning": 158,
+      "cache": {
+       "write": 0,
+       "read": 0
+      }
+     },
+     "cost": 0.007917,
+     "id": "prt_0a66f0951001nAi4wr7mpqRgBa",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66e7250001BP3JYQaVnDNGXv"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.0030072,
+    "tokens": {
+     "total": 10847,
+     "input": 2602,
+     "output": 39,
+     "reasoning": 80,
+     "cache": {
+      "write": 0,
+      "read": 8126
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498690350,
+     "completed": 1789498725780
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a66f0b2e0013PtFVpvGqanGzY",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a66f912a0017IkMCg8na4iEo5",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66f0b2e0013PtFVpvGqanGzY"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "nbmuLJXSxiFQo5Az",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\specs\\M1-grade.md"
+      },
+      "output": "[11100 caracteres omitidos]",
+      "title": "specs\\M1-grade.md",
+      "time": {
+       "start": 1789498724677,
+       "end": 1789498724787
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EqgDCqUDARFNMg8hgtganusFd8YX8mZbdDBmdhQfDkO5XcfLQzlTBzniTlnjDlho7hjfgTMG5i1pe9weVeDWF6brlR05rrkQigz77prH5M5UtI48Jy2HpmLWUWMTsJt+51lP0m5K/SwEQWZ6osqH4pcK2btxioXTrKHmslOakrxSPX8930JbGIWfgkzs4TMCWjjiZZVIsQ8Qf6LLrli76BSOF7QTSkOrb4LU8wWqwpfiWv0Iy17FcOHFEUuWtKgIjGTmJPJmuTnq6AjuOoS05Sj09wv291xfsyawkSXUfV6GzOAxf7eP8pfm95/+rED8edfTIrSRq1clkPjqKWU+C/3HIFAww0X7B91k4f+6lauW41M13uQhJ+uUtWJa874pwpPobQLBMaWC+qVDEi2bIMFH629Ueruv20pp/SIjZ2bc6lYNFVpkmQnGQnaJcUbscpWWt8f0HNaXgmu5kwX/lvFKHAmmuA8OP/d+NHY/L6QRPcOfz1U/1lmwMWih/56HXTu0R3EEbnrzFCXb59ZQB/xgbR4BQ1MJuZYz0OSdmaZLLG2TgzoCG9BhZw=="
+      }
+     },
+     "id": "prt_0a66f9132001iWBv8Jmz1c3TyM",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66f0b2e0013PtFVpvGqanGzY"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 10847,
+      "input": 2602,
+      "output": 39,
+      "reasoning": 80,
+      "cache": {
+       "write": 0,
+       "read": 8126
+      }
+     },
+     "cost": 0.0030072,
+     "id": "prt_0a66f93b1001yXYJs5X6NYtJ0N",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66f0b2e0013PtFVpvGqanGzY"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.00580635,
+    "tokens": {
+     "total": 14914,
+     "input": 6738,
+     "output": 15,
+     "reasoning": 23,
+     "cache": {
+      "write": 0,
+      "read": 8138
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498725791,
+     "completed": 1789498789384
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a66f959f001WAKGW9Oe9tlq2Q",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a6708883001jTsVoNtE2wVEuS",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66f959f001WAKGW9Oe9tlq2Q"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "oh1YZnxmmMiuFfWG",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "**/*"
+      },
+      "output": "[9809 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789498787994,
+       "end": 1789498788448
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "Eu0BCuoBARFNMg8R3BB7LkDxmRnEMfiwJFTL4uhMZNCC8awa3LHOH9YpoblaVIbkgoB1Ek5F8aBB01zkw0CqkXSs4QlN4d6xSzjj35sR3KQJeIA+EpbJZcBrD0HAaBPX+PvQsmYLYYeS/MEU9Im8eV90fUy1k88S11IYvMn/ew7ncwouvpSeSq/n/nv6/+AOqt25WeVYUkY4uRK4L9lioq/tZQZddRjWLXui11jLzxE4X2r9LKZmJzN2959/EXPdWW/pZkjqCOn9IvFHJ/SThNikLjbu8dka172qpmwk7Fy7U0Y9aOgx5SACietA/GTe"
+      }
+     },
+     "id": "prt_0a670888a001WscHpODDZLls1t",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66f959f001WAKGW9Oe9tlq2Q"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 14914,
+      "input": 6738,
+      "output": 15,
+      "reasoning": 23,
+      "cache": {
+       "write": 0,
+       "read": 8138
+      }
+     },
+     "cost": 0.00580635,
+     "id": "prt_0a6708c40001nY5MsSvaQyolvU",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a66f959f001WAKGW9Oe9tlq2Q"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.0085023,
+    "tokens": {
+     "total": 18410,
+     "input": 10202,
+     "output": 21,
+     "reasoning": 43,
+     "cache": {
+      "write": 0,
+      "read": 8144
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498789392,
+     "completed": 1789498832176
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a6708e100014A2oCjZRrsqMTb",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a67130c7001HRs22QMUzb41a8",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6708e100014A2oCjZRrsqMTb"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "e4PpJk5orHxttgo7",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "*.{json,md,js}"
+      },
+      "output": "[542 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789498831072,
+       "end": 1789498831176
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EpUCCpICARFNMg9NYqT46sxQC8Sid7yPF5byXtTepCBDLFIoMi5S6XNePgRRMXFb578kB9GZ4ICY3Kh9322w5lDQs1UXT9B9/1VBepR/EekYmP5hwo0clnAz7YLbj+bgUH3ZADSVLxCnregt9BiTG/lAOsLSbb1tD+kwmGusAdRiME0lpn8/LGGxszm/Rdb8arP+63phx7gPnbZHAKMcOPoZH3Mu1aNy1E1z1BEvWNKjhcP/R13nuelGxGjGuhGaaetOz4RjN9b9a0xpOJMmErqOkTtvEWIy4NZThV8ZYZhRXQ1DEV4JooHsTo7DRF0JwLkFKZ9Z7q8mF30SCQLNm7Vd+SUYupeKhPxtPnXaubYsejXF8E5QpA=="
+      }
+     },
+     "id": "prt_0a67130cd001xp1uAUm0n2p58A",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6708e100014A2oCjZRrsqMTb"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 18410,
+      "input": 10202,
+      "output": 21,
+      "reasoning": 43,
+      "cache": {
+       "write": 0,
+       "read": 8144
+      }
+     },
+     "cost": 0.0085023,
+     "id": "prt_0a671333c001PNzbLA9Aa9U1fj",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6708e100014A2oCjZRrsqMTb"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.003341325,
+    "tokens": {
+     "total": 18724,
+     "input": 2347,
+     "output": 35,
+     "reasoning": 61,
+     "cache": {
+      "write": 0,
+      "read": 16281
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498832186,
+     "completed": 1789498879122
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a6713539001dq3DcGc0HiYv0x",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a671e83d001b0njqk1t7zCVNn",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6713539001dq3DcGc0HiYv0x"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "RZPldKB0xaINcRn7",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\AGENTS.md"
+      },
+      "output": "[567 caracteres omitidos]",
+      "title": "AGENTS.md",
+      "time": {
+       "start": 1789498878033,
+       "end": 1789498878085
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EtsCCtgCARFNMg9mQsgzVgPoZGGy0yAAZSWjdY+wBSq5D/TsnAjwGWwdfogdj768rTh3BhhCgUUCoYLxc2a7jftfJBvJdkopDlt22mzStG3pDlfI2gbekbbEuwUMkkLOlmzywq20qzCrypf0OjqRTgwLy7q2MXdf3Z4S3MjvURyG3sTJoCuH58E353BqtpO/uUQvKHWubGkAO/IbEkb+C9d9f6moe1dkGUeYzufU00VyJjjSQDlEu3P/8pSE/nsvFsg4ZPzAUC1QOsvdNp4cPDL+MRV2vBf9Bt3fVWTK7REJPFARYd79zJyQCMiNx2JRpIJj+Lg+WPyicD4mvJlZL5MPo25v1rRt9158nxSNS7bwt5M3Oc2b5TDBUi+L8uXuX9RMe64plR/KAIy7j1FAsuiJzQfrfHAWJIYqTusjEd6vGtD73nfFF7N38Dbwz+gr2fCtAhPNyq1vOYywCxE="
+      }
+     },
+     "id": "prt_0a671e843001A56FP3UeVL6HIP",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6713539001dq3DcGc0HiYv0x"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 18724,
+      "input": 2347,
+      "output": 35,
+      "reasoning": 61,
+      "cache": {
+       "write": 0,
+       "read": 16281
+      }
+     },
+     "cost": 0.003341325,
+     "id": "prt_0a671ea7b001QOixCOs3Ybei7b",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6713539001dq3DcGc0HiYv0x"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.00340155,
+    "tokens": {
+     "total": 18986,
+     "input": 2663,
+     "output": 37,
+     "reasoning": 12,
+     "cache": {
+      "write": 0,
+      "read": 16274
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498879130,
+     "completed": 1789498938474
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a671ec9a001MZDEfBMTodZ0tY",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a672d0060017hnxzlIRnFl20N",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a671ec9a001MZDEfBMTodZ0tY"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "WrU4F7SAJH1aTLe9",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\contrato-api.md"
+      },
+      "output": "[13897 caracteres omitidos]",
+      "title": "contrato-api.md",
+      "time": {
+       "start": 1789498937393,
+       "end": 1789498937445
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EpYBCpMBARFNMg86El8Qd0OwXKt078pMwXdhCxHQRAOMVqNpSLh04FZCp8ZeDxzK6rrXQSikusJCnai9D7r/jP6+Cios0iz0yMnJ1Eso/4ARGSI71CqEBdr1aBiSrDcyl/7dG4EdjmzQofILKlAVZLYJBnEra1MhJqe5HYQPtdCPb8RL+x9z1BYhnVYtXBZTgawoVKie3T45"
+      }
+     },
+     "id": "prt_0a672d015001dJOd7uUMAbcoKv",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a671ec9a001MZDEfBMTodZ0tY"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 18986,
+      "input": 2663,
+      "output": 37,
+      "reasoning": 12,
+      "cache": {
+       "write": 0,
+       "read": 16274
+      }
+     },
+     "cost": 0.00340155,
+     "id": "prt_0a672d22f001MB2BqwtGbi0hOn",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a671ec9a001MZDEfBMTodZ0tY"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.00781455,
+    "tokens": {
+     "total": 24864,
+     "input": 8515,
+     "output": 34,
+     "reasoning": 21,
+     "cache": {
+      "write": 0,
+      "read": 16294
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789498938486,
+     "completed": 1789499015200
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a672d476001jvxd3EM3qmONoz",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a673fb50001baU55RFtwMA7BX",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a672d476001jvxd3EM3qmONoz"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "qlmpaeGgvWfKWP41",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\projeto.json"
+      },
+      "output": "[335 caracteres omitidos]",
+      "title": "projeto.json",
+      "time": {
+       "start": 1789499013995,
+       "end": 1789499014013
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EtMBCtABARFNMg+RznSJPSp28SAbXK476vZZE16vLKcDNdA4F88pvqs0wAH87PfBCJc34c1jlEvHMQ0IR9UpCCXjCZrr7hML2AuGHpBykjXqQFrrUaKnAvhJZoVJt+BECjAusQkhApvyuALRZo7wGQwFdpWGEJDChyoNoytkvcHP4klDBWgE1Jkxz30jcxlaqKqPo3uLA2rAUe62SDZtXG4zUpkikBJrw60T1r7Y5tAd6GQW01XIJyJwHP4NIxgnPEryEuzmfzYWy4WxrJGPsdlgKMOgYQ=="
+      }
+     },
+     "id": "prt_0a673fb56001eB2jufZyYcv71b",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a672d476001jvxd3EM3qmONoz"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 24864,
+      "input": 8515,
+      "output": 34,
+      "reasoning": 21,
+      "cache": {
+       "write": 0,
+       "read": 16294
+      }
+     },
+     "cost": 0.00781455,
+     "id": "prt_0a673fdc6001FQfUHBj88VP3zV",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a672d476001jvxd3EM3qmONoz"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.0079791,
+    "tokens": {
+     "total": 25074,
+     "input": 8730,
+     "output": 21,
+     "reasoning": 35,
+     "cache": {
+      "write": 0,
+      "read": 16288
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499015212,
+     "completed": 1789499080384
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a674002c001SBBzAlgP4Rb2ge",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a674fa91001rAxRysyH1tnBoM",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a674002c001SBBzAlgP4Rb2ge"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "KCKgt6QM7KiVFL7z",
+     "state": {
+      "status": "error",
+      "input": {
+       "path": "api",
+       "pattern": "**/*"
+      },
+      "error": "ripgrep execution failed",
+      "time": {
+       "start": 1789499079330,
+       "end": 1789499079345
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "Ev4BCvsBARFNMg9aC9tU0Mfv0Ii1+r9AYJqaI94aWm4bFMfbXmtK+XJh04vOvIPcjFmqS2VsTMqYo99sp5+eBOQnfY299vQy6oyz832tgfCmxpxb5RmZHF+a4wnQffjREdGwVsKOOphJ08TqIsLyVf43dlYJppfbWF0r+RIthE0j2T7DLr5ge+W1ypmCCmVj9vMpa0biQlyxqkW9cNjbkKOoFW97vcvqFf9n+Ano1s8+gB0zY4kNztpIOXDSaT/LfZA9jUIuH8GYuV/bU/qFkV6CVfQL4aQHLSSzt70p32R4bJbrcapJQVVlOjZvTekVx3dP/k7iNuNRT/wwrbeRQv4="
+      }
+     },
+     "id": "prt_0a674fa96001ZFEQAE7ZZKSxly",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a674002c001SBBzAlgP4Rb2ge"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 25074,
+      "input": 8730,
+      "output": 21,
+      "reasoning": 35,
+      "cache": {
+       "write": 0,
+       "read": 16288
+      }
+     },
+     "cost": 0.0079791,
+     "id": "prt_0a674fc890017b6q2kZsr1JhAs",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a674002c001SBBzAlgP4Rb2ge"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.00804165,
+    "tokens": {
+     "total": 25152,
+     "input": 8814,
+     "output": 15,
+     "reasoning": 41,
+     "cache": {
+      "write": 0,
+      "read": 16282
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499080396,
+     "completed": 1789499160217
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a674fecc001zvnODAiL3dB2CG",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a6763247001Gh2YtbBxkJT7ox",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a674fecc001zvnODAiL3dB2CG"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "4Ng0QBQ0QpyL64qv",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "api/**/*"
+      },
+      "output": "[14 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789499159133,
+       "end": 1789499159261
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EqACCp0CARFNMg97HcxRySu9Btc7DHClZq/FWaZEpbuMZUKpAFE7a555fI5/KvUB1sDQfyHEEnIVRhavR57Yc8FPbLfqC9/OvVGvwWJo0QauC+88VEFPvbqWZfdfUA7nLwX+wV5lWjiYsrSU3x/wpwjEauivE1Ju6KrgMkncUg4gPuyJzX2mbj+WW8nz/u7echphC4mdWNloCpo1NuPtymQB7UD1hTpE/D3i6PE7SbvuE+QQ9W7OFuqu12lxfnYKboUyDgr38QAXgbj4FcSp7n3qV4L2iVPC+X9bM+xml/Iz4UOuvrOgSrPZcc6UAEs0t77bRiuLbW/2Idh7Cg1Vumm2jdF4xqW+jc34X7KMxQUvvM5g+yALrpwldHa2EMUqkkbc"
+      }
+     },
+     "id": "prt_0a676324e0014iVIRbwcgfSkOf",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a674fecc001zvnODAiL3dB2CG"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 25152,
+      "input": 8814,
+      "output": 15,
+      "reasoning": 41,
+      "cache": {
+       "write": 0,
+       "read": 16282
+      }
+     },
+     "cost": 0.00804165,
+     "id": "prt_0a676349f001fvxZD7GsC5tJOL",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a674fecc001zvnODAiL3dB2CG"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.0080502,
+    "tokens": {
+     "total": 25214,
+     "input": 8896,
+     "output": 14,
+     "reasoning": 28,
+     "cache": {
+      "write": 0,
+      "read": 16276
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499160230,
+     "completed": 1789499244840
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a67636a6001nHoSeNuT4cQ0Ig",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a6777bb5001Ou3VE0ijkLammd",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67636a6001nHoSeNuT4cQ0Ig"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "mZaHMJC7qOYQca6G",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "*"
+      },
+      "output": "[9464 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789499243468,
+       "end": 1789499243889
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EvMBCvABARFNMg8AxvtHxcBOPLYvUfvAcfTdlDM9rc//QcWHlMv5vRJMlg5DQQzzB6g0aJJqnMlN9/sN1ev1poge7SmJJ8HJxJXdDgNXPmTaUlXPPzSC5wSn9o1AnWAMtzEBtd7sWl6+SJ/U5qQMvElhICv9FU9w4KhVDLFbSQfU0bDibzUvexyfMrEN2EaWIZU8DLPnocaW2zLS+HSVSRMuDnTpydBxMRRFU8jvHYc5tDd02TVleZfDX5JU7NzG8lblvTNQb8rN9QdnrkHgeI1mqXgfxI1b8XUH2FJksdFHKaiAYAZuALk1hbiQrC8dJtEoWDn9"
+      }
+     },
+     "id": "prt_0a6777bbe001rOsOP52gNBT1Mi",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67636a6001nHoSeNuT4cQ0Ig"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 25214,
+      "input": 8896,
+      "output": 14,
+      "reasoning": 28,
+      "cache": {
+       "write": 0,
+       "read": 16276
+      }
+     },
+     "cost": 0.0080502,
+     "id": "prt_0a6777f35001CKx2TMCbDA6a88",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67636a6001nHoSeNuT4cQ0Ig"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.005261625,
+    "tokens": {
+     "total": 28762,
+     "input": 4278,
+     "output": 16,
+     "reasoning": 43,
+     "cache": {
+      "write": 0,
+      "read": 24425
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499244851,
+     "completed": 1789499292908
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a6778133001w0qlglBFao8wUs",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a67838a2001n0Vb8IFlJMT5AP",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6778133001w0qlglBFao8wUs"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "45zfV2OvMLwl19XD",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "src/**/*.js"
+      },
+      "output": "[14 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789499291828,
+       "end": 1789499291930
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EpgCCpUCARFNMg/UBGMKghiVs0VMCJwHH0ix7tkkrTHQh4t65lqg7hfFqDUq5q70XAaOIxOFO4PoYcr80mKmZpVEcGGXwY9/eIq+GYVXV+uRJXuXGsNx58H1a5YlyQVdN59LcVVu/4QrEAvpo0Ln14t/kw6Ajyazp4LfIXhPTuMc/iN+X1tEkxNl3TUVvxUIaAGtwxAHgQwhh6k5pAxhijZHnG69WBxIcF+VVWqnDK4z4rC/76WQ+IB1wf8XSvispHRxPtC7KbnLbGglcvzHJ25cnymsMbcgQ4Ym0Ix+B9dyTG6+O/mpLvssyt3MODqhInk84ZI3rfz2eVy8bpq9HQa2QIJmii7ubLbrsiqt2wNj784ndtPa3ZKKhA=="
+      }
+     },
+     "id": "prt_0a67838a600151hEm7mwMYgqjs",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6778133001w0qlglBFao8wUs"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 28762,
+      "input": 4278,
+      "output": 16,
+      "reasoning": 43,
+      "cache": {
+       "write": 0,
+       "read": 24425
+      }
+     },
+     "cost": 0.005261625,
+     "id": "prt_0a6783b17001cr9Wp8BMV5hlcu",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6778133001w0qlglBFao8wUs"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.005213775,
+    "tokens": {
+     "total": 28811,
+     "input": 4365,
+     "output": 17,
+     "reasoning": 12,
+     "cache": {
+      "write": 0,
+      "read": 24417
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499292917,
+     "completed": 1789499316495
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a6783cf5001CPt2Jm5puXUKbI",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a67894f1001In4QMveaicbuhr",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6783cf5001CPt2Jm5puXUKbI"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "BnJjZcgeCK0mibCw",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "verificacoes/**/*"
+      },
+      "output": "[14 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789499315468,
+       "end": 1789499315570
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "Ep8BCpwBARFNMg8b0tI3EBNX1F6TGSztFdBEUYLVFiQQzu9zmyP9nU9C0T14v71eNN4ZLfYYcgg2WTCVzdjF7VK6wbzTm+AIgKs/BL5SAgCw5on02qb+C/yY9iLP8f3/1M6HpoSvssdjAxUPAQzzs5fISl/KaihFaI/0OXzhIjWAHXMUXQhoO5eoQAofiG2wrSR6rxG7SQGFbb/ZDbUU5P+N"
+      }
+     },
+     "id": "prt_0a67894f9001MnsPSG55U5t2cX",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6783cf5001CPt2Jm5puXUKbI"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 28811,
+      "input": 4365,
+      "output": 17,
+      "reasoning": 12,
+      "cache": {
+       "write": 0,
+       "read": 24417
+      }
+     },
+     "cost": 0.005213775,
+     "id": "prt_0a678974a001XVxlydvPd2rYV5",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6783cf5001CPt2Jm5puXUKbI"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.005570925,
+    "tokens": {
+     "total": 28944,
+     "input": 4422,
+     "output": 33,
+     "reasoning": 80,
+     "cache": {
+      "write": 0,
+      "read": 24409
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499316505,
+     "completed": 1789499322107
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a67899180010DlGyld0BOMmkl",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a678a5bb001WoOdOCISrXz7Q2",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67899180010DlGyld0BOMmkl"
+    },
+    {
+     "type": "text",
+     "text": "I will check the directory contents to see the current project structure.",
+     "time": {
+      "start": 1789499319744,
+      "end": 1789499319972
+     },
+     "id": "prt_0a678a5c0001YZso9uFrBfjvxu",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67899180010DlGyld0BOMmkl"
+    },
+    {
+     "type": "tool",
+     "tool": "bash",
+     "callID": "b2igBmyEj3pJbJrT",
+     "state": {
+      "status": "completed",
+      "input": {
+       "command": "Get-ChildItem -Path ."
+      },
+      "output": "\r\n\r\n    Diret�rio: C:\\Users\\User\\Documents\\Atividade-Semana-Academica\r\n\r\n\r\nMode                 LastWriteTime         Length Name                                                                 \r\n----                 -------------         ------ ----                                                                 \r\nd-----        15/09/2026     15:56                .idea                                                                \r\nd-----        15/09/2026     14:40                .opencode                                                            \r\nd-----        14/09/2026     17:15                auditorias                                                           \r\nd-----        14/09/2026     17:16                entrevistas                                                          \r\nd-----        14/09/2026     17:15                evidencias                                                           \r\nd-----        15/09/2026     15:43                specs                                                                \r\n-a----        14/09/2026     17:15            279 .gitignore                                                           \r\n-a----        14/09/2026     17:47            418 AGENTS.md                                                            \r\n-a----        14/09/2026     17:15          12925 contrato-api.md                                                      \r\n-a----        14/09/2026     16:53            701 EQUIPE.md                                                            \r\n-a----        14/09/2026     16:55            162 projeto.json                                                         \r\n-a----        14/09/2026     17:15           3030 README.md                                                            \r\n\r\n\r\n",
+      "metadata": {
+       "output": "\r\n\r\n    Diret�rio: C:\\Users\\User\\Documents\\Atividade-Semana-Academica\r\n\r\n\r\nMode                 LastWriteTime         Length Name                                                                 \r\n----                 -------------         ------ ----                                                                 \r\nd-----        15/09/2026     15:56                .idea                                                                \r\nd-----        15/09/2026     14:40                .opencode                                                            \r\nd-----        14/09/2026     17:15                auditorias                                                           \r\nd-----        14/09/2026     17:16                entrevistas                                                          \r\nd-----        14/09/2026     17:15                evidencias                                                           \r\nd-----        15/09/2026     15:43                specs                                                                \r\n-a----        14/09/2026     17:15            279 .gitignore                                                           \r\n-a----        14/09/2026     17:47            418 AGENTS.md                                                            \r\n-a----        14/09/2026     17:15          12925 contrato-api.md                                                      \r\n-a----        14/09/2026     16:53            701 EQUIPE.md                                                            \r\n-a----        14/09/2026     16:55            162 projeto.json                                                         \r\n-a----        14/09/2026     17:15           3030 README.md                                                            \r\n\r\n\r\n",
+       "exit": 0,
+       "truncated": false
+      },
+      "title": "Get-ChildItem -Path .",
+      "time": {
+       "start": 1789499319933,
+       "end": 1789499321267
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EsoDCscDARFNMg8h0I4aZmF5wVIOSpkN/w/EtyiMAHYB2reSWrxO2cbs5T4pMs29lauKzkYW2AyioSd2LsQrQqcLVpa6LvXrJR5DQJxapQKuwS1uCOBl2CP33d2VK/C3DGGVXLE9KxNnnsfIxBuH/EkCnNF5nML66g+JQcjbEkOwirhnwMqz35hZz4w3GLELROpIqweej7Oci5u/HvvSikcgHGkLlBskdcx04xcS77Pxo/OE9z6elqetCmgxBk0V8oOXqKIbVcdc+WdRyfsMgF8AbIRoic8iHnMiivSexij/e58nTgwF7RNQ6zjz9aLX9YwQBVRHKZ9XtQJNChULP7/gZUU7ZVCjQ/05fokaxD6bFT5M/WGmHw0auc5KIKq//Du5d9GpqX9qWHc/iBR8rTlc40TSFLNQc/OZudWwnFjDxnxm9hQ4TE87Nbel8n6xRjsVh6Oc2/lXmKwgLlvM7fp4hRTruJYoM513m9Vff9R6qk1Iz1J1XwWSQoMklWcSvojDn39h4NlPJXp61DKbaTuvXbSbgdftWW5VF5+wWAXczC/4QlGHaVOi2YkUP4BdZAhs3JBC913CDfnxeyXWCjpB+DvnjaRPDbqytzk="
+      }
+     },
+     "id": "prt_0a678a65e001fka8Wb5JQx4oxt",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67899180010DlGyld0BOMmkl"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 28944,
+      "input": 4422,
+      "output": 33,
+      "reasoning": 80,
+      "cache": {
+       "write": 0,
+       "read": 24409
+      }
+     },
+     "cost": 0.005570925,
+     "id": "prt_0a678ad5c001dnlp2NPk8iMWgo",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67899180010DlGyld0BOMmkl"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.012252225,
+    "tokens": {
+     "total": 31139,
+     "input": 4946,
+     "output": 41,
+     "reasoning": 1749,
+     "cache": {
+      "write": 0,
+      "read": 24403
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499322119,
+     "completed": 1789499335086
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a678af070011tU1QK17U53Mdg",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a678b9b7001RkXjRN0A5R7Je1",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678af070011tU1QK17U53Mdg"
+    },
+    {
+     "type": "reasoning",
+     "text": "**Verifying Directory Existence**\n\nI've checked the project structure, and, as anticipated, the 'api' directory is currently absent. My next step will involve creating this directory, based on the specifications in `projeto.json`.\n\n\n",
+     "time": {
+      "start": 1789499324861,
+      "end": 1789499334258
+     },
+     "id": "prt_0a678b9bd001EC3cp6xTDQ59Wb",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678af070011tU1QK17U53Mdg"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "MHnRTcQ6HhJacOzq",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\entrevistas\\M1-grade.md"
+      },
+      "output": "[5128 caracteres omitidos]",
+      "title": "entrevistas\\M1-grade.md",
+      "time": {
+       "start": 1789499334246,
+       "end": 1789499334277
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "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"
+      }
+     },
+     "id": "prt_0a678de50001extu8fqDULGXcp",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678af070011tU1QK17U53Mdg"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 31139,
+      "input": 4946,
+      "output": 41,
+      "reasoning": 1749,
+      "cache": {
+       "write": 0,
+       "read": 24403
+      }
+     },
+     "cost": 0.012252225,
+     "id": "prt_0a678e01a001unQSmOn32yN9Dx",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678af070011tU1QK17U53Mdg"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.009273075,
+    "tokens": {
+     "total": 33322,
+     "input": 8609,
+     "output": 29,
+     "reasoning": 233,
+     "cache": {
+      "write": 0,
+      "read": 24451
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499335099,
+     "completed": 1789499354144
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a678e1bb001tCS8Mm2fqcE1xU",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a679239800170C01arO7qjPaN",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678e1bb001tCS8Mm2fqcE1xU"
+    },
+    {
+     "type": "reasoning",
+     "text": "**Defining Fatia 1**\n\nOkay, I'm now focusing on defining the components for Fatia 1. Specifically, I'm looking at implementing data reading and calculating derived fields. This includes the GET endpoints for `/salas`, `/atividades`, and `/atividades/:id`. The goal is to get a handle on the static data and how those derived fields will be calculated, like `situacao` and `cargaHorariaMin`.\n\n\n",
+     "time": {
+      "start": 1789499351964,
+      "end": 1789499352393
+     },
+     "id": "prt_0a679239c001fWJ6NA77d0YX9B",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678e1bb001tCS8Mm2fqcE1xU"
+    },
+    {
+     "type": "text",
+     "text": "I will check the Node.js version installed on the system.",
+     "time": {
+      "start": 1789499352397,
+      "end": 1789499352590
+     },
+     "id": "prt_0a679254d0011oOvfYQkADPG0E",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678e1bb001tCS8Mm2fqcE1xU"
+    },
+    {
+     "type": "tool",
+     "tool": "bash",
+     "callID": "iBaDYWnEVijaZnxJ",
+     "state": {
+      "status": "completed",
+      "input": {
+       "command": "node -v"
+      },
+      "output": "v24.19.0\r\n",
+      "metadata": {
+       "output": "v24.19.0\r\n",
+       "exit": 0,
+       "truncated": false
+      },
+      "title": "node -v",
+      "time": {
+       "start": 1789499352574,
+       "end": 1789499353161
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "ErUICrIIARFNMg9+9pQw1j3RaDxFQLW6WRElXIbvVXyQ/hqA/VSE6tuk0UY5IOK/es6j0odneQ6SvpRkabyXnASus1Hw8cLfQrbwrwHb1JucbEo4DvlGONI04hLp0e7/A/CoBN6oswMuWQrIJYPsSs4CvvDNm1M8G9VlamqDmUzLrom9ZacALcgLB+Eo3QEnIjKcXKEgUC1AJAp6AgeCFQCa5SQoZyOcv9FkYULcvbkhpbUxBwwrLuf51DBkWB8TX187NJsgro4gnu4/Tk2qQQFwp8DrDFi2TzUllSZB4BiyC7mg72XJQ1+fjvppG2qCcfLiPZnIUrjG4K2cTqN4Y+GJSSHdUMV7V81cxIFN3H+QnnBBpJY1uhGVGwnug3I1ryztOjgN9W0yfzYUmzVWcExcYRg+yscL4v0wfsazYgiZYEooXerTCwPz2CBe563UemrT/3FoZ7+BUYg9LnafHoePkguTE00fwtRjCaJYpQ6MvuPebsnBYB8FkODbGBc7Um78rTJrIN59syziCEpbvGMl+BEqwsDO/LbNtWb2Wuy5TCJylJGNVj1ht9Atw7Wq1+WjjRx68z7pk+VCTeoLEylGcic22NJxJVSKHzgc4gauKyTGVGBDc+JNl00rjXuym/MzxlxtgmbSw4AL5u0j9ybdOciw707uKZyNro3PJLGzi8kSSQn1G1xTM849bqNMTjCJLP9LXY5rq8Me6tyi0sZqsFkyuk1JXv0t2wd5Exx+aNj5kxiTvro0uTBpsIPbhgbdmu4NTmjrSnPq4v1eD+6YN5o32RL0912Goi4y66JG3hFJlwVHwB17xTHzAgfsLqPMchBijaHeFN5tm8uapzH5IXIoRCL2711VfQmlGxJUc5cQKFN1pIt/2AXy5dEPwDCbc+pmAhnTj1H8Cn0Gv0u7IpNwxA2L5LgEXGViroVYdims9t2zwXCr3XIr4b2UMS5Fgt7WuyuVVeqVtabDoZ5e6JYaPWDqc43TAO8BLQWl3tD+jzR48Dc1iHB1mb1K2/GIVXZwsk8L3WYZX8oaUrwCUyazbGVSIi1ToPa2aoutS2LyoIiV9oEPJSxM64tjqPEyjCpQEm6udn2WDn7SJtItmNhi1n9ryYUj6sn7oPdJbR/BZKIKfrFac1nNQgrxHgMdCZCWKGSsII+bpFhvd997wufGC8Xvhn7ecMEjF3J3Y+d1C6sAmMvcPHurKzyw/zTMFy1R7DB/AbixHLMjhNs9Mx0u7a2LHxSJU7Urlc5MamyIdat7SliSBuuDQNLccYxADfRq+f6dWL2whCpUjztecUGdeZZG8sgGK5ZkEnd6ZuM9lxuJU72rnH2nZ19lj2fwBjip18feC1T0M/n79HAfXVHgNWEwYbDs1RAvb+BExA1cT19IRok48F070kID2d1n5dr+A/JRUbwOEERswlOCxo94EHWu"
+      }
+     },
+     "id": "prt_0a67925eb001zhpmp747sWzZPB",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678e1bb001tCS8Mm2fqcE1xU"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-finish",
+     "tokens": {
+      "total": 33322,
+      "input": 8609,
+      "output": 29,
+      "reasoning": 233,
+      "cache": {
+       "write": 0,
+       "read": 24451
+      }
+     },
+     "cost": 0.009273075,
+     "id": "prt_0a6792a62001QQvQglzFN9Dg1x",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a678e1bb001tCS8Mm2fqcE1xU"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.023080725,
+    "tokens": {
+     "total": 37320,
+     "input": 8928,
+     "output": 154,
+     "reasoning": 3725,
+     "cache": {
+      "write": 0,
+      "read": 24513
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499354159,
+     "completed": 1789499414555
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a6792c2f001m3LIzdMGViIc4S",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "type": "step-start",
+     "id": "prt_0a679be97001HCRii9UinhIdMT",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6792c2f001m3LIzdMGViIc4S"
+    },
+    {
+     "type": "reasoning",
+     "text": "**Analyzing Project Structure**\n\nOkay, Node.js v24.19.0 is confirmed installed! My current focus is figuring out the API structure. I'm checking for an existing `api` directory. If it doesn't exist, I need to decide between creating `api/package.json` with `api/src/...` or just `api/index.js` or `api/server.js`. The project's `projeto.json` file reveals we are using Node.js, Express, and SQLite.\n\n\n**Defining API Behavior**\n\nOkay, I've got a clearer picture now. The `AGENTS.md` file explicitly outlines the stack (Node.js, Express, SQLite) and defines API contracts. I need to adhere to the `contrato-api.md` for error format. Based on `AGENTS.md` and the `tdd` skill instructions, I'm thinking about how the API structure should align with the TDD approach. I'm focusing on defining behavior through HTTP endpoints first. The `api` section in `package.json` makes me think of an installation and start command. The `pasta` value may suggest where the API files may live.\n\n\n**Locating Test Files**\n\nI am now focusing on setting up the testing environment. I've re-examined the project configuration and the instructions. It seems that tests should reside in the `verificacoes/` directory. The format should mirror `verificacoes/livros.spec.js` using `node:assert/strict`. The `projeto.json` suggests `npm test` or `node --test` command. I need to make a decision about the exact test file name, with `grade.spec.js` or `m1-grade.spec.js` being the leading candidates. Next up, I must understand how to launch the server for testing.\n\n\n**Establishing Server Startup**\n\nNow I'm looking into how to handle server startup for testing, and I've got a clearer idea from reviewing `contrato-api.md`. It mentions `instalar` and `iniciar` commands with `MODO_TESTE=1` and `PORT=3000`. I need to figure out how to create the server, using `criarServidor()` or `app.listen(0)` to get a dynamic port. My next step is to decide on the dependencies for `api/package.json`, specifically `express` and also `sqlite` (or `better-sqlite3` or built-in `node:sqlite`), checking the project's root `package.json` file.\n\n\n**Defining Fatia 1 Rules**\n\nI am now carefully mapping out all rules and criteria, focusing specifically on Fatia 1. I'm starting by analyzing the header `X-Usuario` rule, which applies to every route in M1. I need to list *all* rules. I am trying to understand the expected behavior when a request lacks the required header, which will form a crucial test case. I'm ensuring I've thoroughly considered every aspect before writing any code.\n\n\n**Formulating User Validation**\n\nOkay, the rules for the `X-Usuario` header are now crystal clear in my mind. A missing or invalid header results in a 401. I'm taking into consideration the exceptions, specifically the public endpoints. I've also listed the seed users. I now understand the structure of the initial data needed for testing the authorization.\n\n\n**Defining Test Setup**\n\nI am now focusing on the routes and test data for Fatia 1, with the test mode defined. The `POST /_teste/reset` endpoint looks promising for setting up the initial state for the database.  I need to determine how I can set up my test data using this endpoint for the various scenarios, particularly around setting the date and user authentication.\n\n\n**Implementing Activity Filtering**\n\nI'm now focusing on implementing the filtering logic for the `/atividades` endpoint, specifically the `dia` and `tipo` query parameters. I must handle the filtering based on the provided date and activity type. I need to ensure the date filtering considers the local timezone and compare the ISO date appropriately. I am now considering how to combine both filters, as specified in the rules. This includes the format of the returned data.\n\n\n\n**Evaluating Activity Endpoint**\n\nI'm now implementing the logic for the `GET /atividades/:id` endpoint. I'm focusing on the `situacao` and `cargaHorariaMinutos` calculations, specifically checking the `encontros` array and the rules around `agora`. I need to handle cases where an activity isn't found (404) and ensure the `X-Usuario` validation (401) is correctly applied. The time calculations, considering dates and times are key, to determine the status and durations.\n\n\n**Structuring Test-Driven Steps**\n\nI'm now outlining a precise, test-driven approach for Fatia 1, as per the guidelines. I'm breaking the feature into concise test cases, ensuring each test focuses on a distinct acceptance criterion. I'm aiming for a straightforward, iterative implementation with one failing test per iteration, and only the necessary code to make it pass. My strategy includes starting with `GET /salas` and its user authorization requirement. I've broken it down into two tests.\n\n\n**Defining Test Implementation**\n\nI'm now outlining the implementation phase, building upon my test-driven strategy. I have to add `express` and `better-sqlite3` as dependencies to `api/package.json`. Then, I will start to implement the endpoints. I'm focusing on the first defined tests, ensuring a clear path to successful implementation. I'm focusing on the `GET /salas` and the `GET /atividades` tests first, before addressing more complex scenarios. I need to make sure the server works, so will start with a small server setup, then gradually add features as the test cases are written and pass.\n\n\n\n",
+     "time": {
+      "start": 1789499391643,
+      "end": 1789499413080
+     },
+     "id": "prt_0a679be9b0015uHtvkiQj8YDPo",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6792c2f001m3LIzdMGViIc4S"
+    },
+    {
+     "type": "tool",
+     "tool": "write",
+     "callID": "n2osNH00IizLp0Bm",
+     "state": {
+      "status": "completed",
+      "input": {
+       "content": "{\n  \"name\": \"semana-academica-api\",\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"main\": \"src/index.js\",\n  \"scripts\": {\n    \"start\": \"node src/index.js\",\n    \"test\": \"node --test ../verificacoes/*.spec.js\"\n  },\n  \"dependencies\": {\n    \"express\": \"^4.21.2\"\n  }\n}\n",
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\api\\package.json"
+      },
+      "output": "Wrote file successfully.",
+      "metadata": {
+       "diagnostics": {},
+       "filepath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\api\\package.json",
+       "exists": false,
+       "truncated": false
+      },
+      "title": "api\\package.json",
+      "time": {
+       "start": 1789499413043,
+       "end": 1789499413098
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "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"
+      }
+     },
+     "id": "prt_0a67a1221001y7popixuGTtVoH",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6792c2f001m3LIzdMGViIc4S"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "8c37bc85e2f7909b9b4f6e41fa72ada6f15def6a",
+     "type": "step-finish",
+     "tokens": {
+      "total": 37320,
+      "input": 8928,
+      "output": 154,
+      "reasoning": 3725,
+      "cache": {
+       "write": 0,
+       "read": 24513
+      }
+     },
+     "cost": 0.023080725,
+     "id": "prt_0a67a15ef001Uv9Rv5Egz4QmUK",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6792c2f001m3LIzdMGViIc4S"
+    },
+    {
+     "type": "patch",
+     "hash": "b34f677e20f32106e8b2af284b35651541a3250e",
+     "files": [
+      "C:/Users/User/Documents/Atividade-Semana-Academica/api/package.json"
+     ],
+     "id": "prt_0a67a181200182Gd4dwklzFaGY",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a6792c2f001m3LIzdMGViIc4S"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.006637725,
+    "tokens": {
+     "total": 38740,
+     "input": 4816,
+     "output": 103,
+     "reasoning": 28,
+     "cache": {
+      "write": 0,
+      "read": 33793
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499414566,
+     "completed": 1789499454735
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a67a18260012eYTVmkDIJU5Ti",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "8c37bc85e2f7909b9b4f6e41fa72ada6f15def6a",
+     "type": "step-start",
+     "id": "prt_0a67aaece001C0IsXJfCeCC30l",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67a18260012eYTVmkDIJU5Ti"
+    },
+    {
+     "type": "tool",
+     "tool": "write",
+     "callID": "vlX9Hq9yaqT0ufeT",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\package.json",
+       "content": "{\n  \"name\": \"semana-academica-root\",\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"node --test verificacoes/*.spec.js\"\n  }\n}\n"
+      },
+      "output": "Wrote file successfully.",
+      "metadata": {
+       "diagnostics": {},
+       "filepath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\package.json",
+       "exists": false,
+       "truncated": false
+      },
+      "title": "package.json",
+      "time": {
+       "start": 1789499453153,
+       "end": 1789499453166
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EuwBCukBARFNMg91bYH/80BqwJ+vp51rdN0bLgL5g5HGncw4hNBVN1N0uQxllejgwgYfLHDI9DhT0FGEwesmx7tLKesYyBY6IqBANLWlM9+dCVzrXL+6XFB3nHv9u0+EpcGdDwmv0vQJd/DXUhDK0OBYoH0sLlwIj2JAJjIL3DqBjekD1kvjzERl2ddkseAteyyBqftyQitXtHI/3fyeRhBCzT2TfLEtjwYLw/a1PVYGvhWWA5cXdK8nijk93Nt/ANj16qveLAOuqEHddXxwumG7CnvOPQZnoFAsHY5RUqFDB9sq2hrji0xN7TlZCz8="
+      }
+     },
+     "id": "prt_0a67aaed3001rDGFkCrOyknl9w",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67a18260012eYTVmkDIJU5Ti"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "fef7c57d80535defee71e802a0d6738a7650f8dd",
+     "type": "step-finish",
+     "tokens": {
+      "total": 38740,
+      "input": 4816,
+      "output": 103,
+      "reasoning": 28,
+      "cache": {
+       "write": 0,
+       "read": 33793
+      }
+     },
+     "cost": 0.006637725,
+     "id": "prt_0a67ab2a8001ujBLBVdfsDiRLP",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67a18260012eYTVmkDIJU5Ti"
+    },
+    {
+     "type": "patch",
+     "hash": "8c37bc85e2f7909b9b4f6e41fa72ada6f15def6a",
+     "files": [
+      "C:/Users/User/Documents/Atividade-Semana-Academica/package.json"
+     ],
+     "id": "prt_0a67ab4ef001w0K62Ng1TcTBp1",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67a18260012eYTVmkDIJU5Ti"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a66e71fb001TYLFoh2rOJiA5p",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499454747,
+     "completed": 1789499532510
+    },
+    "error": {
+     "name": "APIError",
+     "data": {
+      "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\nPlease retry in 50.524040284s.",
+      "statusCode": 429,
+      "isRetryable": true,
+      "responseHeaders": {
+       "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+       "content-length": "1363",
+       "content-type": "text/event-stream",
+       "date": "Tue, 15 Sep 2026 19:12:09 GMT",
+       "server": "scaffolding on HTTPServer2",
+       "server-timing": "gfet4t7; dur=500",
+       "vary": "Origin, X-Origin, Referer",
+       "x-content-type-options": "nosniff",
+       "x-frame-options": "SAMEORIGIN",
+       "x-xss-protection": "0"
+      },
+      "responseBody": "{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 50.524040284s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-3.6-flash\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"50s\"\n      }\n    ]\n  }\n}\n",
+      "metadata": {
+       "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:streamGenerateContent?alt=sse"
+      }
+     }
+    },
+    "id": "msg_0a67ab51b001NR9SvRbcHbDlyf",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": []
+  },
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1789499564268
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "google",
+     "modelID": "gemini-3.6-flash"
+    },
+    "summary": {
+     "diffs": [
+      {
+       "file": "api/package-lock.json",
+       "patch": "Index: api/package-lock.json\n===================================================================\n--- api/package-lock.json\t\n+++ api/package-lock.json\t\n@@ -0,0 +1,832 @@\n+{\n+  \"name\": \"semana-academica-api\",\n+  \"version\": \"1.0.0\",\n+  \"lockfileVersion\": 3,\n+  \"requires\": true,\n+  \"packages\": {\n+    \"\": {\n+      \"name\": \"semana-academica-api\",\n+      \"version\": \"1.0.0\",\n+      \"dependencies\": {\n+        \"express\": \"^4.21.2\"\n+      }\n+    },\n+    \"node_modules/accepts\": {\n+      \"version\": \"1.3.8\",\n+      \"resolved\": \"https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz\",\n+      \"integrity\": \"sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"mime-types\": \"~2.1.34\",\n+        \"negotiator\": \"0.6.3\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/array-flatten\": {\n+      \"version\": \"1.1.1\",\n+      \"resolved\": \"https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz\",\n+      \"integrity\": \"sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/body-parser\": {\n+      \"version\": \"1.20.8\",\n+      \"resolved\": \"https://registry.npmjs.org/body-parser/-/body-parser-1.20.8.tgz\",\n+      \"integrity\": \"sha512-JNcyFQ64OiijEkPzUBTCe+hyPXUD/3LEldGQ6iF5LR1w00mx9o7xtDWHXBY2iItjdCFGoilOLNQbH943ut7pHA==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"bytes\": \"~3.1.2\",\n+        \"content-type\": \"~1.0.5\",\n+        \"debug\": \"2.6.9\",\n+        \"depd\": \"2.0.0\",\n+        \"destroy\": \"~1.2.0\",\n+        \"http-errors\": \"~2.0.1\",\n+        \"iconv-lite\": \"~0.4.24\",\n+        \"on-finished\": \"~2.4.1\",\n+        \"qs\": \"~6.16.0\",\n+        \"raw-body\": \"~2.5.3\",\n+        \"type-is\": \"~1.6.18\",\n+        \"unpipe\": \"~1.0.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8\",\n+        \"npm\": \"1.2.8000 || >= 1.4.16\"\n+      }\n+    },\n+    \"node_modules/bytes\": {\n+      \"version\": \"3.1.2\",\n+      \"resolved\": \"https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz\",\n+      \"integrity\": \"sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/call-bind-apply-helpers\": {\n+      \"version\": \"1.0.2\",\n+      \"resolved\": \"https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz\",\n+      \"integrity\": \"sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"es-errors\": \"^1.3.0\",\n+        \"function-bind\": \"^1.1.2\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/call-bound\": {\n+      \"version\": \"1.0.4\",\n+      \"resolved\": \"https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz\",\n+      \"integrity\": \"sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"call-bind-apply-helpers\": \"^1.0.2\",\n+        \"get-intrinsic\": \"^1.3.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/content-disposition\": {\n+      \"version\": \"0.5.4\",\n+      \"resolved\": \"https://registry.npmjs.org/content-disposition/-/content-disposition-0.5.4.tgz\",\n+      \"integrity\": \"sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"safe-buffer\": \"5.2.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/content-type\": {\n+      \"version\": \"1.0.5\",\n+      \"resolved\": \"https://registry.npmjs.org/content-type/-/content-type-1.0.5.tgz\",\n+      \"integrity\": \"sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/cookie\": {\n+      \"version\": \"0.7.2\",\n+      \"resolved\": \"https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz\",\n+      \"integrity\": \"sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/cookie-signature\": {\n+      \"version\": \"1.0.7\",\n+      \"resolved\": \"https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.7.tgz\",\n+      \"integrity\": \"sha512-NXdYc3dLr47pBkpUCHtKSwIOQXLVn8dZEuywboCOJY/osA0wFSLlSawr3KN8qXJEyX66FcONTH8EIlVuK0yyFA==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/debug\": {\n+      \"version\": \"2.6.9\",\n+      \"resolved\": \"https://registry.npmjs.org/debug/-/debug-2.6.9.tgz\",\n+      \"integrity\": \"sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"ms\": \"2.0.0\"\n+      }\n+    },\n+    \"node_modules/depd\": {\n+      \"version\": \"2.0.0\",\n+      \"resolved\": \"https://registry.npmjs.org/depd/-/depd-2.0.0.tgz\",\n+      \"integrity\": \"sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/destroy\": {\n+      \"version\": \"1.2.0\",\n+      \"resolved\": \"https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz\",\n+      \"integrity\": \"sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\",\n+        \"npm\": \"1.2.8000 || >= 1.4.16\"\n+      }\n+    },\n+    \"node_modules/dunder-proto\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz\",\n+      \"integrity\": \"sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"call-bind-apply-helpers\": \"^1.0.1\",\n+        \"es-errors\": \"^1.3.0\",\n+        \"gopd\": \"^1.2.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/ee-first\": {\n+      \"version\": \"1.1.1\",\n+      \"resolved\": \"https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz\",\n+      \"integrity\": \"sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/encodeurl\": {\n+      \"version\": \"2.0.0\",\n+      \"resolved\": \"https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.0.tgz\",\n+      \"integrity\": \"sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/es-define-property\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/es-define-property/-/es-define-property-1.0.1.tgz\",\n+      \"integrity\": \"sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/es-errors\": {\n+      \"version\": \"1.3.0\",\n+      \"resolved\": \"https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz\",\n+      \"integrity\": \"sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/es-object-atoms\": {\n+      \"version\": \"1.1.2\",\n+      \"resolved\": \"https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.2.tgz\",\n+      \"integrity\": \"sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"es-errors\": \"^1.3.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/escape-html\": {\n+      \"version\": \"1.0.3\",\n+      \"resolved\": \"https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz\",\n+      \"integrity\": \"sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/etag\": {\n+      \"version\": \"1.8.1\",\n+      \"resolved\": \"https://registry.npmjs.org/etag/-/etag-1.8.1.tgz\",\n+      \"integrity\": \"sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/express\": {\n+      \"version\": \"4.22.3\",\n+      \"resolved\": \"https://registry.npmjs.org/express/-/express-4.22.3.tgz\",\n+      \"integrity\": \"sha512-Bdcs4+3qlpVlx2NRn6fgX2Ue2/gGRaPeawebgclM0ERSCqDpA+owF1fdPwjJUTAJWMTuAaxjDf+hzb0/4eKvvw==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"accepts\": \"~1.3.8\",\n+        \"array-flatten\": \"1.1.1\",\n+        \"body-parser\": \"~1.20.5\",\n+        \"content-disposition\": \"~0.5.4\",\n+        \"content-type\": \"~1.0.4\",\n+        \"cookie\": \"~0.7.1\",\n+        \"cookie-signature\": \"~1.0.6\",\n+        \"debug\": \"2.6.9\",\n+        \"depd\": \"2.0.0\",\n+        \"encodeurl\": \"~2.0.0\",\n+        \"escape-html\": \"~1.0.3\",\n+        \"etag\": \"~1.8.1\",\n+        \"finalhandler\": \"~1.3.1\",\n+        \"fresh\": \"~0.5.2\",\n+        \"http-errors\": \"~2.0.0\",\n+        \"merge-descriptors\": \"1.0.3\",\n+        \"methods\": \"~1.1.2\",\n+        \"on-finished\": \"~2.4.1\",\n+        \"parseurl\": \"~1.3.3\",\n+        \"path-to-regexp\": \"~0.1.13\",\n+        \"proxy-addr\": \"~2.0.7\",\n+        \"qs\": \"~6.16.0\",\n+        \"range-parser\": \"~1.2.1\",\n+        \"safe-buffer\": \"5.2.1\",\n+        \"send\": \"~0.19.0\",\n+        \"serve-static\": \"~1.16.2\",\n+        \"setprototypeof\": \"1.2.0\",\n+        \"statuses\": \"~2.0.1\",\n+        \"type-is\": \"~1.6.18\",\n+        \"utils-merge\": \"1.0.1\",\n+        \"vary\": \"~1.1.2\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.10.0\"\n+      },\n+      \"funding\": {\n+        \"type\": \"opencollective\",\n+        \"url\": \"https://opencollective.com/express\"\n+      }\n+    },\n+    \"node_modules/finalhandler\": {\n+      \"version\": \"1.3.2\",\n+      \"resolved\": \"https://registry.npmjs.org/finalhandler/-/finalhandler-1.3.2.tgz\",\n+      \"integrity\": \"sha512-aA4RyPcd3badbdABGDuTXCMTtOneUCAYH/gxoYRTZlIJdF0YPWuGqiAsIrhNnnqdXGswYk6dGujem4w80UJFhg==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"debug\": \"2.6.9\",\n+        \"encodeurl\": \"~2.0.0\",\n+        \"escape-html\": \"~1.0.3\",\n+        \"on-finished\": \"~2.4.1\",\n+        \"parseurl\": \"~1.3.3\",\n+        \"statuses\": \"~2.0.2\",\n+        \"unpipe\": \"~1.0.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/forwarded\": {\n+      \"version\": \"0.2.0\",\n+      \"resolved\": \"https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz\",\n+      \"integrity\": \"sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/fresh\": {\n+      \"version\": \"0.5.2\",\n+      \"resolved\": \"https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz\",\n+      \"integrity\": \"sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/function-bind\": {\n+      \"version\": \"1.1.2\",\n+      \"resolved\": \"https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz\",\n+      \"integrity\": \"sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==\",\n+      \"license\": \"MIT\",\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/get-intrinsic\": {\n+      \"version\": \"1.3.0\",\n+      \"resolved\": \"https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.3.0.tgz\",\n+      \"integrity\": \"sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"call-bind-apply-helpers\": \"^1.0.2\",\n+        \"es-define-property\": \"^1.0.1\",\n+        \"es-errors\": \"^1.3.0\",\n+        \"es-object-atoms\": \"^1.1.1\",\n+        \"function-bind\": \"^1.1.2\",\n+        \"get-proto\": \"^1.0.1\",\n+        \"gopd\": \"^1.2.0\",\n+        \"has-symbols\": \"^1.1.0\",\n+        \"hasown\": \"^2.0.2\",\n+        \"math-intrinsics\": \"^1.1.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/get-proto\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/get-proto/-/get-proto-1.0.1.tgz\",\n+      \"integrity\": \"sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"dunder-proto\": \"^1.0.1\",\n+        \"es-object-atoms\": \"^1.0.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/gopd\": {\n+      \"version\": \"1.2.0\",\n+      \"resolved\": \"https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz\",\n+      \"integrity\": \"sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/has-symbols\": {\n+      \"version\": \"1.1.0\",\n+      \"resolved\": \"https://registry.npmjs.org/has-symbols/-/has-symbols-1.1.0.tgz\",\n+      \"integrity\": \"sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/hasown\": {\n+      \"version\": \"2.0.4\",\n+      \"resolved\": \"https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz\",\n+      \"integrity\": \"sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"function-bind\": \"^1.1.2\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/http-errors\": {\n+      \"version\": \"2.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/http-errors/-/http-errors-2.0.1.tgz\",\n+      \"integrity\": \"sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"depd\": \"~2.0.0\",\n+        \"inherits\": \"~2.0.4\",\n+        \"setprototypeof\": \"~1.2.0\",\n+        \"statuses\": \"~2.0.2\",\n+        \"toidentifier\": \"~1.0.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      },\n+      \"funding\": {\n+        \"type\": \"opencollective\",\n+        \"url\": \"https://opencollective.com/express\"\n+      }\n+    },\n+    \"node_modules/iconv-lite\": {\n+      \"version\": \"0.4.24\",\n+      \"resolved\": \"https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz\",\n+      \"integrity\": \"sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"safer-buffer\": \">= 2.1.2 < 3\"\n+      },\n+      \"engines\": {\n+        \"node\": \">=0.10.0\"\n+      }\n+    },\n+    \"node_modules/inherits\": {\n+      \"version\": \"2.0.4\",\n+      \"resolved\": \"https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz\",\n+      \"integrity\": \"sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==\",\n+      \"license\": \"ISC\"\n+    },\n+    \"node_modules/ipaddr.js\": {\n+      \"version\": \"1.9.1\",\n+      \"resolved\": \"https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz\",\n+      \"integrity\": \"sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.10\"\n+      }\n+    },\n+    \"node_modules/math-intrinsics\": {\n+      \"version\": \"1.1.0\",\n+      \"resolved\": \"https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz\",\n+      \"integrity\": \"sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      }\n+    },\n+    \"node_modules/media-typer\": {\n+      \"version\": \"0.3.0\",\n+      \"resolved\": \"https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz\",\n+      \"integrity\": \"sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/merge-descriptors\": {\n+      \"version\": \"1.0.3\",\n+      \"resolved\": \"https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.3.tgz\",\n+      \"integrity\": \"sha512-gaNvAS7TZ897/rVaZ0nMtAyxNyi/pdbjbAwUpFQpN70GqnVfOiXpeUUMKRBmzXaSQ8DdTX4/0ms62r2K+hE6mQ==\",\n+      \"license\": \"MIT\",\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/sindresorhus\"\n+      }\n+    },\n+    \"node_modules/methods\": {\n+      \"version\": \"1.1.2\",\n+      \"resolved\": \"https://registry.npmjs.org/methods/-/methods-1.1.2.tgz\",\n+      \"integrity\": \"sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/mime\": {\n+      \"version\": \"1.6.0\",\n+      \"resolved\": \"https://registry.npmjs.org/mime/-/mime-1.6.0.tgz\",\n+      \"integrity\": \"sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==\",\n+      \"license\": \"MIT\",\n+      \"bin\": {\n+        \"mime\": \"cli.js\"\n+      },\n+      \"engines\": {\n+        \"node\": \">=4\"\n+      }\n+    },\n+    \"node_modules/mime-db\": {\n+      \"version\": \"1.52.0\",\n+      \"resolved\": \"https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz\",\n+      \"integrity\": \"sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/mime-types\": {\n+      \"version\": \"2.1.35\",\n+      \"resolved\": \"https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz\",\n+      \"integrity\": \"sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"mime-db\": \"1.52.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/ms\": {\n+      \"version\": \"2.0.0\",\n+      \"resolved\": \"https://registry.npmjs.org/ms/-/ms-2.0.0.tgz\",\n+      \"integrity\": \"sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/negotiator\": {\n+      \"version\": \"0.6.3\",\n+      \"resolved\": \"https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz\",\n+      \"integrity\": \"sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/object-inspect\": {\n+      \"version\": \"1.13.4\",\n+      \"resolved\": \"https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz\",\n+      \"integrity\": \"sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/on-finished\": {\n+      \"version\": \"2.4.1\",\n+      \"resolved\": \"https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz\",\n+      \"integrity\": \"sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"ee-first\": \"1.1.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/parseurl\": {\n+      \"version\": \"1.3.3\",\n+      \"resolved\": \"https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz\",\n+      \"integrity\": \"sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/path-to-regexp\": {\n+      \"version\": \"0.1.13\",\n+      \"resolved\": \"https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.13.tgz\",\n+      \"integrity\": \"sha512-A/AGNMFN3c8bOlvV9RreMdrv7jsmF9XIfDeCd87+I8RNg6s78BhJxMu69NEMHBSJFxKidViTEdruRwEk/WIKqA==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/proxy-addr\": {\n+      \"version\": \"2.0.8\",\n+      \"resolved\": \"https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.8.tgz\",\n+      \"integrity\": \"sha512-5nnx0yGyVUcY6t9RnWcARWtwT9F1D8O9rt08htPvnd49W1IgZtmLkhu9WfMzQj1cFxjHIO6connUNVW5k7AVyQ==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"forwarded\": \"0.2.0\",\n+        \"ipaddr.js\": \"1.9.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.10\"\n+      },\n+      \"funding\": {\n+        \"type\": \"opencollective\",\n+        \"url\": \"https://opencollective.com/express\"\n+      }\n+    },\n+    \"node_modules/qs\": {\n+      \"version\": \"6.16.0\",\n+      \"resolved\": \"https://registry.npmjs.org/qs/-/qs-6.16.0.tgz\",\n+      \"integrity\": \"sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==\",\n+      \"license\": \"BSD-3-Clause\",\n+      \"dependencies\": {\n+        \"es-define-property\": \"^1.0.1\",\n+        \"side-channel\": \"^1.1.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">=0.6\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/range-parser\": {\n+      \"version\": \"1.2.1\",\n+      \"resolved\": \"https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz\",\n+      \"integrity\": \"sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/raw-body\": {\n+      \"version\": \"2.5.3\",\n+      \"resolved\": \"https://registry.npmjs.org/raw-body/-/raw-body-2.5.3.tgz\",\n+      \"integrity\": \"sha512-s4VSOf6yN0rvbRZGxs8Om5CWj6seneMwK3oDb4lWDH0UPhWcxwOWw5+qk24bxq87szX1ydrwylIOp2uG1ojUpA==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"bytes\": \"~3.1.2\",\n+        \"http-errors\": \"~2.0.1\",\n+        \"iconv-lite\": \"~0.4.24\",\n+        \"unpipe\": \"~1.0.0\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/safe-buffer\": {\n+      \"version\": \"5.2.1\",\n+      \"resolved\": \"https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz\",\n+      \"integrity\": \"sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==\",\n+      \"funding\": [\n+        {\n+          \"type\": \"github\",\n+          \"url\": \"https://github.com/sponsors/feross\"\n+        },\n+        {\n+          \"type\": \"patreon\",\n+          \"url\": \"https://www.patreon.com/feross\"\n+        },\n+        {\n+          \"type\": \"consulting\",\n+          \"url\": \"https://feross.org/support\"\n+        }\n+      ],\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/safer-buffer\": {\n+      \"version\": \"2.1.2\",\n+      \"resolved\": \"https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz\",\n+      \"integrity\": \"sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/send\": {\n+      \"version\": \"0.19.2\",\n+      \"resolved\": \"https://registry.npmjs.org/send/-/send-0.19.2.tgz\",\n+      \"integrity\": \"sha512-VMbMxbDeehAxpOtWJXlcUS5E8iXh6QmN+BkRX1GARS3wRaXEEgzCcB10gTQazO42tpNIya8xIyNx8fll1OFPrg==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"debug\": \"2.6.9\",\n+        \"depd\": \"2.0.0\",\n+        \"destroy\": \"1.2.0\",\n+        \"encodeurl\": \"~2.0.0\",\n+        \"escape-html\": \"~1.0.3\",\n+        \"etag\": \"~1.8.1\",\n+        \"fresh\": \"~0.5.2\",\n+        \"http-errors\": \"~2.0.1\",\n+        \"mime\": \"1.6.0\",\n+        \"ms\": \"2.1.3\",\n+        \"on-finished\": \"~2.4.1\",\n+        \"range-parser\": \"~1.2.1\",\n+        \"statuses\": \"~2.0.2\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8.0\"\n+      }\n+    },\n+    \"node_modules/send/node_modules/ms\": {\n+      \"version\": \"2.1.3\",\n+      \"resolved\": \"https://registry.npmjs.org/ms/-/ms-2.1.3.tgz\",\n+      \"integrity\": \"sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==\",\n+      \"license\": \"MIT\"\n+    },\n+    \"node_modules/serve-static\": {\n+      \"version\": \"1.16.3\",\n+      \"resolved\": \"https://registry.npmjs.org/serve-static/-/serve-static-1.16.3.tgz\",\n+      \"integrity\": \"sha512-x0RTqQel6g5SY7Lg6ZreMmsOzncHFU7nhnRWkKgWuMTu5NN0DR5oruckMqRvacAN9d5w6ARnRBXl9xhDCgfMeA==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"encodeurl\": \"~2.0.0\",\n+        \"escape-html\": \"~1.0.3\",\n+        \"parseurl\": \"~1.3.3\",\n+        \"send\": \"~0.19.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.8.0\"\n+      }\n+    },\n+    \"node_modules/setprototypeof\": {\n+      \"version\": \"1.2.0\",\n+      \"resolved\": \"https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz\",\n+      \"integrity\": \"sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==\",\n+      \"license\": \"ISC\"\n+    },\n+    \"node_modules/side-channel\": {\n+      \"version\": \"1.1.1\",\n+      \"resolved\": \"https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz\",\n+      \"integrity\": \"sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"es-errors\": \"^1.3.0\",\n+        \"object-inspect\": \"^1.13.4\",\n+        \"side-channel-list\": \"^1.0.1\",\n+        \"side-channel-map\": \"^1.0.1\",\n+        \"side-channel-weakmap\": \"^1.0.2\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/side-channel-list\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/side-channel-list/-/side-channel-list-1.0.1.tgz\",\n+      \"integrity\": \"sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"es-errors\": \"^1.3.0\",\n+        \"object-inspect\": \"^1.13.4\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/side-channel-map\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/side-channel-map/-/side-channel-map-1.0.1.tgz\",\n+      \"integrity\": \"sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"call-bound\": \"^1.0.2\",\n+        \"es-errors\": \"^1.3.0\",\n+        \"get-intrinsic\": \"^1.2.5\",\n+        \"object-inspect\": \"^1.13.3\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/side-channel-weakmap\": {\n+      \"version\": \"1.0.2\",\n+      \"resolved\": \"https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz\",\n+      \"integrity\": \"sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"call-bound\": \"^1.0.2\",\n+        \"es-errors\": \"^1.3.0\",\n+        \"get-intrinsic\": \"^1.2.5\",\n+        \"object-inspect\": \"^1.13.3\",\n+        \"side-channel-map\": \"^1.0.1\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.4\"\n+      },\n+      \"funding\": {\n+        \"url\": \"https://github.com/sponsors/ljharb\"\n+      }\n+    },\n+    \"node_modules/statuses\": {\n+      \"version\": \"2.0.2\",\n+      \"resolved\": \"https://registry.npmjs.org/statuses/-/statuses-2.0.2.tgz\",\n+      \"integrity\": \"sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/toidentifier\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz\",\n+      \"integrity\": \"sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">=0.6\"\n+      }\n+    },\n+    \"node_modules/type-is\": {\n+      \"version\": \"1.6.18\",\n+      \"resolved\": \"https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz\",\n+      \"integrity\": \"sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==\",\n+      \"license\": \"MIT\",\n+      \"dependencies\": {\n+        \"media-typer\": \"0.3.0\",\n+        \"mime-types\": \"~2.1.24\"\n+      },\n+      \"engines\": {\n+        \"node\": \">= 0.6\"\n+      }\n+    },\n+    \"node_modules/unpipe\": {\n+      \"version\": \"1.0.0\",\n+      \"resolved\": \"https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz\",\n+      \"integrity\": \"sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    },\n+    \"node_modules/utils-merge\": {\n+      \"version\": \"1.0.1\",\n+      \"resolved\": \"https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz\",\n+      \"integrity\": \"sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.4.0\"\n+      }\n+    },\n+    \"node_modules/vary\": {\n+      \"version\": \"1.1.2\",\n+      \"resolved\": \"https://registry.npmjs.org/vary/-/vary-1.1.2.tgz\",\n+      \"integrity\": \"sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==\",\n+      \"license\": \"MIT\",\n+      \"engines\": {\n+        \"node\": \">= 0.8\"\n+      }\n+    }\n+  }\n+}\n",
+       "additions": 832,
+       "deletions": 0,
+       "status": "added"
+      }
+     ]
+    },
+    "id": "msg_0a67c60ec001gVdLBDP7GSVz48",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "use a skill tdd e implemente só a fatia 1 de specs/M1-grade.md, um teste por vez, escreva o teste primeiro, mostre ele falhando e só então faça o código, a fatia 1 contempla a consulta de salas e atividades nas rotas GET /salas, GET /atividades e GET /atividades/:id ",
+     "id": "prt_0a67c60ef001ih6t724HFzCEEF",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67c60ec001gVdLBDP7GSVz48"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a67c60ec001gVdLBDP7GSVz48",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.02940825,
+    "tokens": {
+     "total": 38915,
+     "input": 38841,
+     "output": 44,
+     "reasoning": 30,
+     "cache": {
+      "write": 0,
+      "read": 0
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499564296,
+     "completed": 1789499584834
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a67c6108001QxEpfK12XVM3k6",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": [
+    {
+     "snapshot": "fef7c57d80535defee71e802a0d6738a7650f8dd",
+     "type": "step-start",
+     "id": "prt_0a67c788c001enUUIg0CwiT4iv",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67c6108001QxEpfK12XVM3k6"
+    },
+    {
+     "type": "text",
+     "text": "I will run `npm install` inside the `api` folder to install the required `express` dependency.",
+     "time": {
+      "start": 1789499570321,
+      "end": 1789499570545
+     },
+     "id": "prt_0a67c78910011lszR7pSoX85pG",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67c6108001QxEpfK12XVM3k6"
+    },
+    {
+     "type": "tool",
+     "tool": "bash",
+     "callID": "dLCbBbA8MOLgsJ1Z",
+     "state": {
+      "status": "completed",
+      "input": {
+       "workdir": "api",
+       "command": "npm install"
+      },
+      "output": "\nadded 68 packages, and audited 69 packages in 11s\n\n16 packages are looking for funding\n  run `npm fund` for details\n\nfound 0 vulnerabilities\n",
+      "metadata": {
+       "output": "\nadded 68 packages, and audited 69 packages in 11s\n\n16 packages are looking for funding\n  run `npm fund` for details\n\nfound 0 vulnerabilities\n",
+       "exit": 0,
+       "truncated": false
+      },
+      "title": "npm install",
+      "time": {
+       "start": 1789499570500,
+       "end": 1789499583155
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EvwBCvkBARFNMg+oFqH9mYeWi2KNVrPL9QrTy3hifYOo2viL79qoJL0t3SMcLChp7sGMVMUiJhD0VYDNd1/4CstFmSpqlf5JFAHUTEmEXJRtrztD181r9tdQ5/55IQsjydXh7EVLUJcryiywdbsW82XJwemgQi8zdFcwsgfYAs2yEuPFZM92hmXmqcTNAV7dhgv2ydRaVN0R55mmUKAPRHR808K7PWOKUyGB6p8zG8vJMXN/jbC7iys785uDethDy4QCEXV7KK+TamFlsTXtSoIZEuKvs+y0UjCB9+yGRH0g6ZqRzsgDfgDwRUbgE3x0pQDRSwo0Yxhxb0SvHsXt"
+      }
+     },
+     "id": "prt_0a67c7934001RNz5BSojPmZRFi",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67c6108001QxEpfK12XVM3k6"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "d05b14a797a755949381471a7ca5ca399464258d",
+     "type": "step-finish",
+     "tokens": {
+      "total": 38915,
+      "input": 38841,
+      "output": 44,
+      "reasoning": 30,
+      "cache": {
+       "write": 0,
+       "read": 0
+      }
+     },
+     "cost": 0.02940825,
+     "id": "prt_0a67caeb3001ArGZw6yMnOajJp",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67c6108001QxEpfK12XVM3k6"
+    },
+    {
+     "type": "patch",
+     "hash": "fef7c57d80535defee71e802a0d6738a7650f8dd",
+     "files": [
+      "C:/Users/User/Documents/Atividade-Semana-Academica/api/package-lock.json"
+     ],
+     "id": "prt_0a67cb138001Ph3qmHWnvUuAGn",
+     "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6",
+     "messageID": "msg_0a67c6108001QxEpfK12XVM3k6"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a67c60ec001gVdLBDP7GSVz48",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789499584846,
+     "completed": 1789499657325
+    },
+    "error": {
+     "name": "APIError",
+     "data": {
+      "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\nPlease retry in 45.682822569s.",
+      "statusCode": 429,
+      "isRetryable": true,
+      "responseHeaders": {
+       "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+       "content-length": "1363",
+       "content-type": "text/event-stream",
+       "date": "Tue, 15 Sep 2026 19:14:14 GMT",
+       "server": "scaffolding on HTTPServer2",
+       "server-timing": "gfet4t7; dur=673",
+       "vary": "Origin, X-Origin, Referer",
+       "x-content-type-options": "nosniff",
+       "x-frame-options": "SAMEORIGIN",
+       "x-xss-protection": "0"
+      },
+      "responseBody": "{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3.6-flash\\nPlease retry in 45.682822569s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-3.6-flash\"\n            },\n            \"quotaValue\": \"20\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.RetryInfo\",\n        \"retryDelay\": \"45s\"\n      }\n    ]\n  }\n}\n",
+      "metadata": {
+       "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:streamGenerateContent?alt=sse"
+      }
+     }
+    },
+    "id": "msg_0a67cb14e001GxBuzgFWxka8ca",
+    "sessionID": "ses_f59918e61ffele2iM24ng6OJJ6"
+   },
+   "parts": []
+  }
+ ]
+}

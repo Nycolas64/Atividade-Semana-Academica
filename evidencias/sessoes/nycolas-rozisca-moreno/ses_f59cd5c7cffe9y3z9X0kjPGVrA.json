@@ -1,0 +1,778 @@
+{
+ "info": {
+  "id": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+  "slug": "calm-wizard",
+  "projectID": "57b68b5c94ca89d129e1987fd676355944c7371f",
+  "directory": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+  "path": "",
+  "title": "Respostas de regras de negócio em M1-grade.md",
+  "agent": "build",
+  "model": {
+   "id": "gemini-3.6-flash",
+   "providerID": "google"
+  },
+  "version": "1.18.31",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0.0499428,
+  "tokens": {
+   "input": 19774,
+   "output": 1856,
+   "reasoning": 5559,
+   "cache": {
+    "read": 97414,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1789494731651,
+   "updated": 1789494964297
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1789494731719
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "google",
+     "modelID": "gemini-3.6-flash"
+    },
+    "summary": {
+     "diffs": [
+      {
+       "file": "entrevistas/M1-grade.md",
+       "patch": "Index: entrevistas/M1-grade.md\n===================================================================\n--- entrevistas/M1-grade.md\t\n+++ entrevistas/M1-grade.md\t\n@@ -1,50 +1,68 @@\n # Entrevista M1 — Grade de Atividades\n \n-Status: Rodada 1 em andamento\n+Status: Rodada 1 concluída\n \n ## Perguntas da Rodada 1\n \n ### P1 — Regras de Encontros por Tipo (`QUANTIDADE_DE_ENCONTROS`)\n - **Pergunta**: Quantos encontros uma palestra e um minicurso devem ter?\n - **Recomendação**: Palestra deve ter exatamente 1 encontro; minicurso pode ter 1 ou mais encontros (mínimo 1).\n-- **Status**: Pendente\n+- **Resposta**: Palestra tem exatamente 1 encontro (RN-102) e minicurso tem de 2 a 5 encontros (RN-103).\n+- **Fonte**: RN-102, RN-103\n+- **Status**: Respondido\n \n ### P2 — Validação de Encontro (`ENCONTRO_INVALIDO`)\n - **Pergunta**: O que torna um encontro inválido ao criar/alterar atividade?\n - **Recomendação**: Encontro com `fim <= inicio` ou datas fora da semana do evento (19/10/2026 a 23/10/2026).\n-- **Status**: Pendente\n+- **Resposta**: Encontro é inválido se durar menos de 1h ou mais de 4h (RN-104), se não começar e terminar no mesmo dia entre 19 e 23/10/2026 (RN-105), ou se tiver horário sobreposto na mesma atividade (RN-106).\n+- **Fonte**: RN-104, RN-105, RN-106\n+- **Status**: Respondido\n \n ### P3 — Capacidade e Limite de Vagas (`VAGAS_ACIMA_DA_CAPACIDADE`)\n - **Pergunta**: Como funciona a validação de vagas em relação à capacidade da sala?\n - **Recomendação**: Retornar `VAGAS_ACIMA_DA_CAPACIDADE` (422) se `vagas > sala.capacidade`.\n-- **Status**: Pendente\n+- **Resposta**: Vagas ficam entre 1 e a capacidade da sala (RN-107). Se passar da capacidade, devolve 422 `VAGAS_ACIMA_DA_CAPACIDADE`.\n+- **Fonte**: RN-107\n+- **Status**: Respondido\n \n ### P4 — Conflito de Sala (`CONFLITO_DE_SALA`)\n - **Pergunta**: Como se detecta conflito de sala ao agendar/alterar atividades?\n - **Recomendação**: Qualquer sobreposição de horário nos encontros na mesma sala entre atividades ativas (não canceladas) retorna 409 `CONFLITO_DE_SALA`.\n-- **Status**: Pendente\n+- **Resposta**: Na mesma sala tem que ter no mínimo 15 min de intervalo entre encontros para limpeza (RN-108). Qualquer sobreposição ou intervalo menor dá 409 `CONFLITO_DE_SALA`, ignorando atividade cancelada.\n+- **Fonte**: RN-108\n+- **Status**: Respondido\n \n ### P5 — Campos Editáveis no PATCH (`CAMPO_NAO_EDITAVEL`)\n - **Pergunta**: Quais campos da atividade podem ser alterados via `PATCH /atividades/:id` e quais geram `CAMPO_NAO_EDITAVEL`?\n - **Recomendação**: Permite editar `titulo`, `salaId`, `vagas`. Se o corpo contiver `tipo` ou `encontros`, retorna `CAMPO_NAO_EDITAVEL`.\n-- **Status**: Pendente\n+- **Resposta**: Depois de criar só dá pra mudar título e vagas (RN-110). Se tentar mudar tipo, salaId ou encontros dá 422 `CAMPO_NAO_EDITAVEL`.\n+- **Fonte**: RN-110\n+- **Status**: Respondido\n \n ### P6 — Redução de Vagas (`VAGAS_ABAIXO_DOS_INSCRITOS`)\n - **Pergunta**: Em qual condição a alteração de vagas retorna 409 `VAGAS_ABAIXO_DOS_INSCRITOS`?\n - **Recomendação**: Se o número de vagas informado for menor que a quantidade de inscritos atuais (`ocupadas`).\n-- **Status**: Pendente\n+- **Resposta**: Não pode diminuir vagas abaixo dos inscritos confirmados e convocados (RN-111). Se tentar, dá 409 `VAGAS_ABAIXO_DOS_INSCRITOS`.\n+- **Fonte**: RN-111\n+- **Status**: Respondido\n \n ### P7 — Cancelamento e Atividade Iniciada (`ATIVIDADE_JA_INICIADA`)\n - **Pergunta**: Quando uma atividade é considerada \"já iniciada\" para impedir cancelamento?\n - **Recomendação**: Se o relógio da API (`agora`) for igual ou superior ao horário de início do primeiro encontro.\n-- **Status**: Pendente\n+- **Resposta**: Atividade é considerada iniciada no horário do primeiro encontro (RN-112). Tentar cancelar depois dá 422 `ATIVIDADE_JA_INICIADA`.\n+- **Fonte**: RN-112\n+- **Status**: Respondido\n \n ### P8 — Atividade Cancelada (`ATIVIDADE_CANCELADA`)\n - **Pergunta**: Quais rotas/operações em uma atividade cancelada retornam 422 `ATIVIDADE_CANCELADA`?\n - **Recomendação**: Tentativas de `PATCH /atividades/:id` e `POST /atividades/:id/cancelamento` em atividades com `situacao: \"cancelada\"`.\n-- **Status**: Pendente\n+- **Resposta**: Cancelamento é definitivo (RN-113). Tentar alterar ou cancelar de novo uma atividade cancelada dá 422 `ATIVIDADE_CANCELADA`.\n+- **Fonte**: RN-113\n+- **Status**: Respondido\n \n ### P9 — Precedência entre Regras de Negócio em M1\n - **Pergunta**: Quando múltiplas regras do recurso forem violadas ao mesmo tempo, qual a ordem de precedência dos erros?\n - **Recomendação**: 1. `ATIVIDADE_CANCELADA` -> 2. `ATIVIDADE_JA_INICIADA` -> 3. `CAMPO_NAO_EDITAVEL` -> 4. `QUANTIDADE_DE_ENCONTROS` / `ENCONTRO_INVALIDO` -> 5. `VAGAS_ACIMA_DA_CAPACIDADE` -> 6. `VAGAS_ABAIXO_DOS_INSCRITOS` -> 7. `CONFLITO_DE_SALA`.\n-- **Status**: Pendente\n+- **Resposta**: A ordem de precedência de erros é `ATIVIDADE_CANCELADA` depois `ATIVIDADE_JA_INICIADA` depois `CAMPO_NAO_EDITAVEL` depois `QUANTIDADE_DE_ENCONTROS` ou `ENCONTRO_INVALIDO` depois `VAGAS_ACIMA_DA_CAPACIDADE` depois `VAGAS_ABAIXO_DOS_INSCRITOS` e por último `CONFLITO_DE_SALA`, conforme `contrato-api.md` e RN-208.\n+- **Fonte**: RN-208, contrato-api.md\n+- **Status**: Respondido\n",
+       "additions": 28,
+       "deletions": 10,
+       "status": "modified"
+      }
+     ]
+    },
+    "id": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "vamos responder as perguntas que estão como PENDENTE no entrevistas/M1-grade.md uma por uma, atualiza o arquivo aí preenchendo as respostas e colocando a fonte da regra, para P1 palestra tem exatamente 1 encontro RN-102 e minicurso tem de 2 a 5 encontros RN-103, para P2 encontro é inválido se durar menos de 1h ou mais de 4h RN-104 se não começar e terminar no mesmo dia entre 19 e 23/10/2026 RN-105 ou se tiver horário sobreposto na mesma atividade RN-106, para P3 vagas ficam entre 1 e a capacidade da sala RN-107 e se passar da capacidade devolve 422 VAGAS\\_ACIMA\\_DA\\_CAPACIDADE, para P4 na mesma sala tem que ter no mínimo 15 min de intervalo entre encontros pra limpeza RN-108 e qualquer sobreposição ou intervalo menor dá 409 CONFLITO\\_DE\\_SALA ignorando atividade cancelada, para P5 depois de criar só dá pra mudar título e vagas RN-110 e se tentar mudar tipo salaId ou encontros dá 422 CAMPO\\_NAO\\_EDITAVEL, para P6 não pode diminuir vagas abaixo dos inscritos confirmados e convocados RN-111 e se tentar dá 409 VAGAS\\_ABAIXO\\_DOS\\_INSCRITOS, para P7 atividade é considerada iniciada no horário do primeiro encontro RN-112 e tentar cancelar depois dá 422 ATIVIDADE\\_JA\\_INICIADA, para P8 cancelamento é definitivo RN-113 e tentar alterar ou cancelar de novo uma atividade cancelada dá 422 ATIVIDADE\\_CANCELADA, para P9 a ordem de precedência de erros é ATIVIDADE\\_CANCELADA depois ATIVIDADE\\_JA\\_INICIADA depois CAMPO\\_NAO\\_EDITAVEL depois QUANTIDADE\\_DE\\_ENCONTROS ou ENCONTRO\\_INVALIDO depois VAGAS\\_ACIMA\\_DA\\_CAPACIDADE depois VAGAS\\_ABAIXO\\_DOS\\_INSCRITOS e por último CONFLITO\\_DE\\_SALA conforme contrato-api.md e RN-208 ",
+     "id": "prt_0a632a3c9001gDpGIlCHUdqs4c",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632a3c6001twVKKmeLU4yUWF"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.002695275,
+    "tokens": {
+     "total": 10272,
+     "input": 2035,
+     "output": 41,
+     "reasoning": 109,
+     "cache": {
+      "write": 0,
+      "read": 8087
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494731762,
+     "completed": 1789494736286
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a632a3f2001pr6avLKVsTRw2Y",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-start",
+     "id": "prt_0a632b0de001exJG6k7OngoXMh",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632a3f2001pr6avLKVsTRw2Y"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "wcW0FA1Gr7hI1Vel",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\entrevistas\\M1-grade.md"
+      },
+      "output": "[3255 caracteres omitidos]",
+      "title": "entrevistas\\M1-grade.md",
+      "time": {
+       "start": 1789494735108,
+       "end": 1789494735130
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "ErEECq4EARFNMg9YFGV1Gh7CC11GblzaoM5hvb9jzy0k7LEJB1fFmX3M9ltVcP9EQSr3O4xCEtCRKpDM/fKNxJuQkieJ33NefsZ/KbSx5BLh8/kOB+zMpW/2NuPGSfSt+ka5NLxjONORPfYYkpqedQc//iItivkcWGXgOZQnk21Wno/jdi/Oe5/yhCC6G37pg7MEF7ckJGYtncs4T9UnthWFFrfrRnEHZ4fu+YZfnbvfDXM3QK4duA1YwC9Bsf+DSiqqoHZgxF75jN531E/570NlDduiOKmPBVXDKM1ZpyxG8f44Z5DDLvV2VaUeQLlRSyjAkD+KgN3mAJGCHe0uoX+QYxfMx1ZQMHekxYaOm442x7rtpJsIz4cNKgj9MecfVEjJpJ7+bS15zVvwMKgUL2mT1IGmzMdGTX1H4JeabNikW8eKqFztQdKtde/Za7p/HXL5ZqWtGA/0bQuXRyiTfy8OGcQJdOrhdy65Hf/A1/Y2w8E0EMPq46WPo3oZf9wQlf03KyKjOImInxwXsQ7Db9PTQfXYN6+/4Zg067KDMFAeiJfZavSadLi+/Tnp3OZoujKUc33SeUjsSe41l+g4b1FVifpHUOYjCA1XJanf7op9gUdXNtnGhBUfFUHCCTKEvltQJRLvysiVPM9v+xx7W2Gkx3sbal2gK8nAWspzFwXdwWuoFqR0nUuLA4TCaao/gRqFrVBkNNFHFjxKWMqsNxGwJRreGb6rG8ZWW01ZC7T2td6A"
+      }
+     },
+     "id": "prt_0a632b0f2001gdbkeQ6FncQsCw",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632a3f2001pr6avLKVsTRw2Y"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-finish",
+     "tokens": {
+      "total": 10272,
+      "input": 2035,
+      "output": 41,
+      "reasoning": 109,
+      "cache": {
+       "write": 0,
+       "read": 8087
+      }
+     },
+     "cost": 0.002695275,
+     "id": "prt_0a632b373001Mq5wf3waJmaq82",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632a3f2001pr6avLKVsTRw2Y"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.003864525,
+    "tokens": {
+     "total": 11647,
+     "input": 3364,
+     "output": 18,
+     "reasoning": 178,
+     "cache": {
+      "write": 0,
+      "read": 8087
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494736303,
+     "completed": 1789494741041
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a632b5af0013JHbaBZEG0s7o6",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-start",
+     "id": "prt_0a632c13d001AdyBipdcAwoFXs",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632b5af0013JHbaBZEG0s7o6"
+    },
+    {
+     "type": "reasoning",
+     "text": "**Mapping Instructions Carefully**\n\nI'm currently focused on meticulously mapping the prompt's instructions to the existing questions (P1-P9) within `entrevistas/M1-grade.md`. My primary goal is to address each \"PENDENTE\" question comprehensively by following the instructions diligently. I will be updating the file accordingly.\n\n\n",
+     "time": {
+      "start": 1789494739273,
+      "end": 1789494739590
+     },
+     "id": "prt_0a632c149001IfjfCj0MBLWhQL",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632b5af0013JHbaBZEG0s7o6"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "udXd5MgtSxAY0MQf",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "entrevistas/*.md"
+      },
+      "output": "[74 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789494739570,
+       "end": 1789494739809
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EvoGCvcGARFNMg/Xup19UxAnCL9jt+bC0pbbE+eXeyd+oU+ozjq6+vmXgw21n5HtWpopaERvnOD9wy09DmbdAEjt9WZVFtc/kLs9heCQNl1jDW0sM3S7iLBTbkXYh6V9E2QYwaAv3zrmM8KXEgqoegwiqr3fjaRvAnCRwQCsjEDSi9a/JLNHR4sf3LFprq/bMaS2Y+sXh8DOfodSlgCgENNYp8oC5PwtOb1LdBjdKq5ci0+RLOBW0qqLNH1BhK3aYtQnc/0bbF0sUBZUdqayx2r1AT4M0xJwmqpQ2qzVT/KiOoJ3u5qHpYYKMN9dIpd9qpwrEoOJDni0vOfiviWjYW+glqMZO3Pm5S0qV08bDrV3d7lWCWTlnX0ZtQsBySUEGGZsPx+y5fPB24CiikRG+CziR0GQb7AluU10VU7vnjSr5ryYWlw62J5tb29ezssbHmGeAJolDs5GKRTii2XYcQ0E6fw4tbqF4paGfHvvOQr3baARhBB5Ck4dniQ+f0x2+NysOVJH0GREA2eSEFyqY8IqUl2H2Mtf92G/a2OUvlWzX6G3tmFygW7w858QwEoq4Zq6ikz1D7r94XmJDN4PtSG/dg8QJD8MAD/rebCSSQ4SoEfZkqKH5dL9T7+Gpc5rFvr+tVxdACSKuvYlKFEckG9rkhjpfh2TBpXdU9s/53r7jQRBlhqHLtXAKbePSaHUN/aZjeODnqGXLCI9zkrF4uYIWf7FXFGp1c/N/pzG/ZexcLVUe/zDiq6WL18eBcwjE5+DSWCRsnMZG1ETToK7QvFFImRlxoP0wWuL1ipa1DYKShe53ly4g3L05j7m7LGggh6FrbqWJSZHGUWi9ZhLyGkRa+mKByzJM0KMuhRpxlRnOwC4kWzYqf2dro0A8C7ogUDJgNlpS79fOC+Yt996x54E3JwFVz2irKevWaQBevTG4EbXfOuIliDXdSEkKpy+OUDfBKWTWWR6AFyNtyQjhjb65MTnPlHsKGpgW4LT1bOH6b5uLJuOkQw4JdqHqk+vJiQJ/SN0TUY54zX3cP6yCvguPHPjLmr0f1yGkIS98XUxwdqYyQwRmcQT7wGShNuGqe6h/aAvWc8y+UnhsaQbJFD9xZyrc+5mU9taAn7tQ46XD3MBERh5RqUJVzEfIyAwzKTD2mUzqtzm9qri31KE9UGr1u9018T9Jg2Jc1k="
+      }
+     },
+     "id": "prt_0a632c242001pWMsupWD8227xc",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632b5af0013JHbaBZEG0s7o6"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-finish",
+     "tokens": {
+      "total": 11647,
+      "input": 3364,
+      "output": 18,
+      "reasoning": 178,
+      "cache": {
+       "write": 0,
+       "read": 8087
+      }
+     },
+     "cost": 0.003864525,
+     "id": "prt_0a632c65a001UzV1iogCMPR1rK",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632b5af0013JHbaBZEG0s7o6"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.002630775,
+    "tokens": {
+     "total": 11816,
+     "input": 2296,
+     "output": 16,
+     "reasoning": 37,
+     "cache": {
+      "write": 0,
+      "read": 9467
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494741052,
+     "completed": 1789494745715
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a632c83c001L2MB4roZzuloZI",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-start",
+     "id": "prt_0a632d2ae001UBPz2EofbvcNZA",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632c83c001L2MB4roZzuloZI"
+    },
+    {
+     "type": "tool",
+     "tool": "glob",
+     "callID": "9myg7jF5JcCSa7sc",
+     "state": {
+      "status": "completed",
+      "input": {
+       "pattern": "**/*.md"
+      },
+      "output": "[324 caracteres omitidos]",
+      "title": "",
+      "time": {
+       "start": 1789494743762,
+       "end": 1789494744195
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EqkCCqYCARFNMg+tW9NbDENSpR3XOtb24WnqnvSr2wUzDc2ieyvlBYEH3PLYoQIuRI9bVpTa/S5x/MNAh1ZKiU/5s36A1zWMV0dcID83X6DpXQGY/z87GkZPHzKGFrsw+8XtBcXqzU31lttM29Q+ZqGK3rDT5oXc4qMIrpeySsXEJ2w2K8y5p4YDYvFKi7vCTprxl1g1RyCbLs8mhtAsn8p/uJDRa5pIBpDs9Tb/jHTl+GguVZGwIf2hwkMbJk1o0lnkHVD8WqhHbwPfBUSiGJ+cIP8aZl7FXNpux6TCkC0YUEI8nLr5/5THHOleqxbQ+oDKxw/K9Argpe7hKh20g6dxAR/pO8CIU3XmXo4+Qp2FuSQtmePmNnw0a71+sTs31kI02RZPq3IaCsfU"
+      }
+     },
+     "id": "prt_0a632d2c1001rzEO1EZlWfmTdC",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632c83c001L2MB4roZzuloZI"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-finish",
+     "tokens": {
+      "total": 11816,
+      "input": 2296,
+      "output": 16,
+      "reasoning": 37,
+      "cache": {
+       "write": 0,
+       "read": 9467
+      }
+     },
+     "cost": 0.002630775,
+     "id": "prt_0a632d779001inO3nO6YRgbrCe",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632c83c001L2MB4roZzuloZI"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.002843175,
+    "tokens": {
+     "total": 12069,
+     "input": 2245,
+     "output": 34,
+     "reasoning": 81,
+     "cache": {
+      "write": 0,
+      "read": 9709
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494745727,
+     "completed": 1789494750572
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a632da7f001nKWk49WTznn7Tv",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-start",
+     "id": "prt_0a632e8d6001zOo9kDA0GOistA",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632da7f001nKWk49WTznn7Tv"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "nihPyx8lmq1yvsIz",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\README.md"
+      },
+      "output": "[3240 caracteres omitidos]",
+      "title": "README.md",
+      "time": {
+       "start": 1789494749420,
+       "end": 1789494749475
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EroDCrcDARFNMg9cIBKjVLZs5pnYApBmFDwJ7UO2Cg7EWYGLn5e91y/PAUhiKMDET7c1sUnQldyeFI+QF9P45lYg7Oj9gC6B1pG6btfZ657iB2x37zM8apMQSTq9OAoujjqX8FcAyi2OZhdomT/NZ/Tf0AOyv5YzZE3lz5R+bRQXjUsAY959cYnDA8YbiY4FnHDa1LsdUVspo5/2YCAbQ+ssoXE4Rsj6Sg1jz7RLvT3qbWx/1yyfgw6V5zZ1BpP/XZCrX/BKmMzw874HrNsGf1TatGgGXRWMm4gdLqfKvllpwguwWr3xI/BtP6aFM2YFryur8alkf5whtjzr2veRzRpOE7DeW5WimOcItyBQY038P2WqjMjhLav1jDjW07doPyTlq+HDDE47XrT3i0mYd/dp8YVepAvjhsWJmzb42Mzat1r+5e3B7pADtTFkhN7CndKjf41w4sXJ1cF9TzrpADc/L7iw2KiI4cFSdjfcOVIstFptORUWIRNhVQOqRVH+2/eWheptvGvHIx7Cwd3EZfBs/OdGFJ6Hn+oF1W0+/QmdaITYD8Rx42cF2Cr5+G9hwXN7cskj1HtzMmiPhw=="
+      }
+     },
+     "id": "prt_0a632e8de001rx6RbwdrebfFYy",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632da7f001nKWk49WTznn7Tv"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-finish",
+     "tokens": {
+      "total": 12069,
+      "input": 2245,
+      "output": 34,
+      "reasoning": 81,
+      "cache": {
+       "write": 0,
+       "read": 9709
+      }
+     },
+     "cost": 0.002843175,
+     "id": "prt_0a632eb230019VXXcthc5Qc9cT",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632da7f001nKWk49WTznn7Tv"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.003424875,
+    "tokens": {
+     "total": 13229,
+     "input": 3261,
+     "output": 26,
+     "reasoning": 37,
+     "cache": {
+      "write": 0,
+      "read": 9905
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494750583,
+     "completed": 1789494754165
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a632ed77001qZZEFQMUb4A6QD",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-start",
+     "id": "prt_0a632f654001dvjnt7AaLNgnN9",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632ed77001qZZEFQMUb4A6QD"
+    },
+    {
+     "type": "tool",
+     "tool": "grep",
+     "callID": "pAno1JPDUzZXABsv",
+     "state": {
+      "status": "completed",
+      "input": {
+       "path": "contrato-api.md",
+       "pattern": "RN-"
+      },
+      "output": "[14 caracteres omitidos]",
+      "title": "RN-",
+      "time": {
+       "start": 1789494752876,
+       "end": 1789494753057
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EosCCogCARFNMg9+9eR9YEevZgawWTw6cfWj1XTn2bbVXRYiCjulWUULkJ90vbzF0klaP9tpZlJw7BuLUBKQysIku3LjMXamBBs4TibqN2sJBbTjXAK3d02VfKL34wZCW2qPDvMzTvCMYjj/B//kl2epQpqyJDeuOpCJnLrdgkR2A9zFN/0wcm+zrFn9T6qfeGSFp8pmeQh1k3tgySJRIZ785pu1ZTjwzqeM1WceC6VPfcj1LJLmc7JE6aGzqjiaa0qJRuj2BhC8lF5nmyNltlVE7NM1L6Tr10K/P7Zzuimf3FvYy2AmE+qjO0X7iAxemL+BrVp0KuBqBQwDNkhtUkeq+JRZkylSXsjf+pEz"
+      }
+     },
+     "id": "prt_0a632f65900190LxkiLU5uU4yx",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632ed77001qZZEFQMUb4A6QD"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-finish",
+     "tokens": {
+      "total": 13229,
+      "input": 3261,
+      "output": 26,
+      "reasoning": 37,
+      "cache": {
+       "write": 0,
+       "read": 9905
+      }
+     },
+     "cost": 0.003424875,
+     "id": "prt_0a632f93b001GpJFFF6GFT8fF7",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632ed77001qZZEFQMUb4A6QD"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.027585375,
+    "tokens": {
+     "total": 19956,
+     "input": 2134,
+     "output": 1622,
+     "reasoning": 5085,
+     "cache": {
+      "write": 0,
+      "read": 11115
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494754181,
+     "completed": 1789494787141
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a632fb84001WZuXEvBX76Vl2K",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "type": "step-start",
+     "id": "prt_0a6330870001Z7AMmqAKphF6PC",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632fb84001WZuXEvBX76Vl2K"
+    },
+    {
+     "type": "reasoning",
+     "text": "**Addressing Pending Questions**\n\nI'm currently focused on addressing the pending questions found in \"entrevistas/M1-grade.md.\" My process involves tackling each question individually, directly updating the file with the answers. I am paying close attention to citing the source rule for each response, and to confirm for P1, the lecture has exactly 1 meeting RN-102 and the mini-course.\n\n\n**Defining Meeting Rules**\n\nI've moved on to defining rules for RN-103 through RN-112. For P2, I'm clarifying what constitutes a valid meeting duration, date and time, and handling overlapping times. I'm focusing on capacity management for P3 (RN-107) and dealing with cleaning intervals and conflicts for P4 (RN-108). Finally, I'm solidifying rules around editability (P5, RN-110), vacancy restrictions (P6, RN-111), and activity start and cancellation limitations (P7, P8, RN-112).\n\n\n**Prioritizing Error Precedence**\n\nI am now organizing the error precedence rules, specifically addressing P9 and RN-208 in `contrato-api.md`. The focus is on the order in which error conditions should be handled: `ATIVIDADE_CANCELADA`, `ATIVIDADE_JA_INICIADA`, `CAMPO_NAO_EDITAVEL`, `QUANTIDADE_DE_ENCONTROS` or `ENCONTRO_INVALIDO`, then `VAGAS_ACIMA_DA_CAPACIDADE`, then `VAGAS_ABAIXO_DOS_INSCRITOS`, and finally `CONFLITO_DE_SALA`. I'm using this hierarchy to refine the implementation in line with the defined rules. I will be checking on the status of each item in `entrevistas/M1-grade.md`.\n\n\n**Refining Response Structuring**\n\nI'm now refining the response structure within the file. I'm focusing on clarifying how to integrate the response and source rules. Should I keep separate lines for each? Or integrate?  The standard structure, with clear delineation of `Resposta` and `Fonte`, seems best. I'm reviewing each question, particularly P1, to align with this approach and ensure clarity in referencing RN-102.\n\n\n**Validating Meeting Counts**\n\nI'm now verifying the meeting counts for mini-courses and what triggers the `QUANTIDADE_DE_ENCONTROS` error, referencing RN-103. Additionally, I have finalized defining the conditions triggering `ENCONTRO_INVALIDO` and detailed the validation rules concerning meeting durations, date ranges (RN-104, RN-105, RN-106), and overlapping times for P2. I have added the relevant answers to `entrevistas/M1-grade.md`.\n\n\n**Implementing Capacity Validation**\n\nI've just added the logic for RN-107, ensuring the system returns a 422 error (`VAGAS_ACIMA_DA_CAPACIDADE`) if the number of vacancies exceeds the room's capacity. I've also defined the conditions for detecting room conflicts in RN-108, returning 409 (`CONFLITO_DE_SALA`) for overlapping schedules or intervals shorter than 15 minutes. Both have been marked as resolved.\n\n\n**Clarifying Editability Rules**\n\nI am now focused on defining editability constraints, particularly RN-110, regarding which fields are mutable via `PATCH /atividades/:id`. The system should permit editing of `titulo` and `vagas`, while modifications to fields like `tipo` and `encontros` trigger a `CAMPO_NAO_EDITAVEL` error. I've documented this in `entrevistas/M1-grade.md`, marking it as answered. Furthermore, I'm working to clarify P6 (RN-111).\n\n\n\n**Defining Cancellation Rules**\n\nI've established the rules to trigger the `VAGAS_ABAIXO_DOS_INSCRITOS` error per RN-111. I'm now setting up cancellation and initialization rules for an activity in RN-112. The activity is considered started from the first meeting, and cancellation after that time returns `ATIVIDADE_JA_INICIADA` (RN-112). Finally, I am working on defining the operations that will return `ATIVIDADE_CANCELADA` in RN-113.\n\n\n**Confirming Error Precedence**\n\nI've just confirmed the error precedence rules, specifically ensuring that `ATIVIDADE_CANCELADA` takes the highest priority, per RN-208 and `contrato-api.md`. The hierarchy is now: `ATIVIDADE_CANCELADA`, `ATIVIDADE_JA_INICIADA`, `CAMPO_NAO_EDITAVEL`, `QUANTIDADE_DE_ENCONTROS` / `ENCONTRO_INVALIDO`, `VAGAS_ACIMA_DA_CAPACIDADE`, `VAGAS_ABAIXO_DOS_INSCRITOS`, and finally `CONFLITO_DE_SALA`. The answers have been updated in `entrevistas/M1-grade.md`.\n\n\n**Finalizing Activity Rules**\n\nI am now focusing on finalizing the rules for activity restrictions and cancellations. I've finished implementing RN-110, RN-111, and RN-112. I've covered all P1 to P9 questions in `entrevistas/M1-grade.md`, with sources included. Now I'm ensuring everything works as intended, and then I will document the rules to trigger `ATIVIDADE_CANCELADA` per RN-113.\n\n\n**Updating Status Details**\n\nI have finished the implementation and validation of the last points, RN-110 to RN-113. The focus now is to update the status in `M1-grade.md` from `Rodada 1 em andamento` to `Rodada 1 concluída`. All rules for all P questions have been documented, and confirmed, with a complete, final status.\n\n\n**Writing Complete Details**\n\nI'm now writing the full updated content to `entrevistas/M1-grade.md`. I've reviewed the markdown file and am ready to update it completely. I've updated the status to indicate the final status of `Rodada 1`.\n\n\n**Validating Meeting Durations**\n\nI'm now implementing the rules for handling invalid meetings. An invalid meeting occurs if the duration is less than 1 hour or exceeds 4 hours, and it's flagged by `ENCONTRO_INVALIDO`. I've added this to `entrevistas/M1-grade.md`, confirming that meetings must start and end on the same day within the event week (October 19-23, 2026).\n\n\n**Defining Overlapping Rules**\n\nI am now implementing the conflict rules for overlapping meetings (RN-108). Any scheduling conflict, or an interval shorter than 15 minutes between active meetings within the same room, will result in a 409 error (`CONFLITO_DE_SALA`). Activities marked as cancelled are ignored for this check. I've updated `entrevistas/M1-grade.md`.\n\n\n**Clarifying Vacancy Constraints**\n\nI'm now clarifying the vacancy constraints that trigger the `VAGAS_ABAIXO_DOS_INSCRITOS` error (RN-111). I am focusing on ensuring that the number of provided vacancies cannot be less than the current number of registered, confirmed, and enrolled participants. Furthermore, I have clarified when an activity is considered \"already started\" to prevent cancellation (RN-112). Finally, I am looking at rules to trigger `ATIVIDADE_CANCELADA`.\n\n\n\n**Defining Cancellation Behavior**\n\nI'm now defining the behavior for cancelled activities, specifically addressing RN-113. Attempts to `PATCH` or re-`POST` the cancellation of a cancelled activity will return a 422 error, `ATIVIDADE_CANCELADA`. I've added these details to `entrevistas/M1-grade.md`, marking it as answered. I am also making sure I understand the precedence rules for the error messages, when multiple rules are violated, referencing `contrato-api.md`.\n\n\n",
+     "time": {
+      "start": 1789494757505,
+      "end": 1789494783784
+     },
+     "id": "prt_0a6330880001sQMagLnnh1CMnh",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632fb84001WZuXEvBX76Vl2K"
+    },
+    {
+     "type": "tool",
+     "tool": "write",
+     "callID": "L124YCNKXR3igVrH",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\entrevistas\\M1-grade.md",
+       "content": "# Entrevista M1 — Grade de Atividades\n\nStatus: Rodada 1 concluída\n\n## Perguntas da Rodada 1\n\n### P1 — Regras de Encontros por Tipo (`QUANTIDADE_DE_ENCONTROS`)\n- **Pergunta**: Quantos encontros uma palestra e um minicurso devem ter?\n- **Recomendação**: Palestra deve ter exatamente 1 encontro; minicurso pode ter 1 ou mais encontros (mínimo 1).\n- **Resposta**: Palestra tem exatamente 1 encontro (RN-102) e minicurso tem de 2 a 5 encontros (RN-103).\n- **Fonte**: RN-102, RN-103\n- **Status**: Respondido\n\n### P2 — Validação de Encontro (`ENCONTRO_INVALIDO`)\n- **Pergunta**: O que torna um encontro inválido ao criar/alterar atividade?\n- **Recomendação**: Encontro com `fim <= inicio` ou datas fora da semana do evento (19/10/2026 a 23/10/2026).\n- **Resposta**: Encontro é inválido se durar menos de 1h ou mais de 4h (RN-104), se não começar e terminar no mesmo dia entre 19 e 23/10/2026 (RN-105), ou se tiver horário sobreposto na mesma atividade (RN-106).\n- **Fonte**: RN-104, RN-105, RN-106\n- **Status**: Respondido\n\n### P3 — Capacidade e Limite de Vagas (`VAGAS_ACIMA_DA_CAPACIDADE`)\n- **Pergunta**: Como funciona a validação de vagas em relação à capacidade da sala?\n- **Recomendação**: Retornar `VAGAS_ACIMA_DA_CAPACIDADE` (422) se `vagas > sala.capacidade`.\n- **Resposta**: Vagas ficam entre 1 e a capacidade da sala (RN-107). Se passar da capacidade, devolve 422 `VAGAS_ACIMA_DA_CAPACIDADE`.\n- **Fonte**: RN-107\n- **Status**: Respondido\n\n### P4 — Conflito de Sala (`CONFLITO_DE_SALA`)\n- **Pergunta**: Como se detecta conflito de sala ao agendar/alterar atividades?\n- **Recomendação**: Qualquer sobreposição de horário nos encontros na mesma sala entre atividades ativas (não canceladas) retorna 409 `CONFLITO_DE_SALA`.\n- **Resposta**: Na mesma sala tem que ter no mínimo 15 min de intervalo entre encontros para limpeza (RN-108). Qualquer sobreposição ou intervalo menor dá 409 `CONFLITO_DE_SALA`, ignorando atividade cancelada.\n- **Fonte**: RN-108\n- **Status**: Respondido\n\n### P5 — Campos Editáveis no PATCH (`CAMPO_NAO_EDITAVEL`)\n- **Pergunta**: Quais campos da atividade podem ser alterados via `PATCH /atividades/:id` e quais geram `CAMPO_NAO_EDITAVEL`?\n- **Recomendação**: Permite editar `titulo`, `salaId`, `vagas`. Se o corpo contiver `tipo` ou `encontros`, retorna `CAMPO_NAO_EDITAVEL`.\n- **Resposta**: Depois de criar só dá pra mudar título e vagas (RN-110). Se tentar mudar tipo, salaId ou encontros dá 422 `CAMPO_NAO_EDITAVEL`.\n- **Fonte**: RN-110\n- **Status**: Respondido\n\n### P6 — Redução de Vagas (`VAGAS_ABAIXO_DOS_INSCRITOS`)\n- **Pergunta**: Em qual condição a alteração de vagas retorna 409 `VAGAS_ABAIXO_DOS_INSCRITOS`?\n- **Recomendação**: Se o número de vagas informado for menor que a quantidade de inscritos atuais (`ocupadas`).\n- **Resposta**: Não pode diminuir vagas abaixo dos inscritos confirmados e convocados (RN-111). Se tentar, dá 409 `VAGAS_ABAIXO_DOS_INSCRITOS`.\n- **Fonte**: RN-111\n- **Status**: Respondido\n\n### P7 — Cancelamento e Atividade Iniciada (`ATIVIDADE_JA_INICIADA`)\n- **Pergunta**: Quando uma atividade é considerada \"já iniciada\" para impedir cancelamento?\n- **Recomendação**: Se o relógio da API (`agora`) for igual ou superior ao horário de início do primeiro encontro.\n- **Resposta**: Atividade é considerada iniciada no horário do primeiro encontro (RN-112). Tentar cancelar depois dá 422 `ATIVIDADE_JA_INICIADA`.\n- **Fonte**: RN-112\n- **Status**: Respondido\n\n### P8 — Atividade Cancelada (`ATIVIDADE_CANCELADA`)\n- **Pergunta**: Quais rotas/operações em uma atividade cancelada retornam 422 `ATIVIDADE_CANCELADA`?\n- **Recomendação**: Tentativas de `PATCH /atividades/:id` e `POST /atividades/:id/cancelamento` em atividades com `situacao: \"cancelada\"`.\n- **Resposta**: Cancelamento é definitivo (RN-113). Tentar alterar ou cancelar de novo uma atividade cancelada dá 422 `ATIVIDADE_CANCELADA`.\n- **Fonte**: RN-113\n- **Status**: Respondido\n\n### P9 — Precedência entre Regras de Negócio em M1\n- **Pergunta**: Quando múltiplas regras do recurso forem violadas ao mesmo tempo, qual a ordem de precedência dos erros?\n- **Recomendação**: 1. `ATIVIDADE_CANCELADA` -> 2. `ATIVIDADE_JA_INICIADA` -> 3. `CAMPO_NAO_EDITAVEL` -> 4. `QUANTIDADE_DE_ENCONTROS` / `ENCONTRO_INVALIDO` -> 5. `VAGAS_ACIMA_DA_CAPACIDADE` -> 6. `VAGAS_ABAIXO_DOS_INSCRITOS` -> 7. `CONFLITO_DE_SALA`.\n- **Resposta**: A ordem de precedência de erros é `ATIVIDADE_CANCELADA` depois `ATIVIDADE_JA_INICIADA` depois `CAMPO_NAO_EDITAVEL` depois `QUANTIDADE_DE_ENCONTROS` ou `ENCONTRO_INVALIDO` depois `VAGAS_ACIMA_DA_CAPACIDADE` depois `VAGAS_ABAIXO_DOS_INSCRITOS` e por último `CONFLITO_DE_SALA`, conforme `contrato-api.md` e RN-208.\n- **Fonte**: RN-208, contrato-api.md\n- **Status**: Respondido\n"
+      },
+      "output": "Wrote file successfully.",
+      "metadata": {
+       "diagnostics": {},
+       "filepath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\entrevistas\\M1-grade.md",
+       "exists": true,
+       "truncated": false
+      },
+      "title": "entrevistas\\M1-grade.md",
+      "time": {
+       "start": 1789494783771,
+       "end": 1789494783867
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "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"
+      }
+     },
+     "id": "prt_0a6336eee001pp5q3iFhRB9GH6",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632fb84001WZuXEvBX76Vl2K"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "f1d4eac35ad04f98903e82ee1bb9c4b401819f1f",
+     "type": "step-finish",
+     "tokens": {
+      "total": 19956,
+      "input": 2134,
+      "output": 1622,
+      "reasoning": 5085,
+      "cache": {
+       "write": 0,
+       "read": 11115
+      }
+     },
+     "cost": 0.027585375,
+     "id": "prt_0a63379240011kEnpG9v9VvL9L",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632fb84001WZuXEvBX76Vl2K"
+    },
+    {
+     "type": "patch",
+     "hash": "d4538470c5b9c12179667272038faba6e31f74b7",
+     "files": [
+      "C:/Users/User/Documents/Atividade-Semana-Academica/entrevistas/M1-grade.md"
+     ],
+     "id": "prt_0a6337c3d001bYhdEm6ShAvA6n",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a632fb84001WZuXEvBX76Vl2K"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.003336075,
+    "tokens": {
+     "total": 21832,
+     "input": 2228,
+     "output": 41,
+     "reasoning": 12,
+     "cache": {
+      "write": 0,
+      "read": 19551
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494787150,
+     "completed": 1789494791138
+    },
+    "finish": "tool-calls",
+    "id": "msg_0a6337c4e0016xYNiRQI8XNiit",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "f1d4eac35ad04f98903e82ee1bb9c4b401819f1f",
+     "type": "step-start",
+     "id": "prt_0a633874d0010DGnudHHGYW4PH",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a6337c4e0016xYNiRQI8XNiit"
+    },
+    {
+     "type": "tool",
+     "tool": "read",
+     "callID": "K2roez4Sd8aCk6j6",
+     "state": {
+      "status": "completed",
+      "input": {
+       "filePath": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica\\entrevistas\\M1-grade.md"
+      },
+      "output": "[5128 caracteres omitidos]",
+      "title": "entrevistas\\M1-grade.md",
+      "time": {
+       "start": 1789494789985,
+       "end": 1789494790007
+      }
+     },
+     "metadata": {
+      "google": {
+       "thoughtSignature": "EqoBCqcBARFNMg9pmi2j0IdbEBeglFVHT2/zXKEcNOOZiHBJIpT72yncD0/x/2lsxBsRD34jp/gLNIXgHlVomWeiqPZ8nONjH8B4lcbeT6sC1BC5rNiVM39sclR+6orvSTRKvkQ+Inz9XZQJqu+2N5usj0OjJvby3lDU0kctHQk1W6awLw0ur2I9M/QF/xntimajTijDYoqh5hS5lB5zK8raywazvO2GkDtkDjM="
+      }
+     },
+     "id": "prt_0a6338753001ERl7SjBuLfklsc",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a6337c4e0016xYNiRQI8XNiit"
+    },
+    {
+     "reason": "tool-calls",
+     "snapshot": "f1d4eac35ad04f98903e82ee1bb9c4b401819f1f",
+     "type": "step-finish",
+     "tokens": {
+      "total": 21832,
+      "input": 2228,
+      "output": 41,
+      "reasoning": 12,
+      "cache": {
+       "write": 0,
+       "read": 19551
+      }
+     },
+     "cost": 0.003336075,
+     "id": "prt_0a63389ae0010DnDIt0SX83369",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a6337c4e0016xYNiRQI8XNiit"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0a632a3c6001twVKKmeLU4yUWF",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica",
+     "root": "C:\\Users\\User\\Documents\\Atividade-Semana-Academica"
+    },
+    "cost": 0.003562725,
+    "tokens": {
+     "total": 23782,
+     "input": 2211,
+     "output": 58,
+     "reasoning": 20,
+     "cache": {
+      "write": 0,
+      "read": 21493
+     }
+    },
+    "modelID": "gemini-3.6-flash",
+    "providerID": "google",
+    "time": {
+     "created": 1789494791149,
+     "completed": 1789494964239
+    },
+    "finish": "stop",
+    "id": "msg_0a6338bed0015yyDsUVZRZWJ2E",
+    "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA"
+   },
+   "parts": [
+    {
+     "snapshot": "f1d4eac35ad04f98903e82ee1bb9c4b401819f1f",
+     "type": "step-start",
+     "id": "prt_0a636287c001EyGn4DA4cuWa2R",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a6338bed0015yyDsUVZRZWJ2E"
+    },
+    {
+     "type": "text",
+     "text": "Arquivo `entrevistas/M1-grade.md` atualizado com sucesso. Todas as perguntas de P1 a P9 foram respondidas com os detalhes fornecidos, indicando os status como `Respondido` e incluindo a respectiva fonte da regra (`RN-xxx`).",
+     "time": {
+      "start": 1789494962307,
+      "end": 1789494962723
+     },
+     "id": "prt_0a6362883001qacbO67rjkAXB1",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a6338bed0015yyDsUVZRZWJ2E"
+    },
+    {
+     "reason": "stop",
+     "snapshot": "f1d4eac35ad04f98903e82ee1bb9c4b401819f1f",
+     "type": "step-finish",
+     "tokens": {
+      "total": 23782,
+      "input": 2211,
+      "output": 58,
+      "reasoning": 20,
+      "cache": {
+       "write": 0,
+       "read": 21493
+      }
+     },
+     "cost": 0.003562725,
+     "id": "prt_0a6362d66001labj72dw5Gcg2G",
+     "sessionID": "ses_f59cd5c7cffe9y3z9X0kjPGVrA",
+     "messageID": "msg_0a6338bed0015yyDsUVZRZWJ2E"
+    }
+   ]
+  }
+ ]
+}
