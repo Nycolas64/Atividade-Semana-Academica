@@ -320,4 +320,347 @@ describe('API M2 — Inscrições e Lista de Espera', () => {
       assert.equal(corpo.erro, 'NAO_ENCONTRADO');
     });
   });
+
+  describe('Fatia 2 — Recheces de inscrição e precedência', () => {
+    it('Critério 34 (R13): inscrever em atividade cancelada → 422 ATIVIDADE_CANCELADA, mesmo com encerradas e conflito potenciais', async () => {
+      const atvA = await criarAtividade({
+        titulo: 'Atividade Ocupada',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T12:00:00-03:00', fim: '2026-10-19T14:00:00-03:00' }
+        ]
+      });
+      const atvB = await criarAtividade({
+        titulo: 'Atividade Cancelada',
+        tipo: 'palestra',
+        salaId: 'sala-102',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T12:00:00-03:00', fim: '2026-10-19T14:00:00-03:00' }
+        ]
+      });
+
+      assert.equal((await inscrever(atvA.id, headersPart)).status, 201);
+
+      await fetch(`${url}/_teste/relogio`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agora: '2026-10-19T11:30:00-03:00' })
+      });
+
+      const cancelRes = await fetch(`${url}/atividades/${atvB.id}/cancelamento`, {
+        method: 'POST',
+        headers: headersOrg
+      });
+      assert.equal(cancelRes.status, 200);
+
+      const res = await inscrever(atvB.id, headersPart);
+      assert.equal(res.status, 422);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'ATIVIDADE_CANCELADA');
+    });
+
+    it('Critério 32 (R13): já inscrito e relógio após o encerramento → 422 INSCRICOES_ENCERRADAS (não JA_INSCRITO)', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Precedência',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T12:00:00-03:00', fim: '2026-10-19T14:00:00-03:00' }
+        ]
+      });
+
+      assert.equal((await inscrever(atv.id, headersPart)).status, 201);
+
+      await fetch(`${url}/_teste/relogio`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agora: '2026-10-19T11:35:00-03:00' })
+      });
+
+      const res = await inscrever(atv.id, headersPart);
+      assert.equal(res.status, 422);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'INSCRICOES_ENCERRADAS');
+    });
+
+    it('Critério 7 (R3): confirmada em A (09:00–11:00) e inscrição em B (10:00–12:00) → 409 CONFLITO_DE_HORARIO', async () => {
+      const atvA = await criarAtividade({
+        titulo: 'Palestra Manhã',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' }
+        ]
+      });
+      const atvB = await criarAtividade({
+        titulo: 'Palestra Sobreposta',
+        tipo: 'palestra',
+        salaId: 'sala-102',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T10:00:00-03:00', fim: '2026-10-19T12:00:00-03:00' }
+        ]
+      });
+
+      assert.equal((await inscrever(atvA.id, headersPart)).status, 201);
+
+      const res = await inscrever(atvB.id, headersPart);
+      assert.equal(res.status, 409);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'CONFLITO_DE_HORARIO');
+    });
+
+    it('Critério 8 (R3): A termina 11:00 e B começa 11:00 → 201 (encostar não é conflito)', async () => {
+      const atvA = await criarAtividade({
+        titulo: 'Palestra Encaixe A',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' }
+        ]
+      });
+      const atvB = await criarAtividade({
+        titulo: 'Palestra Encaixe B',
+        tipo: 'palestra',
+        salaId: 'sala-102',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T11:00:00-03:00', fim: '2026-10-19T13:00:00-03:00' }
+        ]
+      });
+
+      assert.equal((await inscrever(atvA.id, headersPart)).status, 201);
+
+      const res = await inscrever(atvB.id, headersPart);
+      assert.equal(res.status, 201);
+      const corpo = await res.json();
+      assert.equal(corpo.status, 'confirmada');
+    });
+
+    it('Critério 9 (R3): inscrição em_espera sobreposta não gera conflito → 201', async () => {
+      const atvA = await criarAtividade({
+        titulo: 'Palestra Cheia',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 1,
+        encontros: [
+          { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' }
+        ]
+      });
+      const atvB = await criarAtividade({
+        titulo: 'Palestra Depois',
+        tipo: 'palestra',
+        salaId: 'sala-102',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-19T10:00:00-03:00', fim: '2026-10-19T12:00:00-03:00' }
+        ]
+      });
+
+      assert.equal((await inscrever(atvA.id, headersPart)).status, 201);
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      const espera = await inscrever(atvA.id, headersDiego);
+      assert.equal(espera.status, 201);
+      const inscEspera = await espera.json();
+      assert.equal(inscEspera.status, 'em_espera');
+
+      const res = await inscrever(atvB.id, headersDiego);
+      assert.equal(res.status, 201);
+      const corpo = await res.json();
+      assert.equal(corpo.status, 'confirmada');
+    });
+
+    it('Critério 3 (R2): 3 minicursos confirmadas e inscrição em um 4º com vaga → 422 LIMITE_DE_MINICURSOS', async () => {
+      const minicurso = async (titulo, salaId, encontros) => {
+        return criarAtividade({
+          titulo,
+          tipo: 'minicurso',
+          salaId,
+          vagas: 10,
+          encontros
+        });
+      };
+
+      const m1 = await minicurso('Minicurso 1', 'sala-101', [
+        { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' },
+        { inicio: '2026-10-20T09:00:00-03:00', fim: '2026-10-20T11:00:00-03:00' }
+      ]);
+      const m2 = await minicurso('Minicurso 2', 'sala-102', [
+        { inicio: '2026-10-19T13:00:00-03:00', fim: '2026-10-19T15:00:00-03:00' },
+        { inicio: '2026-10-20T13:00:00-03:00', fim: '2026-10-20T15:00:00-03:00' }
+      ]);
+      const m3 = await minicurso('Minicurso 3', 'sala-101', [
+        { inicio: '2026-10-19T16:00:00-03:00', fim: '2026-10-19T18:00:00-03:00' },
+        { inicio: '2026-10-20T16:00:00-03:00', fim: '2026-10-20T18:00:00-03:00' }
+      ]);
+      const m4 = await minicurso('Minicurso 4', 'sala-102', [
+        { inicio: '2026-10-21T09:00:00-03:00', fim: '2026-10-21T11:00:00-03:00' },
+        { inicio: '2026-10-22T09:00:00-03:00', fim: '2026-10-22T11:00:00-03:00' }
+      ]);
+
+      assert.equal((await inscrever(m1.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m2.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m3.id, headersPart)).status, 201);
+
+      const res = await inscrever(m4.id, headersPart);
+      assert.equal(res.status, 422);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'LIMITE_DE_MINICURSOS');
+    });
+
+    it('Critério 4 (R2): 3 minicursos confirmadas e inscrição em minicurso sem vaga → 201 em_espera (não conta no limite)', async () => {
+      const minicurso = async (titulo, salaId, encontros, vagas = 10) => {
+        return criarAtividade({
+          titulo,
+          tipo: 'minicurso',
+          salaId,
+          vagas,
+          encontros
+        });
+      };
+
+      const m1 = await minicurso('Mini A', 'sala-101', [
+        { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' },
+        { inicio: '2026-10-20T09:00:00-03:00', fim: '2026-10-20T11:00:00-03:00' }
+      ]);
+      const m2 = await minicurso('Mini B', 'sala-102', [
+        { inicio: '2026-10-19T13:00:00-03:00', fim: '2026-10-19T15:00:00-03:00' },
+        { inicio: '2026-10-20T13:00:00-03:00', fim: '2026-10-20T15:00:00-03:00' }
+      ]);
+      const m3 = await minicurso('Mini C', 'sala-101', [
+        { inicio: '2026-10-19T16:00:00-03:00', fim: '2026-10-19T18:00:00-03:00' },
+        { inicio: '2026-10-20T16:00:00-03:00', fim: '2026-10-20T18:00:00-03:00' }
+      ]);
+      const mLotado = await minicurso('Mini Lotado', 'sala-102', [
+        { inicio: '2026-10-21T09:00:00-03:00', fim: '2026-10-21T11:00:00-03:00' },
+        { inicio: '2026-10-22T09:00:00-03:00', fim: '2026-10-22T11:00:00-03:00' }
+      ], 1);
+
+      assert.equal((await inscrever(m1.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m2.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m3.id, headersPart)).status, 201);
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      assert.equal((await inscrever(mLotado.id, headersDiego)).status, 201);
+
+      const res = await inscrever(mLotado.id, headersPart);
+      assert.equal(res.status, 201);
+      const corpo = await res.json();
+      assert.equal(corpo.status, 'em_espera');
+    });
+
+    it('Critério 5 (R2): 3 minicursos confirmadas e inscrição em uma palestra → 201 (palestras não contam)', async () => {
+      const minicurso = async (titulo, salaId, encontros) => {
+        return criarAtividade({
+          titulo,
+          tipo: 'minicurso',
+          salaId,
+          vagas: 10,
+          encontros
+        });
+      };
+
+      const m1 = await minicurso('Mini X', 'sala-101', [
+        { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' },
+        { inicio: '2026-10-20T09:00:00-03:00', fim: '2026-10-20T11:00:00-03:00' }
+      ]);
+      const m2 = await minicurso('Mini Y', 'sala-102', [
+        { inicio: '2026-10-19T13:00:00-03:00', fim: '2026-10-19T15:00:00-03:00' },
+        { inicio: '2026-10-20T13:00:00-03:00', fim: '2026-10-20T15:00:00-03:00' }
+      ]);
+      const m3 = await minicurso('Mini Z', 'sala-101', [
+        { inicio: '2026-10-19T16:00:00-03:00', fim: '2026-10-19T18:00:00-03:00' },
+        { inicio: '2026-10-20T16:00:00-03:00', fim: '2026-10-20T18:00:00-03:00' }
+      ]);
+
+      assert.equal((await inscrever(m1.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m2.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m3.id, headersPart)).status, 201);
+
+      const palestra = await criarAtividade({
+        titulo: 'Palestra Complementar',
+        tipo: 'palestra',
+        salaId: 'auditorio',
+        vagas: 100,
+        encontros: [
+          { inicio: '2026-10-21T14:00:00-03:00', fim: '2026-10-21T16:00:00-03:00' }
+        ]
+      });
+
+      const res = await inscrever(palestra.id, headersPart);
+      assert.equal(res.status, 201);
+      const corpo = await res.json();
+      assert.equal(corpo.status, 'confirmada');
+    });
+
+    it('Critério 35 (R13): 3 minicursos E conflito de horário na nova atividade → 409 CONFLITO_DE_HORARIO (não LIMITE)', async () => {
+      const minicurso = async (titulo, salaId, encontros) => {
+        return criarAtividade({
+          titulo,
+          tipo: 'minicurso',
+          salaId,
+          vagas: 10,
+          encontros
+        });
+      };
+
+      const m1 = await minicurso('Mini Base 1', 'sala-101', [
+        { inicio: '2026-10-19T09:00:00-03:00', fim: '2026-10-19T11:00:00-03:00' },
+        { inicio: '2026-10-20T09:00:00-03:00', fim: '2026-10-20T11:00:00-03:00' }
+      ]);
+      const m2 = await minicurso('Mini Base 2', 'sala-102', [
+        { inicio: '2026-10-19T13:00:00-03:00', fim: '2026-10-19T15:00:00-03:00' },
+        { inicio: '2026-10-20T13:00:00-03:00', fim: '2026-10-20T15:00:00-03:00' }
+      ]);
+      const m3 = await minicurso('Mini Base 3', 'sala-101', [
+        { inicio: '2026-10-19T16:00:00-03:00', fim: '2026-10-19T18:00:00-03:00' },
+        { inicio: '2026-10-20T16:00:00-03:00', fim: '2026-10-20T18:00:00-03:00' }
+      ]);
+
+      assert.equal((await inscrever(m1.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m2.id, headersPart)).status, 201);
+      assert.equal((await inscrever(m3.id, headersPart)).status, 201);
+
+      const mConflitante = await minicurso('Mini Conflitante', 'sala-102', [
+        { inicio: '2026-10-19T10:00:00-03:00', fim: '2026-10-19T12:00:00-03:00' },
+        { inicio: '2026-10-21T09:00:00-03:00', fim: '2026-10-21T11:00:00-03:00' }
+      ]);
+
+      const res = await inscrever(mConflitante.id, headersPart);
+      assert.equal(res.status, 409);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'CONFLITO_DE_HORARIO');
+    });
+
+    it('Critério 36 (R13): participante sem impedimento em atividade aberta → 201; INSCRICAO_BLOQUEADA nunca retorna', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Livre',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-21T15:00:00-03:00', fim: '2026-10-21T17:00:00-03:00' }
+        ]
+      });
+
+      const res = await inscrever(atv.id, headersPart);
+      assert.equal(res.status, 201);
+      const corpo = await res.json();
+      assert.equal(corpo.status, 'confirmada');
+      assert.equal(JSON.stringify(corpo).includes('INSCRICAO_BLOQUEADA'), false);
+    });
+  });
 });

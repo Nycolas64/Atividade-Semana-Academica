@@ -57,6 +57,47 @@ export function formatarInscricao(insc) {
   };
 }
 
+// R3: sobreposição estrita entre encontros (encostar não é conflito)
+function encontrosSeSobrepoe(encontrosX, encontrosY) {
+  for (const ex of encontrosX) {
+    const inicioX = new Date(ex.inicio).getTime();
+    const fimX = new Date(ex.fim).getTime();
+    for (const ey of encontrosY) {
+      const inicioY = new Date(ey.inicio).getTime();
+      const fimY = new Date(ey.fim).getTime();
+      if (inicioX < fimY && inicioY < fimX) return true;
+    }
+  }
+  return false;
+}
+
+// R3: outra inscrição confirmada/convocada em atividade não cancelada que se sobrepõe
+function temConflitoDeHorario(participanteId, atividadeAlvo) {
+  const outras = inscricoesStore.filter(
+    (i) =>
+      i.participanteId === participanteId &&
+      i.atividadeId !== atividadeAlvo.id &&
+      (i.status === 'confirmada' || i.status === 'convocada')
+  );
+  for (const insc of outras) {
+    const outra = obterAtividadeBrutaPorId(insc.atividadeId);
+    if (!outra || outra.isCancelada) continue;
+    if (encontrosSeSobrepoe(outra.encontros, atividadeAlvo.encontros)) return true;
+  }
+  return false;
+}
+
+// R2: minicursos confirmados/convocados do participante
+function contarMinicursosAtivos(participanteId, excluindoInscricaoId = null) {
+  return inscricoesStore.filter((i) => {
+    if (i.participanteId !== participanteId) return false;
+    if (i.id === excluindoInscricaoId) return false;
+    if (i.status !== 'confirmada' && i.status !== 'convocada') return false;
+    const atv = obterAtividadeBrutaPorId(i.atividadeId);
+    return atv && atv.tipo === 'minicurso';
+  }).length;
+}
+
 export function criarInscricao(atividadeId, participanteId, agora) {
   const atv = obterAtividadeBrutaPorId(atividadeId);
   if (!atv) {
@@ -64,6 +105,15 @@ export function criarInscricao(atividadeId, participanteId, agora) {
       erro: 'NAO_ENCONTRADO',
       status: 404,
       mensagem: 'Atividade não encontrada.'
+    };
+  }
+
+  // R13.1: atividade cancelada recusa antes de todas as demais regras do recurso
+  if (atv.isCancelada) {
+    return {
+      erro: 'ATIVIDADE_CANCELADA',
+      status: 422,
+      mensagem: 'Não é possível inscrever-se em atividade cancelada.'
     };
   }
 
@@ -91,8 +141,31 @@ export function criarInscricao(atividadeId, participanteId, agora) {
     };
   }
 
+  // R3: conflito de horário com outra inscrição que ocupa vaga
+  if (temConflitoDeHorario(participanteId, atv)) {
+    return {
+      erro: 'CONFLITO_DE_HORARIO',
+      status: 409,
+      mensagem: 'Participante já possui inscrição sobreposta em outro horário.'
+    };
+  }
+
   // R6: com vaga nasce confirmada; sem vaga entra no fim da fila (FIFO)
   const vagasLivres = Math.max(0, atv.vagas - contarOcupadas(atv.id));
+
+  // R2: no máximo 3 minicursos simultâneos; em_espera não conta
+  if (
+    atv.tipo === 'minicurso' &&
+    vagasLivres > 0 &&
+    contarMinicursosAtivos(participanteId) + 1 > 3
+  ) {
+    return {
+      erro: 'LIMITE_DE_MINICURSOS',
+      status: 422,
+      mensagem: 'Participante atingiu o limite de 3 minicursos simultâneos.'
+    };
+  }
+
   const status = vagasLivres > 0 ? 'confirmada' : 'em_espera';
 
   const inscricao = {
