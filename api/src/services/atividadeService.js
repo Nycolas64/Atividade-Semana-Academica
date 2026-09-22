@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import { obterSala } from './salaService.js';
+import { cancelarInscricoesDaAtividade } from './inscricaoService.js';
 
 let atividadesStore = [];
 
@@ -427,6 +428,7 @@ export function cancelarAtividade(id, agora) {
   }
 
   atv.isCancelada = true;
+  cancelarInscricoesDaAtividade(id);
 
   return {
     sucesso: true,

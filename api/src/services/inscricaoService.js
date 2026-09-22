@@ -186,6 +186,61 @@ export function criarInscricao(atividadeId, participanteId, agora) {
   };
 }
 
+// R10/R12: cancela inscrição ativa do próprio participante
+export function cancelarInscricao(id, agora, participanteId) {
+  const insc = inscricoesStore.find((i) => i.id === id);
+  // R12: dono errado responde igual a id inexistente (não revela existência)
+  if (!insc || insc.participanteId !== participanteId) {
+    return {
+      erro: 'NAO_ENCONTRADO',
+      status: 404,
+      mensagem: 'Inscrição não encontrada.'
+    };
+  }
+
+  // R10: estado da atividade vem antes do estado da inscrição
+  const atv = obterAtividadeBrutaPorId(insc.atividadeId);
+  if (atv && new Date(agora).getTime() >= primeiroInicioMs(atv)) {
+    return {
+      erro: 'ATIVIDADE_JA_INICIADA',
+      status: 422,
+      mensagem: 'Atividade já iniciada; inscrição não pode ser cancelada.'
+    };
+  }
+
+  // R10: só inscrições ativas podem ser canceladas
+  if (!STATUS_ATIVOS.includes(insc.status)) {
+    return {
+      erro: 'INSCRICAO_INATIVA',
+      status: 422,
+      mensagem: 'Inscrição não está ativa.'
+    };
+  }
+
+  insc.status = 'cancelada';
+  if (atv) sincronizarContadores(atv);
+
+  return {
+    sucesso: true,
+    status: 200,
+    dados: formatarInscricao(insc)
+  };
+}
+
+// R11: cancelar atividade propaga para as inscrições ativas dela
+export function cancelarInscricoesDaAtividade(atividadeId) {
+  for (const insc of inscricoesStore) {
+    if (
+      insc.atividadeId === atividadeId &&
+      STATUS_ATIVOS.includes(insc.status)
+    ) {
+      insc.status = 'cancelada';
+    }
+  }
+  const atv = obterAtividadeBrutaPorId(atividadeId);
+  if (atv) sincronizarContadores(atv);
+}
+
 export function resetInscricoes() {
   inscricoesStore = [];
 }

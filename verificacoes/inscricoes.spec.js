@@ -663,4 +663,389 @@ describe('API M2 — Inscrições e Lista de Espera', () => {
       assert.equal(JSON.stringify(corpo).includes('INSCRICAO_BLOQUEADA'), false);
     });
   });
+
+  describe('Fatia 3 — Cancelamento', () => {
+    it('Critério 23 (R10): cancelar inscrição confirmada ou em_espera antes do início → 200 status cancelada', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Cancelável',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 1,
+        encontros: [
+          { inicio: '2026-10-21T15:00:00-03:00', fim: '2026-10-21T17:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const inscConfirmada = await criada.json();
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      const espera = await inscrever(atv.id, headersDiego);
+      assert.equal(espera.status, 201);
+      const inscEspera = await espera.json();
+      assert.equal(inscEspera.status, 'em_espera');
+
+      const resConfirmada = await fetch(
+        `${url}/inscricoes/${inscConfirmada.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(resConfirmada.status, 200);
+      const corpoConfirmada = await resConfirmada.json();
+      assert.equal(corpoConfirmada.status, 'cancelada');
+      assert.equal(corpoConfirmada.id, inscConfirmada.id);
+      assert.equal(corpoConfirmada.posicaoNaEspera, null);
+
+      const resEspera = await fetch(
+        `${url}/inscricoes/${inscEspera.id}/cancelamento`,
+        { method: 'POST', headers: headersDiego }
+      );
+      assert.equal(resEspera.status, 200);
+      const corpoEspera = await resEspera.json();
+      assert.equal(corpoEspera.status, 'cancelada');
+      assert.equal(corpoEspera.posicaoNaEspera, null);
+    });
+
+    it('Critério 24 (R10): cancelar inscrição já cancelada → 422 INSCRICAO_INATIVA', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Duplo Cancel',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-21T15:00:00-03:00', fim: '2026-10-21T17:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const insc = await criada.json();
+
+      const primeira = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(primeira.status, 200);
+
+      const segunda = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(segunda.status, 422);
+      const corpo = await segunda.json();
+      assert.equal(corpo.erro, 'INSCRICAO_INATIVA');
+    });
+
+    it('Critério 25 (R10): relógio no início da atividade e inscrição ainda ativa → 422 ATIVIDADE_JA_INICIADA', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Já Começou',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-21T15:00:00-03:00', fim: '2026-10-21T17:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const insc = await criada.json();
+
+      await fetch(`${url}/_teste/relogio`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agora: '2026-10-21T15:00:00-03:00' })
+      });
+
+      const res = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(res.status, 422);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'ATIVIDADE_JA_INICIADA');
+    });
+
+    it('Critério 26 (R10): atividade já iniciada E inscrição já cancelada → 422 ATIVIDADE_JA_INICIADA (precedência)', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Iniciada e Cancelada',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-21T15:00:00-03:00', fim: '2026-10-21T17:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const insc = await criada.json();
+
+      const cancelada = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(cancelada.status, 200);
+
+      await fetch(`${url}/_teste/relogio`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agora: '2026-10-21T16:00:00-03:00' })
+      });
+
+      const res = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(res.status, 422);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'ATIVIDADE_JA_INICIADA');
+    });
+
+    it('Critério 27 (R11): organização cancela atividade → inscrições ativas viram cancelada; cancelar uma delas → 422 INSCRICAO_INATIVA', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Será Cancelada',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 1,
+        encontros: [
+          { inicio: '2026-10-22T15:00:00-03:00', fim: '2026-10-22T17:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const inscConfirmada = await criada.json();
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      const espera = await inscrever(atv.id, headersDiego);
+      assert.equal(espera.status, 201);
+      const inscEspera = await espera.json();
+      assert.equal(inscEspera.status, 'em_espera');
+
+      const cancelAtv = await fetch(`${url}/atividades/${atv.id}/cancelamento`, {
+        method: 'POST',
+        headers: headersOrg
+      });
+      assert.equal(cancelAtv.status, 200);
+
+      const lista = await fetch(`${url}/inscricoes`, { headers: headersOrg });
+      const inscricoes = await lista.json();
+      const daAtividade = inscricoes.filter((i) => i.atividadeId === atv.id);
+      assert.equal(daAtividade.length, 2);
+      assert.equal(
+        daAtividade.every((i) => i.status === 'cancelada'),
+        true
+      );
+
+      const res = await fetch(
+        `${url}/inscricoes/${inscConfirmada.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(res.status, 422);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'INSCRICAO_INATIVA');
+    });
+
+    it('Critério 15 (R6): cancelar a inscrição de posição 1 → a que era posição 2 passa a posicaoNaEspera 1', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Fila',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 1,
+        encontros: [
+          { inicio: '2026-10-22T09:00:00-03:00', fim: '2026-10-22T11:00:00-03:00' }
+        ]
+      });
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      const headersElisa = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-elisa'
+      };
+
+      const conf = await inscrever(atv.id, headersPart);
+      assert.equal(conf.status, 201);
+
+      const pos1 = await inscrever(atv.id, headersDiego);
+      assert.equal(pos1.status, 201);
+      const inscPos1 = await pos1.json();
+      assert.equal(inscPos1.posicaoNaEspera, 1);
+
+      const pos2 = await inscrever(atv.id, headersElisa);
+      assert.equal(pos2.status, 201);
+      const inscPos2 = await pos2.json();
+      assert.equal(inscPos2.posicaoNaEspera, 2);
+
+      const cancel = await fetch(
+        `${url}/inscricoes/${inscPos1.id}/cancelamento`,
+        { method: 'POST', headers: headersDiego }
+      );
+      assert.equal(cancel.status, 200);
+
+      const lida = await fetch(`${url}/inscricoes/${inscPos2.id}`, {
+        headers: headersElisa
+      });
+      assert.equal(lida.status, 200);
+      const corpo = await lida.json();
+      assert.equal(corpo.status, 'em_espera');
+      assert.equal(corpo.posicaoNaEspera, 1);
+    });
+
+    it('Critério 28 (R12): organização chama POST /inscricoes/:id/cancelamento → 403 SOMENTE_PARTICIPANTE', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Cancel Org',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-22T09:00:00-03:00', fim: '2026-10-22T11:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const insc = await criada.json();
+
+      const res = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersOrg }
+      );
+      assert.equal(res.status, 403);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'SOMENTE_PARTICIPANTE');
+    });
+
+    it('Critério 29 (R12): p-diego tenta cancelar inscrição de p-carla → 404 NAO_ENCONTRADO', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Alheia',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 30,
+        encontros: [
+          { inicio: '2026-10-22T09:00:00-03:00', fim: '2026-10-22T11:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const insc = await criada.json();
+
+      const res = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Usuario': 'p-diego' }
+        }
+      );
+      assert.equal(res.status, 404);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'NAO_ENCONTRADO');
+    });
+
+    it('Critério 30 (R12): POST /inscricoes/ins_inexistente/cancelamento → 404 NAO_ENCONTRADO', async () => {
+      const res = await fetch(
+        `${url}/inscricoes/ins_inexistente/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(res.status, 404);
+      const corpo = await res.json();
+      assert.equal(corpo.erro, 'NAO_ENCONTRADO');
+    });
+
+    it('Critério 13 (R5, R6): cancela e inscreve de novo → novo id ins_…, no fim da fila', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Reinício',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 1,
+        encontros: [
+          { inicio: '2026-10-23T09:00:00-03:00', fim: '2026-10-23T11:00:00-03:00' }
+        ]
+      });
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      const headersElisa = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-elisa'
+      };
+
+      assert.equal((await inscrever(atv.id, headersDiego)).status, 201);
+      assert.equal((await inscrever(atv.id, headersElisa)).status, 201);
+
+      const primeira = await inscrever(atv.id, headersPart);
+      assert.equal(primeira.status, 201);
+      const inscAntiga = await primeira.json();
+      assert.equal(inscAntiga.status, 'em_espera');
+      assert.equal(inscAntiga.posicaoNaEspera, 2);
+
+      const cancel = await fetch(
+        `${url}/inscricoes/${inscAntiga.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(cancel.status, 200);
+
+      const nova = await inscrever(atv.id, headersPart);
+      assert.equal(nova.status, 201);
+      const inscNova = await nova.json();
+      assert.notEqual(inscNova.id, inscAntiga.id);
+      assert.match(inscNova.id, /^ins_[0-9a-f]{8}$/);
+      assert.equal(inscNova.status, 'em_espera');
+      assert.equal(inscNova.posicaoNaEspera, 2);
+
+      const lidaAntiga = await fetch(`${url}/inscricoes/${inscAntiga.id}`, {
+        headers: headersPart
+      });
+      const antiga = await lidaAntiga.json();
+      assert.equal(antiga.status, 'cancelada');
+    });
+
+    it('Critério 11 parcial (R4, R10): cancelar confirmada libera a vaga — ocupadas/vagasRestantes/emEspera refletem', async () => {
+      const atv = await criarAtividade({
+        titulo: 'Palestra Libera Vaga',
+        tipo: 'palestra',
+        salaId: 'sala-101',
+        vagas: 1,
+        encontros: [
+          { inicio: '2026-10-23T14:00:00-03:00', fim: '2026-10-23T16:00:00-03:00' }
+        ]
+      });
+
+      const criada = await inscrever(atv.id, headersPart);
+      assert.equal(criada.status, 201);
+      const insc = await criada.json();
+
+      const headersDiego = {
+        'Content-Type': 'application/json',
+        'X-Usuario': 'p-diego'
+      };
+      const espera = await inscrever(atv.id, headersDiego);
+      assert.equal(espera.status, 201);
+
+      const cancel = await fetch(
+        `${url}/inscricoes/${insc.id}/cancelamento`,
+        { method: 'POST', headers: headersPart }
+      );
+      assert.equal(cancel.status, 200);
+
+      const lista = await fetch(`${url}/atividades`, { headers: headersPart });
+      const atividades = await lista.json();
+      const alvo = atividades.find((a) => a.id === atv.id);
+      assert.equal(alvo.ocupadas, 0);
+      assert.equal(alvo.vagasRestantes, 1);
+      assert.equal(alvo.emEspera, 1);
+    });
+  });
 });

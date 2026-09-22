@@ -14,7 +14,12 @@ import {
   putRelogio,
   getRelogio
 } from './controllers/testeController.js';
-import { postInscricao, getInscricoes, getInscricaoPorId } from './controllers/inscricaoController.js';
+import {
+  postInscricao,
+  getInscricoes,
+  getInscricaoPorId,
+  postCancelamentoInscricao
+} from './controllers/inscricaoController.js';
 
 export function criarServidor() {
   const app = express();
@@ -60,6 +65,7 @@ export function criarServidor() {
   app.post('/atividades/:id/inscricoes', postInscricao);
   app.get('/inscricoes', getInscricoes);
   app.get('/inscricoes/:id', getInscricaoPorId);
+  app.post('/inscricoes/:id/cancelamento', postCancelamentoInscricao);
 
   // Rotas de Teste
   app.post('/_teste/reset', postReset);
