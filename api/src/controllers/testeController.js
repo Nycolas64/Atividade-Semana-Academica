@@ -1,9 +1,11 @@
 import { resetRelogio, setAgora, getAgora } from '../services/relogioService.js';
 import { resetAtividades } from '../services/atividadeService.js';
+import { resetInscricoes } from '../services/inscricaoService.js';
 
 export function postReset(req, res) {
   resetRelogio();
   resetAtividades();
+  resetInscricoes();
   res.status(204).end();
 }
 

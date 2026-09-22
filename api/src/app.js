@@ -14,6 +14,7 @@ import {
   putRelogio,
   getRelogio
 } from './controllers/testeController.js';
+import { postInscricao, getInscricoes, getInscricaoPorId } from './controllers/inscricaoController.js';
 
 export function criarServidor() {
   const app = express();
@@ -28,7 +29,9 @@ export function criarServidor() {
     if (
       req.path.startsWith('/_teste') ||
       (req.method === 'GET' && req.path.startsWith('/certificados/')) ||
-      (!req.path.startsWith('/salas') && !req.path.startsWith('/atividades'))
+      (!req.path.startsWith('/salas') &&
+        !req.path.startsWith('/atividades') &&
+        !req.path.startsWith('/inscricoes'))
     ) {
       return next();
     }
@@ -52,6 +55,11 @@ export function criarServidor() {
   app.post('/atividades', postAtividade);
   app.patch('/atividades/:id', patchAtividade);
   app.post('/atividades/:id/cancelamento', postCancelamento);
+
+  // Rotas M2
+  app.post('/atividades/:id/inscricoes', postInscricao);
+  app.get('/inscricoes', getInscricoes);
+  app.get('/inscricoes/:id', getInscricaoPorId);
 
   // Rotas de Teste
   app.post('/_teste/reset', postReset);
