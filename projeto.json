@@ -1,5 +1,5 @@
 {
-  "stack": "Node.js, express, SQLite",
+  "stack": "Node.js 22, Express, dados em memória; interface web estática em api/public",
   "api": {
     "pasta": "api",
     "instalar": "npm install",
