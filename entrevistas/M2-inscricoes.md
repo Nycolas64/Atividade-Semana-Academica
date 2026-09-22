@@ -1,8 +1,8 @@
 # Entrevista M2 — Inscrições e lista de espera
 
-Status: Rodada 1 concluída
+Status: Rodada 2 concluída
 Dono: Gabriel Augusto Giroto (Girotin)
-Documento de requisitos: NÃO consultado (somente na rodada 2)
+Documento de requisitos: consultado na rodada 2 (RN-202, RN-207, RN-208, RN-211, RN-212)
 Baseline: `npm test` verde — 24/24 testes, 0 falhas
 
 ## Perguntas da Rodada 1
@@ -11,15 +11,15 @@ Baseline: `npm test` verde — 24/24 testes, 0 falhas
 - **Pergunta**: Quando a inscrição em uma atividade fecha? (a) no início do primeiro encontro; (b) X horas antes do primeiro encontro; (c) outra regra.
 - **Recomendação**: Fecha no início do primeiro encontro (mesmo instante em que a atividade "já iniciou") e permanece fechada depois — 422 `INSCRICOES_ENCERRADAS`.
 - **Resposta**: Fecha 30 minutos antes do início do primeiro encontro da atividade. A partir desse momento, uma nova inscrição retorna `INSCRICOES_ENCERRADAS`.
-- **Fonte**: contrato-api.md §6
-- **Status**: Respondido
+- **Fonte**: RN-202 (rodada 2); contrato-api.md §6 (código `INSCRICOES_ENCERRADAS`)
+- **Status**: Confirmado na rodada 2 (recomendação da rodada 1 — "início do 1º encontro" — estava divergente e é descartada)
 
 ### P2 — Limite de minicursos (`LIMITE_DE_MINICURSOS`)
 - **Pergunta**: Qual o número máximo de minicursos simultâneos por participante e quais status de inscrição contam para esse limite?
 - **Recomendação**: Máximo de 2 minicursos ativos; contam `confirmada` e `convocada` (na confirmação, a própria convocação entra na conta); `em_espera` não conta.
 - **Resposta**: O limite é de 3 minicursos simultâneos. Contam as inscrições `confirmada` e `convocada`. `em_espera` não conta, e palestras também não entram nesse limite.
-- **Fonte**: contrato-api.md §6
-- **Status**: Respondido
+- **Fonte**: RN-207 (rodada 2); contrato-api.md §6 (código `LIMITE_DE_MINICURSOS`)
+- **Status**: Confirmado na rodada 2 (recomendação da rodada 1 — "2 minicursos" — estava divergente e é descartada)
 
 ### P3 — Conflito de horário (`CONFLITO_DE_HORARIO`)
 - **Pergunta**: Quais inscrições do participante contam como conflito ao inscrever/confirmar? E inscrições de atividade que foi cancelada depois?
@@ -59,9 +59,9 @@ Baseline: `npm test` verde — 24/24 testes, 0 falhas
 ### P8 — Prazo da convocação (`convocadaAte`)
 - **Pergunta**: Qual a duração do prazo para confirmar uma convocação?
 - **Recomendação**: 24 horas a partir da convocação, medida pelo relógio da API (`PUT /_teste/relogio`); `convocadaAte` = instante da convocação + 24h.
-- **Resposta**: O prazo é de 2 horas a partir da convocação, limitado pelo encerramento das inscrições.
-- **Fonte**: contrato-api.md §5
-- **Status**: Respondido
+- **Resposta**: O prazo é de 2 horas a partir da convocação. `convocadaAte = min(convocação + 2h, encerramento das inscrições)`. Se a vaga for liberada **depois** do encerramento das inscrições, **não** gera nova convocação.
+- **Fonte**: RN-211 (prazo de 2h) + RN-212 (limitação pelo encerramento), ambas da rodada 2; contrato-api.md §5 (campo `convocadaAte`)
+- **Status**: Confirmado na rodada 2 (recomendação da rodada 1 — "24 horas" — estava divergente e é descartada; a limitação pelo encerramento foi confirmada em P8a)
 
 ### P9 — Expiração de convocação (`CONVOCACAO_EXPIRADA` / status `expirada`)
 - **Pergunta**: Quando o tempo passa e ninguém acessa, quem muda `convocada` → `expirada` e promove o próximo da fila? O que uma leitura comum (ex.: `GET /atividades`) deve mostrar depois do prazo?
@@ -98,9 +98,9 @@ Baseline: `npm test` verde — 24/24 testes, 0 falhas
   - **Confirmar convocação**: `SEM_CONVOCACAO` → `CONVOCACAO_EXPIRADA` → `CONFLITO_DE_HORARIO` → `LIMITE_DE_MINICURSOS`.
   - **Cancelar inscrição**: `ATIVIDADE_JA_INICIADA` → `INSCRICAO_INATIVA`.
   - (Antes disso, sempre: 401 → 403 → 404 → 422 `DADOS_INVALIDOS`, por convenção do projeto.)
-- **Resposta**: Na inscrição, a precedência documentada é: atividade inexistente (404) → atividade cancelada → inscrições encerradas → inscrição bloqueada, quando aplicável → já inscrito → conflito de horário → limite de minicursos. Para confirmação, primeiro deve ser verificado se existe uma convocação válida: sem convocação → `SEM_CONVOCACAO`; convocação vencida → `CONVOCACAO_EXPIRADA`; estando válida, são refeitos conflito de horário e limite de minicursos. Para cancelamento, atividade já iniciada gera `ATIVIDADE_JA_INICIADA` e inscrição já cancelada/expirada gera `INSCRICAO_INATIVA`. O documento não estabelece uma precedência adicional entre essas duas últimas situações.
-- **Fonte**: contrato-api.md §1, §6
-- **Status**: Respondido
+- **Resposta**: Na inscrição, a precedência documentada (RN-208) é: atividade inexistente (404) → atividade cancelada → inscrições encerradas → **`INSCRICAO_BLOQUEADA`** → já inscrito → conflito de horário → limite de minicursos. `INSCRICAO_BLOQUEADA` é integração de M5: fica documentada no fluxo como **fora do escopo do M2** (grupo de 2, sem M5) e o check **não é implementado** (sempre passa). Para confirmação: `SEM_CONVOCACAO` → `CONVOCACAO_EXPIRADA` → recheces de conflito e limite. Para cancelamento, a RN não define ordem entre `ATIVIDADE_JA_INICIADA` e `INSCRICAO_INATIVA`; **decisão externa** (não é da RN): `ATIVIDADE_JA_INICIADA` → `INSCRICAO_INATIVA` (estado da atividade antes do recurso).
+- **Fonte**: RN-208 + contrato-api.md §1, §6; decisão externa registrada na rodada 2 (cancelamento)
+- **Status**: Confirmado na rodada 2 (P13a: RN-208 inclui `INSCRICAO_BLOQUEADA`, fora de escopo; P13b: precedência do cancelamento é decisão externa, não da RN)
 
 ### P14 — Efeito da falha na confirmação
 - **Pergunta**: Convocada tenta confirmar e leva `CONFLITO_DE_HORARIO` ou `LIMITE_DE_MINICURSOS` — o que acontece com a convocação dela?
@@ -115,6 +115,14 @@ Baseline: `npm test` verde — 24/24 testes, 0 falhas
 - **Resposta**: M2 não implementa a regra `INSCRICAO_BLOQUEADA`; ela só entra como ponto de integração quando o grupo possui M5. A organização pode consultar as inscrições, mas não pode criar, confirmar ou cancelar inscrições em nome dos participantes. Na interface, M2 precisa contemplar as operações de inscrição, cancelamento e confirmação, além da visualização das inscrições do participante com o status e a posição na fila quando aplicável.
 - **Fonte**: contrato-api.md §5, §6; api/public/app.js
 - **Status**: Respondido
+
+## Rodada 2 — validação contra o documento de requisitos
+
+- **P1 / P2 / P8**: respostas da rodada 1 confirmadas; fontes corrigidas de `contrato-api.md §x` para RN-202, RN-207, RN-211+RN-212. Recomendações da rodada 1 (início do 1º encontro, 2 minicursos, 24h) divergentes e descartadas.
+- **P8a**: `convocadaAte = min(convocação+2h, encerramento das inscrições)`; liberação de vaga após o encerramento **não** convoca (RN-211/RN-212).
+- **P13a**: RN-208 coloca `INSCRICAO_BLOQUEADA` entre "encerradas" e `JA_INSCRITO`; sem M5 → documentar como integração fora de escopo, não implementar o check (coerente com P15).
+- **P13b**: RN não define ordem entre `ATIVIDADE_JA_INICIADA` e `INSCRICAO_INATIVA` → decisão externa registrada: `ATIVIDADE_JA_INICIADA` → `INSCRICAO_INATIVA`.
+- Demais perguntas (P3–P7, P9–P12, P14–P15): mantidas da rodada 1; fontes genéricas continuam válidas pelo contrato, números/prazos vieram das RNs acima.
 
 ## Nota de verificação
 
