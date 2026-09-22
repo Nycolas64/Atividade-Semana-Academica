@@ -292,6 +292,74 @@ input:focus, select:focus {
   color: #991b1b;
 }
 
+.badge.confirmada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.em_espera {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.badge.convocada {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge.expirada {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-mini {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+}
+
+.atividade-acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.inscricao-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.inscricao-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.inscricao-titulo {
+  font-weight: 600;
+}
+
+.posicao-espera,
+.convocada-ate {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.inscricao-acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .atividade-info {
   font-size: 0.9rem;
   color: var(--text-muted);

@@ -14,11 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnLimparFiltros = document.getElementById('btn-limpar-filtros');
   const atividadesGrid = document.getElementById('atividades-grid');
 
+  const minhasInscricoesSec = document.getElementById('minhas-inscricoes');
+  const inscricoesLista = document.getElementById('inscricoes-lista');
+  const feedbackAlert = document.getElementById('feedback-alert');
+
   const modal = document.getElementById('modal-detalhe');
   const modalBody = document.getElementById('modal-body');
   const closeModal = document.querySelector('.close-modal');
 
   let salasMap = {};
+  let atividadesCache = [];
+  let minhasInscricoes = [];
+
+  const STATUS_ATIVOS = ['confirmada', 'em_espera', 'convocada'];
 
   // Obter cabeçalhos com o usuário atual
   function getHeaders() {
@@ -28,19 +36,35 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  function ehOrganizacao() {
+    return usuarioSelect.value.startsWith('org-');
+  }
+
+  function mostrarFeedback(mensagem, tipo) {
+    feedbackAlert.textContent = mensagem;
+    feedbackAlert.className = `alert ${tipo}`;
+  }
+
+  function limparFeedback() {
+    feedbackAlert.className = 'alert hidden';
+  }
+
   // Verificar se o usuário atual é da organização (simples verificação de prefixo org-)
   function atualizarPermissoesUI() {
     const usuario = usuarioSelect.value;
-    if (usuario.startsWith('org-')) {
+    if (ehOrganizacao()) {
       orgSection.classList.remove('hidden');
+      minhasInscricoesSec.classList.add('hidden');
     } else {
       orgSection.classList.add('hidden');
+      minhasInscricoesSec.classList.remove('hidden');
     }
   }
 
   usuarioSelect.addEventListener('change', () => {
+    limparFeedback();
     atualizarPermissoesUI();
-    carregarAtividades();
+    recarregar();
   });
 
   // Ajustar campos de encontros baseado no tipo (palestra = 1, minicurso = 2-5)
@@ -127,10 +151,133 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const atividades = await res.json();
+      atividadesCache = atividades;
       renderizarAtividades(atividades);
     } catch (e) {
       atividadesGrid.innerHTML = `<p class="alert error">Erro ao carregar atividades: ${e.message}</p>`;
     }
+  }
+
+  // Carregar Minhas Inscrições (R16)
+  async function carregarMinhasInscricoes() {
+    if (ehOrganizacao()) {
+      minhasInscricoes = [];
+      return;
+    }
+    inscricoesLista.innerHTML = '<p class="loading">Carregando inscrições...</p>';
+    try {
+      const res = await fetch('/inscricoes', { headers: getHeaders() });
+      if (!res.ok) throw new Error('Falha ao carregar inscrições');
+      minhasInscricoes = await res.json();
+      renderizarMinhasInscricoes();
+    } catch (e) {
+      inscricoesLista.innerHTML = `<p class="alert error">Erro ao carregar inscrições: ${e.message}</p>`;
+    }
+  }
+
+  function renderizarMinhasInscricoes() {
+    if (minhasInscricoes.length === 0) {
+      inscricoesLista.innerHTML = '<p>Você ainda não tem inscrições.</p>';
+      return;
+    }
+
+    inscricoesLista.innerHTML = '';
+    minhasInscricoes.forEach((insc) => {
+      const atv = atividadesCache.find((a) => a.id === insc.atividadeId);
+      const titulo = atv ? atv.titulo : insc.atividadeId;
+      const item = document.createElement('div');
+      item.className = 'inscricao-item';
+      item.innerHTML = `
+        <div class="inscricao-info">
+          <span class="inscricao-titulo">${escapeHtml(titulo)}</span>
+          <span class="badge status-${insc.status}">${insc.status.replace('_', ' ')}</span>
+          ${insc.posicaoNaEspera !== null ? `<span class="posicao-espera">Posição na fila: ${insc.posicaoNaEspera}</span>` : ''}
+          ${insc.convocadaAte ? `<span class="convocada-ate">Convocada até: ${new Date(insc.convocadaAte).toLocaleString('pt-BR')}</span>` : ''}
+        </div>
+        <div class="inscricao-acoes">
+          ${insc.status === 'convocada' ? `<button class="btn primary btn-mini" data-confirmar="${insc.id}">Confirmar</button>` : ''}
+          ${STATUS_ATIVOS.includes(insc.status) ? `<button class="btn secondary btn-mini" data-cancelar="${insc.id}">Cancelar</button>` : ''}
+        </div>
+      `;
+
+      const btnConfirmar = item.querySelector('[data-confirmar]');
+      if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', () => confirmarInscricao(insc.id));
+      }
+      const btnCancel = item.querySelector('[data-cancelar]');
+      if (btnCancel) {
+        btnCancel.addEventListener('click', () => cancelarInscricao(insc.id));
+      }
+
+      inscricoesLista.appendChild(item);
+    });
+  }
+
+  async function recarregar() {
+    await Promise.all([carregarAtividades(), carregarMinhasInscricoes()]);
+  }
+
+  // Operações de inscrição do participante (R16)
+  async function inscreverAtividade(atividadeId) {
+    limparFeedback();
+    try {
+      const res = await fetch(`/atividades/${atividadeId}/inscricoes`, {
+        method: 'POST',
+        headers: getHeaders()
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        mostrarFeedback(`Erro [${data.erro}]: ${data.mensagem}`, 'error');
+      } else {
+        mostrarFeedback(
+          data.status === 'em_espera'
+            ? `Inscrição criada na fila de espera (posição ${data.posicaoNaEspera}).`
+            : 'Inscrição realizada com sucesso!',
+          'success'
+        );
+      }
+    } catch (err) {
+      mostrarFeedback(`Erro de conexão: ${err.message}`, 'error');
+    }
+    await recarregar();
+  }
+
+  async function cancelarInscricao(inscricaoId) {
+    limparFeedback();
+    try {
+      const res = await fetch(`/inscricoes/${inscricaoId}/cancelamento`, {
+        method: 'POST',
+        headers: getHeaders()
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        mostrarFeedback(`Erro [${data.erro}]: ${data.mensagem}`, 'error');
+      } else {
+        mostrarFeedback('Inscrição cancelada.', 'success');
+      }
+    } catch (err) {
+      mostrarFeedback(`Erro de conexão: ${err.message}`, 'error');
+    }
+    await recarregar();
+  }
+
+  async function confirmarInscricao(inscricaoId) {
+    limparFeedback();
+    try {
+      const res = await fetch(`/inscricoes/${inscricaoId}/confirmacao`, {
+        method: 'POST',
+        headers: getHeaders()
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        mostrarFeedback(`Erro [${data.erro}]: ${data.mensagem}`, 'error');
+      } else {
+        mostrarFeedback('Convocação confirmada!', 'success');
+      }
+    } catch (err) {
+      mostrarFeedback(`Erro de conexão: ${err.message}`, 'error');
+    }
+    await recarregar();
   }
 
   function renderizarAtividades(atividades) {
@@ -142,6 +289,24 @@ document.addEventListener('DOMContentLoaded', () => {
     atividadesGrid.innerHTML = '';
     atividades.forEach(atv => {
       const sala = salasMap[atv.salaId] ? salasMap[atv.salaId].nome : atv.salaId;
+      const minhaAtiva = minhasInscricoes.find(
+        (i) => i.atividadeId === atv.id && STATUS_ATIVOS.includes(i.status)
+      );
+
+      let acoesHtml = '';
+      if (!ehOrganizacao()) {
+        if (!minhaAtiva) {
+          acoesHtml = `<button class="btn primary btn-mini btn-inscrever" data-atv="${atv.id}">Inscrever</button>`;
+        } else {
+          const btns = [];
+          if (minhaAtiva.status === 'convocada') {
+            btns.push(`<button class="btn primary btn-mini btn-confirmar" data-insc="${minhaAtiva.id}">Confirmar</button>`);
+          }
+          btns.push(`<button class="btn secondary btn-mini btn-cancelar" data-insc="${minhaAtiva.id}">Cancelar</button>`);
+          acoesHtml = btns.join(' ');
+        }
+      }
+
       const card = document.createElement('div');
       card.className = 'atividade-card';
       card.innerHTML = `
@@ -154,13 +319,39 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>📍 Sala: ${escapeHtml(sala)}</span>
             <span>⏱️ Carga Horária: ${atv.cargaHorariaMinutos} min</span>
             <span>👥 Vagas Restantes: ${atv.vagasRestantes} / ${atv.vagas}</span>
+            ${minhaAtiva ? `<span>🎫 Minha inscrição: <span class="badge status-${minhaAtiva.status}">${minhaAtiva.status.replace('_', ' ')}</span></span>` : ''}
           </div>
         </div>
         <div class="atividade-footer">
           <span class="badge ${atv.situacao}">${atv.situacao.replace('_', ' ')}</span>
-          <span style="color: var(--primary);">Ver detalhes →</span>
+          <span class="atividade-acoes">
+            ${acoesHtml}
+            <span class="ver-detalhes" style="color: var(--primary);">Ver detalhes →</span>
+          </span>
         </div>
       `;
+
+      const btnInscrever = card.querySelector('.btn-inscrever');
+      if (btnInscrever) {
+        btnInscrever.addEventListener('click', (e) => {
+          e.stopPropagation();
+          inscreverAtividade(atv.id);
+        });
+      }
+      const btnCancelar = card.querySelector('.btn-cancelar');
+      if (btnCancelar) {
+        btnCancelar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          cancelarInscricao(minhaAtiva.id);
+        });
+      }
+      const btnConfirmar = card.querySelector('.btn-confirmar');
+      if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          confirmarInscricao(minhaAtiva.id);
+        });
+      }
 
       card.addEventListener('click', () => abrirDetalhesAtividade(atv.id));
       atividadesGrid.appendChild(card);
@@ -378,6 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicialização
   atualizarPermissoesUI();
   carregarSalas().then(() => {
-    carregarAtividades();
+    recarregar();
   });
 });

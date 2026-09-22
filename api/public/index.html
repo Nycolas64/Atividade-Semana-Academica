@@ -10,7 +10,7 @@
   <header>
     <div class="container header-content">
       <h1>Semana Acadêmica 2026</h1>
-      <p class="subtitle">M1 — Gestão da Grade de Atividades</p>
+      <p class="subtitle">M1/M2 — Grade de Atividades e Inscrições</p>
       <div class="user-bar">
         <label for="usuario-select">Usuário:</label>
         <select id="usuario-select">
@@ -23,6 +23,16 @@
   </header>
 
   <main class="container">
+    <div id="feedback-alert" class="alert hidden"></div>
+
+    <!-- Seção Participante: Minhas Inscrições -->
+    <section id="minhas-inscricoes" class="card hidden">
+      <h2>Minhas Inscrições</h2>
+      <div id="inscricoes-lista">
+        <p class="loading">Carregando inscrições...</p>
+      </div>
+    </section>
+
     <!-- Seção Organização: Formulário de Criação -->
     <section id="org-section" class="card org-card">
       <h2>Painel da Organização — Criar Atividade</h2>
