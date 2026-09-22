@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { obterSala } from './salaService.js';
-import { cancelarInscricoesDaAtividade } from './inscricaoService.js';
+import { cancelarInscricoesDaAtividade, convocarAposAumentoDeVagas } from './inscricaoService.js';
 
 let atividadesStore = [];
 
@@ -379,7 +379,12 @@ export function atualizarAtividade(id, dados, agora) {
   }
 
   if (dados.vagas !== undefined) {
+    const vagasAnteriores = atv.vagas;
     atv.vagas = dados.vagas;
+    // R7b: aumento de vagas dispara convocação da fila
+    if (dados.vagas > vagasAnteriores) {
+      convocarAposAumentoDeVagas(atv, agora);
+    }
   }
 
   return {

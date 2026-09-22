@@ -1,6 +1,37 @@
 import { getAgora } from '../services/relogioService.js';
 import { isOrganizacao } from '../services/usuarioService.js';
-import { criarInscricao, listarInscricoes, obterInscricaoPorId, cancelarInscricao } from '../services/inscricaoService.js';
+import {
+  criarInscricao,
+  listarInscricoes,
+  obterInscricaoPorId,
+  cancelarInscricao,
+  confirmarInscricao,
+  processarExpiracoes
+} from '../services/inscricaoService.js';
+
+export function postConfirmacaoInscricao(req, res) {
+  if (isOrganizacao(req.usuario)) {
+    return res.status(403).json({
+      erro: 'SOMENTE_PARTICIPANTE',
+      mensagem: 'Apenas participantes podem confirmar convocações.'
+    });
+  }
+
+  const resultado = confirmarInscricao(
+    req.params.id,
+    getAgora(),
+    req.usuario
+  );
+
+  if (!resultado.sucesso) {
+    return res.status(resultado.status).json({
+      erro: resultado.erro,
+      mensagem: resultado.mensagem
+    });
+  }
+
+  res.status(200).json(resultado.dados);
+}
 
 export function postCancelamentoInscricao(req, res) {
   if (isOrganizacao(req.usuario)) {
@@ -23,6 +54,7 @@ export function postCancelamentoInscricao(req, res) {
 }
 
 export function getInscricaoPorId(req, res) {
+  processarExpiracoes(getAgora());
   const insc = obterInscricaoPorId(req.params.id);
   if (!insc) {
     return res.status(404).json({
@@ -34,6 +66,7 @@ export function getInscricaoPorId(req, res) {
 }
 
 export function getInscricoes(req, res) {
+  processarExpiracoes(getAgora());
   const lista = listarInscricoes({
     participanteId: req.usuario,
     ehOrganizacao: isOrganizacao(req.usuario),

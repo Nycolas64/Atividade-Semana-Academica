@@ -7,9 +7,11 @@ import {
   atualizarAtividade,
   cancelarAtividade
 } from '../services/atividadeService.js';
+import { processarExpiracoes } from '../services/inscricaoService.js';
 
 export function getAtividades(req, res) {
   const agora = getAgora();
+  processarExpiracoes(agora);
   const filtros = {
     dia: req.query.dia,
     tipo: req.query.tipo
@@ -20,6 +22,7 @@ export function getAtividades(req, res) {
 
 export function getAtividadePorId(req, res) {
   const agora = getAgora();
+  processarExpiracoes(agora);
   const atv = obterAtividadePorId(req.params.id, agora);
   if (!atv) {
     return res.status(404).json({

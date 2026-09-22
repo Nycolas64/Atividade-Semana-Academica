@@ -37,6 +37,53 @@ function encerramentoMs(atv) {
   return primeiroInicioMs(atv) - 30 * 60 * 1000;
 }
 
+// instante em texto ISO com fuso -03:00 (formato do contrato)
+function formatarIsoMenos3(ms) {
+  const d = new Date(ms - 3 * 3600 * 1000);
+  return d.toISOString().replace(/\.\d{3}Z$/, '-03:00');
+}
+
+// R7: sempre que há vaga e fila, convoca o primeiro — uma vaga por vez
+// R8: após o encerramento das inscrições não há nova convocação
+function convocarProximoDaFila(atv, agora) {
+  for (;;) {
+    if (new Date(agora).getTime() >= encerramentoMs(atv)) return;
+    const vagasLivres = Math.max(0, atv.vagas - contarOcupadas(atv.id));
+    if (vagasLivres <= 0) return;
+    const prox = inscricoesStore.find(
+      (i) => i.atividadeId === atv.id && i.status === 'em_espera'
+    );
+    if (!prox) return;
+    prox.status = 'convocada';
+    prox.convocadaEm = agora;
+    sincronizarContadores(atv);
+  }
+}
+
+// R7b: gatilho externo (aumento de vagas via PATCH do M1)
+export function convocarAposAumentoDeVagas(atv, agora) {
+  convocarProximoDaFila(atv, agora);
+}
+
+// R9: convocação vencida vira expirada e, em cascata, o próximo da fila é
+// convocado — acontece a cada acesso, mesmo que ninguém tenha clicado
+export function processarExpiracoes(agora) {
+  for (;;) {
+    const agoraMs = new Date(agora).getTime();
+    const vencida = inscricoesStore.find(
+      (i) => i.status === 'convocada' && agoraMs > prazoConvocacaoMs(i)
+    );
+    if (!vencida) return;
+    vencida.status = 'expirada';
+    vencida.convocadaEm = undefined;
+    const atv = obterAtividadeBrutaPorId(vencida.atividadeId);
+    if (atv) {
+      sincronizarContadores(atv);
+      convocarProximoDaFila(atv, agora);
+    }
+  }
+}
+
 export function formatarInscricao(insc) {
   let posicaoNaEspera = null;
   if (insc.status === 'em_espera') {
@@ -46,13 +93,19 @@ export function formatarInscricao(insc) {
     posicaoNaEspera = fila.indexOf(insc) + 1;
   }
 
+  // R8: convocadaAte = min(convocação + 2h, encerramento) — derivado, nunca guardado
+  let convocadaAte = null;
+  if (insc.status === 'convocada') {
+    convocadaAte = formatarIsoMenos3(prazoConvocacaoMs(insc));
+  }
+
   return {
     id: insc.id,
     atividadeId: insc.atividadeId,
     participanteId: insc.participanteId,
     status: insc.status,
     posicaoNaEspera,
-    convocadaAte: null,
+    convocadaAte,
     criadaEm: insc.criadaEm
   };
 }
@@ -99,6 +152,7 @@ function contarMinicursosAtivos(participanteId, excluindoInscricaoId = null) {
 }
 
 export function criarInscricao(atividadeId, participanteId, agora) {
+  processarExpiracoes(agora);
   const atv = obterAtividadeBrutaPorId(atividadeId);
   if (!atv) {
     return {
@@ -188,6 +242,7 @@ export function criarInscricao(atividadeId, participanteId, agora) {
 
 // R10/R12: cancela inscrição ativa do próprio participante
 export function cancelarInscricao(id, agora, participanteId) {
+  processarExpiracoes(agora);
   const insc = inscricoesStore.find((i) => i.id === id);
   // R12: dono errado responde igual a id inexistente (não revela existência)
   if (!insc || insc.participanteId !== participanteId) {
@@ -217,8 +272,12 @@ export function cancelarInscricao(id, agora, participanteId) {
     };
   }
 
+  const liberouVaga =
+    insc.status === 'confirmada' || insc.status === 'convocada';
   insc.status = 'cancelada';
   if (atv) sincronizarContadores(atv);
+  // R7a: cancelamento que libera vaga dispara convocação
+  if (liberouVaga && atv) convocarProximoDaFila(atv, agora);
 
   return {
     sucesso: true,
@@ -239,6 +298,87 @@ export function cancelarInscricoesDaAtividade(atividadeId) {
   }
   const atv = obterAtividadeBrutaPorId(atividadeId);
   if (atv) sincronizarContadores(atv);
+}
+
+// R8: prazo derivado da convocação
+function prazoConvocacaoMs(insc) {
+  const atv = obterAtividadeBrutaPorId(insc.atividadeId);
+  return Math.min(
+    Date.parse(insc.convocadaEm) + 2 * 3600 * 1000,
+    atv ? encerramentoMs(atv) : Infinity
+  );
+}
+
+// R14: confirmar convocação; sucesso retorna a inscrição confirmada
+export function confirmarInscricao(id, agora, participanteId) {
+  processarExpiracoes(agora);
+  const insc = inscricoesStore.find((i) => i.id === id);
+  if (!insc || insc.participanteId !== participanteId) {
+    return {
+      erro: 'NAO_ENCONTRADO',
+      status: 404,
+      mensagem: 'Inscrição não encontrada.'
+    };
+  }
+
+  if (insc.status === 'expirada') {
+    return {
+      erro: 'CONVOCACAO_EXPIRADA',
+      status: 422,
+      mensagem: 'Convocação expirada.'
+    };
+  }
+  if (insc.status !== 'convocada') {
+    return {
+      erro: 'SEM_CONVOCACAO',
+      status: 422,
+      mensagem: 'Inscrição não possui convocação ativa.'
+    };
+  }
+
+  const atv = obterAtividadeBrutaPorId(insc.atividadeId);
+
+  // R14: prazo vencido vem antes dos recheces (e antes de qualquer mutação — R15)
+  if (new Date(agora).getTime() > prazoConvocacaoMs(insc)) {
+    return {
+      erro: 'CONVOCACAO_EXPIRADA',
+      status: 422,
+      mensagem: 'Convocação expirada.'
+    };
+  }
+
+  // R3/R14: rechec de conflito na confirmação (a convocação foi cega — R7)
+  // R15: falha não altera a inscrição — checagens antes de qualquer mutação
+  if (atv && temConflitoDeHorario(participanteId, atv)) {
+    return {
+      erro: 'CONFLITO_DE_HORARIO',
+      status: 409,
+      mensagem: 'Participante já possui inscrição sobreposta em outro horário.'
+    };
+  }
+
+  // R2/R14: rechec de limite na confirmação — a própria convocada já conta
+  if (
+    atv &&
+    atv.tipo === 'minicurso' &&
+    contarMinicursosAtivos(participanteId) > 3
+  ) {
+    return {
+      erro: 'LIMITE_DE_MINICURSOS',
+      status: 422,
+      mensagem: 'Participante atingiu o limite de 3 minicursos simultâneos.'
+    };
+  }
+
+  insc.status = 'confirmada';
+  insc.convocadaEm = undefined;
+  if (atv) sincronizarContadores(atv);
+
+  return {
+    sucesso: true,
+    status: 200,
+    dados: formatarInscricao(insc)
+  };
 }
 
 export function resetInscricoes() {

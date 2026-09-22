@@ -18,7 +18,8 @@ import {
   postInscricao,
   getInscricoes,
   getInscricaoPorId,
-  postCancelamentoInscricao
+  postCancelamentoInscricao,
+  postConfirmacaoInscricao
 } from './controllers/inscricaoController.js';
 
 export function criarServidor() {
@@ -66,6 +67,7 @@ export function criarServidor() {
   app.get('/inscricoes', getInscricoes);
   app.get('/inscricoes/:id', getInscricaoPorId);
   app.post('/inscricoes/:id/cancelamento', postCancelamentoInscricao);
+  app.post('/inscricoes/:id/confirmacao', postConfirmacaoInscricao);
 
   // Rotas de Teste
   app.post('/_teste/reset', postReset);
