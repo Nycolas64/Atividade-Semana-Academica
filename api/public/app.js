@@ -240,7 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function recarregar() {
-    await Promise.all([carregarAtividades(), carregarMinhasInscricoes()]);
+    // As inscrições carregam antes: o card depende delas para escolher
+    // entre Inscrever, Cancelar e Confirmar (R16).
+    await carregarMinhasInscricoes();
+    await carregarAtividades();
   }
 
   // Operações de inscrição do participante (R16)

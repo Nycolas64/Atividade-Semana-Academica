@@ -178,7 +178,9 @@ function inserirHtml(pai, html, doc) {
 }
 
 function combina(el, sel) {
-  if (sel.startsWith('.')) return el.classList.contains(sel.slice(1));
+  if (sel.startsWith('.')) {
+    return sel.slice(1).split('.').every((c) => c && el.classList.contains(c));
+  }
   if (sel.startsWith('#')) return el.id === sel.slice(1);
   if (sel.startsWith('[')) {
     const mm = sel.match(/^\[([\w-]+)(?:="([^"]*)")?\]$/);

@@ -190,4 +190,137 @@ describe('Interface M2 — telas com API falsa', () => {
     assert.equal(contagem.textContent, 'Prazo vencido', 'prazo ultrapassado deve indicar vencido');
     assert.equal(ui.intervalos.length, 0, 'vencido o prazo, o relógio da contagem deve parar');
   });
+
+  it('card da listagem oferece Inscrever e o clique chama POST de inscrição', async () => {
+    const ui = await carregarInterface({ atividades: [atv], inscricoes: [] });
+    ui.fetch.programar('POST', '/atividades/atv_1/inscricoes', 201, {
+      id: 'ins_aa11bb22',
+      atividadeId: 'atv_1',
+      participanteId: 'p-carla',
+      status: 'confirmada',
+      posicaoNaEspera: null,
+      convocadaAte: null,
+      criadaEm: '2026-10-19T09:00:00-03:00'
+    });
+
+    const card = ui.document.getElementById('atividades-grid').children[0];
+    const botao = card.querySelector('.btn-inscrever');
+    assert.ok(botao, 'card sem inscrição deve oferecer Inscrever');
+
+    botao.click();
+    await aguardar();
+
+    const chamada = ui.fetch.chamadas.find(
+      (c) => c.metodo === 'POST' && c.caminho === '/atividades/atv_1/inscricoes'
+    );
+    assert.ok(chamada, 'clicar em Inscrever no card deve fazer POST de inscrição');
+    assert.equal(
+      ui.document.getElementById('modal-body').innerHTML.includes('Oficina de Testes'),
+      false,
+      'o clique no botão não deve abrir o modal de detalhes'
+    );
+  });
+
+  it('card da listagem oferece Cancelar com inscrição ativa e o clique chama POST', async () => {
+    const inscricoes = [{
+      id: 'ins_1',
+      atividadeId: 'atv_1',
+      participanteId: 'p-carla',
+      status: 'confirmada',
+      posicaoNaEspera: null,
+      convocadaAte: null,
+      criadaEm: '2026-10-19T08:00:00-03:00'
+    }];
+    const ui = await carregarInterface({ atividades: [atv], inscricoes });
+    ui.fetch.programar('POST', '/inscricoes/ins_1/cancelamento', 200, {
+      ...inscricoes[0],
+      status: 'cancelada'
+    });
+
+    const card = ui.document.getElementById('atividades-grid').children[0];
+    const botao = card.querySelector('.btn-cancelar');
+    assert.ok(botao, 'card com inscrição ativa deve oferecer Cancelar');
+    assert.equal(card.querySelector('.btn-inscrever'), null, 'não deve oferecer Inscrever ao mesmo tempo');
+
+    botao.click();
+    await aguardar();
+
+    const chamada = ui.fetch.chamadas.find(
+      (c) => c.metodo === 'POST' && c.caminho === '/inscricoes/ins_1/cancelamento'
+    );
+    assert.ok(chamada, 'clicar em Cancelar no card deve fazer POST de cancelamento');
+  });
+
+  it('card da listagem oferece Confirmar quando convocada e o clique chama POST', async () => {
+    const inscricoes = [{
+      id: 'ins_9',
+      atividadeId: 'atv_1',
+      participanteId: 'p-carla',
+      status: 'convocada',
+      posicaoNaEspera: null,
+      convocadaAte: '2026-10-19T11:00:00-03:00',
+      criadaEm: '2026-10-19T08:00:00-03:00'
+    }];
+    const ui = await carregarInterface({ atividades: [atv], inscricoes });
+    ui.fetch.programar('POST', '/inscricoes/ins_9/confirmacao', 200, {
+      ...inscricoes[0],
+      status: 'confirmada',
+      convocadaAte: null
+    });
+
+    const card = ui.document.getElementById('atividades-grid').children[0];
+    const botao = card.querySelector('.btn-confirmar');
+    assert.ok(botao, 'card convocada deve oferecer Confirmar');
+
+    botao.click();
+    await aguardar();
+
+    const chamada = ui.fetch.chamadas.find(
+      (c) => c.metodo === 'POST' && c.caminho === '/inscricoes/ins_9/confirmacao'
+    );
+    assert.ok(chamada, 'clicar em Confirmar no card deve fazer POST de confirmação');
+  });
+
+  it('minhas inscrições mostra status e posição na fila de cada inscrição', async () => {
+    const inscricoes = [
+      {
+        id: 'ins_1',
+        atividadeId: 'atv_1',
+        participanteId: 'p-carla',
+        status: 'confirmada',
+        posicaoNaEspera: null,
+        convocadaAte: null,
+        criadaEm: '2026-10-19T08:00:00-03:00'
+      },
+      {
+        id: 'ins_2',
+        atividadeId: 'atv_1',
+        participanteId: 'p-carla',
+        status: 'em_espera',
+        posicaoNaEspera: 1,
+        convocadaAte: null,
+        criadaEm: '2026-10-19T08:05:00-03:00'
+      }
+    ];
+    const ui = await carregarInterface({ atividades: [atv], inscricoes });
+
+    const lista = ui.document.getElementById('inscricoes-lista');
+    const itens = lista.querySelectorAll('.inscricao-item');
+    assert.equal(itens.length, 2, 'as duas inscrições devem aparecer na seção');
+
+    assert.ok(
+      lista.querySelector('.badge.status-confirmada'),
+      'a inscrição confirmada deve exibir o status'
+    );
+    const badgeEspera = lista.querySelector('.badge.status-em_espera');
+    assert.ok(badgeEspera, 'a inscrição em_espera deve exibir o status');
+
+    const posicao = lista.querySelector('.posicao-espera');
+    assert.ok(posicao, 'a inscrição em_espera deve exibir a posição na fila');
+    assert.equal(
+      posicao.textContent,
+      'Posição na fila: 1',
+      'a posição exibida deve ser a vinda da API'
+    );
+  });
 });
