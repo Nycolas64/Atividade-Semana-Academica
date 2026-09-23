@@ -33,7 +33,7 @@ api/
 ## Rotas por módulo
 
 - M1 (feito): `/salas`, `/atividades` (GET/POST/PATCH/cancelamento).
-- M2 (a fazer): `/atividades/:id/inscricoes`, `/inscricoes`, `/inscricoes/:id` (+ cancelamento, confirmacao).
+- M2 (feito): `/atividades/:id/inscricoes`, `/inscricoes`, `/inscricoes/:id` (+ cancelamento, confirmacao).
 - `/_teste/*` (feito): reset e relógio.
 
 ## Testes

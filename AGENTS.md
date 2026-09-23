@@ -10,7 +10,7 @@
 ## Equipe
 
 - M1 — Grade de atividades: Nycolas Rozisca Moreno (Nycolas64) — concluído.
-- M2 — Inscrições e lista de espera: Gabriel Augusto Giroto (Girotin) — em andamento.
+- M2 — Inscrições e lista de espera: Gabriel Augusto Giroto (Girotin) — concluído.
 - Grupo de 2: apenas M1 e M2.
 
 ## Regras do projeto
