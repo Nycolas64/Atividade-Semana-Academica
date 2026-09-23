@@ -376,6 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const sala = salasMap[atv.salaId] ? salasMap[atv.salaId].nome : atv.salaId;
       const isOrg = usuarioSelect.value.startsWith('org-');
+      const minhaAtiva = minhasInscricoes.find(
+        (i) => i.atividadeId === atv.id && STATUS_ATIVOS.includes(i.status)
+      );
 
       let encontrosHtml = '<ul>';
       atv.encontros.forEach((enc, idx) => {
@@ -396,6 +399,14 @@ document.addEventListener('DOMContentLoaded', () => {
           
           <h4 style="margin-top: 1rem;">Encontros</h4>
           ${encontrosHtml}
+
+          ${!isOrg ? `
+            <div class="acoes-inscricao" style="margin-top: 1rem;">
+              ${!minhaAtiva
+                ? `<button class="btn primary btn-mini btn-inscrever" data-atv="${atv.id}">Inscrever</button>`
+                : `<button class="btn secondary btn-mini btn-cancelar" data-insc="${minhaAtiva.id}">Cancelar</button>`}
+            </div>
+          ` : ''}
 
           ${isOrg && atv.situacao !== 'cancelada' ? `
             <hr style="margin: 1.5rem 0; border:0; border-top:1px solid var(--border-color);">
@@ -421,6 +432,23 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       modal.classList.remove('hidden');
+
+      const btnDetalheInscrever = modalBody.querySelector('.btn-inscrever');
+      if (btnDetalheInscrever) {
+        btnDetalheInscrever.addEventListener('click', (e) => {
+          e.stopPropagation();
+          modal.classList.add('hidden');
+          inscreverAtividade(atv.id);
+        });
+      }
+      const btnDetalheCancelar = modalBody.querySelector('.btn-cancelar');
+      if (btnDetalheCancelar) {
+        btnDetalheCancelar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          modal.classList.add('hidden');
+          cancelarInscricao(minhaAtiva.id);
+        });
+      }
 
       if (isOrg && atv.situacao !== 'cancelada') {
         const formEditar = document.getElementById('form-editar-atividade');
