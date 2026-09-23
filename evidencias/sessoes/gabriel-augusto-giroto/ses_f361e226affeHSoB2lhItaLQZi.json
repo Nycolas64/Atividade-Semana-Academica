@@ -1,0 +1,264 @@
+{
+ "info": {
+  "id": "ses_f361e226affeHSoB2lhItaLQZi",
+  "slug": "stellar-pixel",
+  "projectID": "global",
+  "directory": "/home/giroto/Documents/Default Project",
+  "path": "home/giroto/Documents/Default Project",
+  "title": "Navegar para pasta Atividade-Semana-Academica",
+  "agent": "build",
+  "model": {
+   "id": "mimo-v2.6-flash-free",
+   "providerID": "opencode",
+   "variant": "default"
+  },
+  "version": "1.18.28",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 1036,
+   "output": 110,
+   "reasoning": 36,
+   "cache": {
+    "read": 15872,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1790093417877,
+   "updated": 1790093426771
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790093418213
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "mimo-v2.6-flash-free"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0c9e1deba001G87bsE9tkrYiHi",
+    "sessionID": "ses_f361e226affeHSoB2lhItaLQZi"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "va para a pasta\n\n /home/giroto/DevFaculdade/Atividade-Semana-Academica/",
+     "id": "prt_0c9e1debb0015aBjkamWVGl1xe",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1deba001G87bsE9tkrYiHi"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0c9e1deba001G87bsE9tkrYiHi",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "total": 8163,
+     "input": 26,
+     "output": 60,
+     "reasoning": 13,
+     "cache": {
+      "write": 0,
+      "read": 8064
+     }
+    },
+    "modelID": "mimo-v2.6-flash-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790093418228,
+     "completed": 1790093421163
+    },
+    "finish": "tool-calls",
+    "id": "msg_0c9e1def4001NDVau1deaUeNbN",
+    "sessionID": "ses_f361e226affeHSoB2lhItaLQZi"
+   },
+   "parts": [
+    {
+     "type": "step-start",
+     "id": "prt_0c9e1e807001PISHpoJBPOhsnt",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1def4001NDVau1deaUeNbN"
+    },
+    {
+     "type": "reasoning",
+     "text": "The user wants me to change working directory to that folder.",
+     "time": {
+      "start": 1790093420612,
+      "end": 1790093420760
+     },
+     "id": "prt_0c9e1e8440018d47JU3wkNpesH",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1def4001NDVau1deaUeNbN"
+    },
+    {
+     "type": "tool",
+     "tool": "bash",
+     "callID": "call_4d663513effc4f3e85f126f3",
+     "state": {
+      "status": "completed",
+      "input": {
+       "command": "ls -la /home/giroto/DevFaculdade/Atividade-Semana-Academica/"
+      },
+      "output": "total 48\ndrwxr-xr-x. 1 giroto giroto   324 set 22 12:57 .\ndrwxr-xr-x. 1 giroto giroto   620 set 22 13:03 ..\n-rw-r--r--. 1 giroto giroto   414 set 22 12:40 AGENTS.md\ndrwxr-xr-x. 1 giroto giroto   100 set 22 12:40 api\ndrwxr-xr-x. 1 giroto giroto    42 set 22 12:40 auditorias\n-rw-r--r--. 1 giroto giroto  5029 set 22 13:08 COMECE-AQUI-M2.md\n-rw-r--r--. 1 giroto giroto 12631 set 22 12:40 contrato-api.md\ndrwxr-xr-x. 1 giroto giroto    70 set 22 12:47 entrevistas\n-rw-r--r--. 1 giroto giroto   683 set 22 12:46 EQUIPE.md\ndrwxr-xr-x. 1 giroto giroto    60 set 22 12:40 evidencias\ndrwxr-xr-x. 1 giroto giroto   122 set 22 12:40 .git\n-rw-r--r--. 1 giroto giroto   259 set 22 12:40 .gitignore\ndrwxr-xr-x. 1 giroto giroto   132 set 22 12:40 .idea\ndrwxr-xr-x. 1 giroto giroto    22 set 22 12:40 .opencode\n-rw-r--r--. 1 giroto giroto   149 set 22 12:40 package.json\n-rw-r--r--. 1 giroto giroto   162 set 22 12:40 projeto.json\n-rw-r--r--. 1 giroto giroto  2990 set 22 12:40 README.md\ndrwxr-xr-x. 1 giroto giroto    38 set 22 12:40 specs\ndrwxr-xr-x. 1 giroto giroto    26 set 22 12:40 verificacoes\n",
+      "metadata": {
+       "output": "total 48\ndrwxr-xr-x. 1 giroto giroto   324 set 22 12:57 .\ndrwxr-xr-x. 1 giroto giroto   620 set 22 13:03 ..\n-rw-r--r--. 1 giroto giroto   414 set 22 12:40 AGENTS.md\ndrwxr-xr-x. 1 giroto giroto   100 set 22 12:40 api\ndrwxr-xr-x. 1 giroto giroto    42 set 22 12:40 auditorias\n-rw-r--r--. 1 giroto giroto  5029 set 22 13:08 COMECE-AQUI-M2.md\n-rw-r--r--. 1 giroto giroto 12631 set 22 12:40 contrato-api.md\ndrwxr-xr-x. 1 giroto giroto    70 set 22 12:47 entrevistas\n-rw-r--r--. 1 giroto giroto   683 set 22 12:46 EQUIPE.md\ndrwxr-xr-x. 1 giroto giroto    60 set 22 12:40 evidencias\ndrwxr-xr-x. 1 giroto giroto   122 set 22 12:40 .git\n-rw-r--r--. 1 giroto giroto   259 set 22 12:40 .gitignore\ndrwxr-xr-x. 1 giroto giroto   132 set 22 12:40 .idea\ndrwxr-xr-x. 1 giroto giroto    22 set 22 12:40 .opencode\n-rw-r--r--. 1 giroto giroto   149 set 22 12:40 package.json\n-rw-r--r--. 1 giroto giroto   162 set 22 12:40 projeto.json\n-rw-r--r--. 1 giroto giroto  2990 set 22 12:40 README.md\ndrwxr-xr-x. 1 giroto giroto    38 set 22 12:40 specs\ndrwxr-xr-x. 1 giroto giroto    26 set 22 12:40 verificacoes\n",
+       "exit": 0,
+       "truncated": false
+      },
+      "title": "ls -la /home/giroto/DevFaculdade/Atividade-Semana-Academica/",
+      "time": {
+       "start": 1790093420986,
+       "end": 1790093421017
+      }
+     },
+     "id": "prt_0c9e1e8da001xEWGKyVzze9abf",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1def4001NDVau1deaUeNbN"
+    },
+    {
+     "type": "tool",
+     "tool": "bash",
+     "callID": "call_8ee494f67e944317bf34fe8f",
+     "state": {
+      "status": "completed",
+      "input": {
+       "command": "pwd"
+      },
+      "output": "/home/giroto/Documents/Default Project\n",
+      "metadata": {
+       "output": "/home/giroto/Documents/Default Project\n",
+       "exit": 0,
+       "truncated": false
+      },
+      "title": "pwd",
+      "time": {
+       "start": 1790093421131,
+       "end": 1790093421157
+      }
+     },
+     "id": "prt_0c9e1e9de001g2SKd6NLob0ZXb",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1def4001NDVau1deaUeNbN"
+    },
+    {
+     "reason": "tool-calls",
+     "type": "step-finish",
+     "tokens": {
+      "total": 8163,
+      "input": 26,
+      "output": 60,
+      "reasoning": 13,
+      "cache": {
+       "write": 0,
+       "read": 8064
+      }
+     },
+     "cost": 0,
+     "id": "prt_0c9e1ea68001gR7HnTITKQP90h",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1def4001NDVau1deaUeNbN"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0c9e1deba001G87bsE9tkrYiHi",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "total": 8891,
+     "input": 1010,
+     "output": 50,
+     "reasoning": 23,
+     "cache": {
+      "write": 0,
+      "read": 7808
+     }
+    },
+    "modelID": "mimo-v2.6-flash-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790093421165,
+     "completed": 1790093426767
+    },
+    "finish": "stop",
+    "id": "msg_0c9e1ea6d001K31DxcQyNFtupn",
+    "sessionID": "ses_f361e226affeHSoB2lhItaLQZi"
+   },
+   "parts": [
+    {
+     "type": "step-start",
+     "id": "prt_0c9e1fb5f001L9zyKNMP8FRsXR",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1ea6d001K31DxcQyNFtupn"
+    },
+    {
+     "type": "reasoning",
+     "text": "The user wants to work in that directory. I should note that I'll use workdir parameter for commands.",
+     "time": {
+      "start": 1790093425541,
+      "end": 1790093426094
+     },
+     "id": "prt_0c9e1fb85001REpJofllqC0gGt",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1ea6d001K31DxcQyNFtupn"
+    },
+    {
+     "type": "text",
+     "text": "Estou na pasta `/home/giroto/DevFaculdade/Atividade-Semana-Academica/`. Vou usar `workdir` para rodar comandos nela. O que quer fazer?",
+     "time": {
+      "start": 1790093426096,
+      "end": 1790093426762
+     },
+     "id": "prt_0c9e1fdb0001EN9gFzdXwWwAGr",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1ea6d001K31DxcQyNFtupn"
+    },
+    {
+     "reason": "stop",
+     "type": "step-finish",
+     "tokens": {
+      "total": 8891,
+      "input": 1010,
+      "output": 50,
+      "reasoning": 23,
+      "cache": {
+       "write": 0,
+       "read": 7808
+      }
+     },
+     "cost": 0,
+     "id": "prt_0c9e2004c001g0HThfJrvF6ZuT",
+     "sessionID": "ses_f361e226affeHSoB2lhItaLQZi",
+     "messageID": "msg_0c9e1ea6d001K31DxcQyNFtupn"
+    }
+   ]
+  }
+ ]
+}

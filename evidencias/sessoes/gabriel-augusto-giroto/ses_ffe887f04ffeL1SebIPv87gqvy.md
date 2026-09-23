@@ -1,0 +1,210 @@
+# Estudos
+
+| | |
+|---|---|
+| Sessão | `ses_ffe887f04ffeL1SebIPv87gqvy` |
+| Pasta | Documents/Default Project |
+| Período | 14/08 15:10 → 16/09 13:49 |
+| Modelo | google/gemini-3.5-flash-lite, google/gemini-3.7-flash, opencode/muse-spark-1.2-contributor-free, opencode/nemotron-3.5-lightning-free |
+| Requisições ao modelo | 372 |
+| Tokens de entrada / saída | 11.833.948 / 181.956 |
+| Skills | — |
+| Subagentes | — |
+| Execuções de teste | 0 vermelhas, 0 verdes |
+| TDD | 0 ciclo(s) vermelho → verde · 0 teste(s) que já nasceram verdes · 0 vez(es) teste e código juntos |
+| Arquivos editados | 0 de teste, 66 de código, 0 de entrevista, 0 de spec, 0 de contexto, 0 de auditoria |
+| Alertas | — |
+
+## Linha do tempo
+
+- `14/08 15:10` **prompt** — Go to my folder /home/giroto/DevFaculdade/Estagio/ImpactaStore and simply analyse my mandatory temp code from my college and tell me what do you think of i
+- `14/08 15:18` **prompt** — It's temporary and half vibe coded I am worried of not properly dominating it how can I protect myself from turning dumb
+- `14/08 16:15` **prompt** — Got it... I'm a bit stuck with documentation though, I'm trying to use pgModeler to creat ERD (DER in portuguese) and I also need to create a Class Diagram with Astah and I'm kinda lost on where to start
+- `14/08 16:16` **prompt** — Oh for pgModeler I managed to exctract everything from the code with it, but it seems there's A LOT of stuff from the default package I am not utilizing (And I don't know what I can delete or not)
+- `14/08 16:34` **prompt** — It's currently like this, how can I make the relationships? Also, I forgot the difference between MER and DER
+- `14/08 16:37` **prompt** — Do I really need a MER?
+- `14/08 16:37` **prompt** — Do I really need a MER? Or can I have only a DER straight?
+- `14/08 16:38` **prompt** — brModelo renders weirdly on my Fedora, can you check if that's common? (I use GNOME with 125% scale, but even at default 100% a lot of stuffs looks way too small)
+- `14/08 16:40` **prompt** — ummm.. Is it easier if I use a VM? If it's the case can you help me setup one for this? My college seems confused, they ask for a DER, but they're delivering the MER (Concept one)
+- `14/08 16:44` **prompt** — I have this old ass "compilation/study" mind map from years ago that I never managed to evolve Is it useful now?
+- `14/08 21:33` **prompt** — Can you create a MER considering what I have on my code?
+- `14/08 21:34` **prompt** — It got me a syntax error XError: Error: Parse error on line 2:...-o{ GAME : cadastra { bigint id -----------------------^ Expecting 'EOF', 'SPACE', 'NEWLINE', 'title', 'acc_title', 'acc_descr', 'acc_descr_multiline_value', 'direction_tb', 'direction_bt', 'direction_rl', 'direction_lr', 'CLASSDEF', 'UNICODE_TEXT', 'CLASS', 'STYLE', 'NUM', 'ENTITY_NAME', 'DECIMAL_NUM', 'ENTITY_ONE', got 'BLOCK_STAR…
+- `14/08 21:35` **prompt** — Ok, what about the admin?
+- `14/08 21:35` **prompt** — Oh sure, but there will be an ADMIN
+- `14/08 21:40` **prompt** — Does this make it clearer?
+- `14/08 21:40` **prompt** — Now update the MER please
+- `14/08 21:44` **prompt** — Good, but damn, that's scary On pgModeler the generated Diagram from my code was way bigger, the real code sure is small then How should I keep going?
+- `14/08 21:45` **prompt** — My project is on /home/giroto/DevFaculdade/Estagio/ImpactaStore feel free to remove the unnecessary stuff
+- `14/08 21:46` **prompt** — WAIT Tell me everything you plan to delete, make a copy of the current project for backup please, I still didn't added it to github
+- `14/08 21:47` **prompt** — No, the game.blade is being used
+- `14/08 21:49` **prompt** — Looks good Tell me what else needs to go away The goal is to reach closest as possible to what our use case diagram is right now and then I can generate a proper DER for it with pgModeler
+- `14/08 21:51` **prompt** — WAIT Your backup seems incomplete, compare the current project with the backup and make them IDENTICAL The backup should be a clone of the main project
+- `14/08 21:55` **prompt** — Some paths broke on the backup in the blades files, please fix them
+- `14/08 21:59` **prompt** — fix only the backup files, the current project ones aren't broken the "fix" is simple, just align whatver paths necessary for the image/visualization files like pngs and gifs to properly display I want changes only on the BLADES files
+- `14/08 22:00` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore_backup/resources/views/about.blade.php`
+- `14/08 22:03` **prompt** — I think you broke something on the main page Text disappeared and my logo is gone, it was a gif at the BACKUP project
+- `14/08 22:06` **prompt** — This is how the main page should look like the image is a gif with forced transparency with CSS Not there yet though even with those commands
+- `14/08 22:08` **prompt** — No, it's rendering like this, only the lower area
+- `14/08 22:13` **prompt** — Nope, not yet
+- `14/08 22:16` **prompt** — No, just refreshed it. It's looking the same
+- `14/08 22:17` **prompt** — Didn't change
+- `15/08 19:15` **prompt** — forget it The problem was: FOLDER'S NAME I deleted your backup, created a copy with GNOME EXPLORER and tested renaming it to original "ImpactaStore" and boom, it worked Now we were doing something else about DER and MER weren't we?
+- `15/08 19:19` **prompt** — polish the code removing everything unnecessary not being used. from the IMPACTA STORE folder, don't touch our backup don't touch any files that are NOT laravel's default's I mean to remove the stuff from the default Laravel package we are not using after it, report me what we removed for me to proper document it outside Open Code
+- `15/08 19:23` **prompt** — Create a folder name Changelogs at /home/giroto/DevFaculdade/Estagio and create a .odt file properly formatted registering all of this in brazilian portuguese
+- `15/08 19:24` edita código `/tmp/opencode/create_odt.py`
+- `15/08 19:41` **prompt** — good, see this DER? The current code (or at least the latest import I got from pgModeler) gave me this diagram I need pgModeler to give me a proper DER, a lot of stuff in this image currently seem unnecessary Creat a new changelog file on our changelogs folder detailing new changes on our code, and go step by step with me to make this diagram easier to visualize/keep only necessary stuff only exp…
+- `15/08 19:41` edita código `/tmp/opencode/create_changelog2.py`
+- `15/08 19:44` **prompt** — WAIT isn't the migrations table necessary? Explain to me the differences between the migrations concept and the table you wanna delete I'm scared of breaking our database
+- `15/08 20:00` **prompt** — then do it, and keep it on the changelog files
+- `15/08 20:00` **prompt** — hello?
+- `15/08 20:01` edita código `/tmp/update_changelog2.py`
+- `15/08 20:17` **prompt** — Are the tables on pgmodeler supposed to change? they did not change at all
+- `15/08 20:18` **prompt** — english please I am reimporting the from the postgresDB of our project but it's not changing
+- `15/08 22:12` **prompt** — Ok now it's like this
+- `15/08 22:15` **prompt** — I like your mix of portugues and english in this scenario, portuguese for speaking about Banco de Dados/database/SQL and English as main language out of it, let's keep this. Please change the code too to remove those "hardcoded" tables (is it right to call them like that?) And I'll run the commands to update the database and pgModeler manually here
+- `15/08 22:16` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/database/migrations/0001_01_01_000000_create_users_table.php` (3×)
+- `15/08 22:22` **prompt** — Ok now we have this BUT now the website doesn't run anymore: # Illuminate\Database\QueryException - Internal Server Error SQLSTATE[42P01]: Undefined table: 7 ERROR: relation "sessions" does not exist LINE 1: select * from "sessions" where "id" = $1 limit 1 ^ (Connection: pgsql, Host: 127.0.0.1, Port: 5432, Database: impacta, SQL: select * from "sessions" where "id" = smlrZRIvfTM4SeNu1xT5ThEGbK1Ck…
+- `15/08 22:22` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/.env`
+- `15/08 22:25` **prompt** — The website is back! But the CRUD is broken now too :/ # Illuminate\Database\QueryException - Internal Server Error SQLSTATE[23502]: Not null violation: 7 ERROR: null value in column "user_id" of relation "games" violates not-null constraint DETAIL: Failing row contains (1, null, Teste, null, null, null, null, approved, 2026-08-16 01:25:15, 2026-08-16 01:25:15). (Connection: pgsql, Host: 127.0.0.…
+- `15/08 22:26` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/database/migrations/2026_06_23_200016_create_games_table.php`
+- `15/08 22:27` **prompt** — Me explique a diferença de DER, MER, e o que estamos usando de chaves atualmente
+- `15/08 22:31` **prompt** — entidades são objetos? classes? qual relação com POO? me ensine a fazer o Diagrama de classes do nosso projeto
+- `15/08 22:42` **prompt** — Chave Primária (Primary Key - PK):Onde está: Na coluna id da tabela users e na coluna id da tabela games. Para que serve: Identifica de forma única cada registro (cada usuário ou cada jogo) dentro daquela tabela. Nenhum registro pode ter o mesmo id. Chave Estrangeira (Foreign Key - FK): Onde está: Na coluna user_id da tabela games, apontando para o id da tabela users. Para que serve: Estabelece o…
+- `15/08 22:46` **prompt** — Please generate a UML MER code for me to use along https://plantuml.com/ website and compare ele com o Astah pra mim pra eu saber o que eu perdi de diferença
+- `15/08 23:05` **prompt** — Is this right? The class diagram from a friend of mine looks very different
+- `15/08 23:07` **prompt** — Now it's kinda hard to read LOL
+- `15/08 23:08` **prompt** — It's kinda hard to see the lines
+- `15/08 23:11` **prompt** — Please compare this diagram with our project on Impacta Store folder and tell me if anything looks weird
+- `15/08 23:12` **prompt** — Just to be sure You sent me a class diagram right now, right?
+- `15/08 23:15` **prompt** — Good! How about the DER? The white image is the MER from a friend of mine
+- `15/08 23:28` **prompt** — My friend told me this about my class diagram: geralmente as views ou boundaries do sistema não precisam de métodos ou atributos no diagrama de classe what does that mean? about our MER I can't find it on plantUML
+- `15/08 23:41` **prompt** — aquele codigo que voce me passou para o MER (you sent me a code for MER right?) is for plantUML? I mean, it looked like it, I'm confused Is my DER from PGmodeler good enough?
+- `15/08 23:46` **prompt** — Excellente! Please update our changelogs folder creating a new subfolder under the name "ESTUDOS" for all those stuff that aren't directly related to code, but to knowloedge and studies in general As well as any remaining stuff leftover around our code
+- `15/08 23:46` edita código `/tmp/create_estudos_odt.py`
+- `15/08 23:49` **prompt** — @startumlskinparam classAttributeIconSize 0 skinparam backgroundColor #1b1b18 skinparam defaultFontColor #ffffff skinparam classBackgroundColor #212121 skinparam classBorderColor #f53003 skinparam classFontColor #ffffff skinparam arrowColor #00ffcc skinparam arrowFontColor #ffffff class User <<entity>> { + id: Long + name: String + email: String + password: String } class Game <<entity>> { + id: …
+- `15/08 23:54` **prompt** — My friend said he is confused about my DER, and I think he is right He said my DER is missing "cardinalidades" and 1 pra N from users to games seems confusing I have 4 minutes for the last second on google classroom what can we do?
+- `15/08 23:55` **prompt** — pé de galinha right?
+- `19/08 13:09` **prompt** — Can you teach me about our code? Em portugues please? The essentials and how our diagrams were made
+- `19/08 13:24` **prompt** — I'm bringing the class diagram to Astah at the moment, can you help me?
+- `19/08 13:28` **prompt** — e agora?
+- `19/08 13:31` **prompt** — e as setas?
+- `19/08 13:36` **prompt** — diferença entre dependency e realization? setas bem parecidas
+- `19/08 13:52` **prompt** — Explain me our database we have users... but no auth no nothing how does it work
+- `19/08 13:54` **prompt** — Entao no momento o banco cria a tabela users mas só estamos usando a game?
+- `19/08 14:12` **prompt** — go back to english please teach me how to use postgres on our database now
+- `21/08 22:44` **prompt** — Hey, can you try adding this to our background homepage? I think it would look cool
+- `21/08 22:46` **prompt** — Oh sure, create a lightweigh simillar effect compatible with our tools, let's try keeping it simple
+- `21/08 22:47` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css` (2×)
+- `21/08 22:57` **prompt** — Wait, I sent you a nice animation what happened? you just added some minor nearly invisible dithering on the background, static, no animations also, something is wrong with my Vite, or you broke the transparency from my gif I run the command npm run dev -- --host 127.0.0.1 like always and my gif still misses the CSS transparency
+- `21/08 22:59` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `21/08 23:02` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/home.blade.php` (2×)
+- `21/08 23:09` **prompt** — oh wow but my gif from (the logo) still lacks transparency also your version isn't the same I am using on the code, I used a less "aggressive view", like, it was a bigger black central area, the effect reaching mostly the corners instead of turning the entire screen orange also it want it fixed on the screen, reaching even if we scroll it down, not only a small section
+- `21/08 23:14` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/home.blade.php`
+- `21/08 23:15` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 01:10` **prompt** — ummm... no that's not it alo the effect looks weird there is a black area in the middle now let's do this remove the previous static orange gradient (the one that wasn't related to our new animation) and keep everything black in the background after it try re-adding our animation the main upper tab (the one for the name impacta, shortcuts for Inicio, Games and Sobre nós) should have a transparent…
+- `22/08 01:13` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/components/header.css`
+- `22/08 01:14` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 01:19` **prompt** — Good! but behind our logo gif there is still a black giant bar not allowing us to see the animated background (I believe the gif transperency is still missing as well) also the background does a vortex wayyy too "curvy" for my taste, it floods the entire screen and I didn't wanted that, I just wanted a nice subtle effect at the borders, check the source code for our animation again please and see…
+- `22/08 01:22` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `22/08 01:23` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 02:29` **prompt** — closer but still not there yet I want the center black area of the vortex bigger, the dithering should be easier be more crisp/visible (t doesn't look like high-res dithering it looks like quantized layers under some kind of overlay) and THERE IS STILL A DAMN BLACK GIAN BAR UNDER THE LOGO.GIF AND THE "Impacta Store" " Games com alma universitaria" !!!
+- `22/08 02:31` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `22/08 02:32` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 09:10` **prompt** — My gif needs transparency (remove the black on it) please help, it used to work and now doesnt also the black vortex circle in the center should be bigger and the color of of the vortex should be a bit darker too
+- `22/08 09:10` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 09:33` **prompt** — something is weird please help me verify I am running the commands npm run dev -- --host 127.0.0.1 and php artisan serve on my project, yet the FUCKING gif still misses our transparency CSS effect (Again, it's a gif with black background, the transparency was being added with luma key like effects by css)
+- `22/08 09:35` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `22/08 09:42` **prompt** — This is what I am seeing ok? focus on fixing this gif's transparency (the "impacta" logo.gif) it was working before
+- `22/08 09:45` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `22/08 09:47` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/home.blade.php`
+- `22/08 10:11` **prompt** — Do you have the capabiliy of creating diagrams on Astah uml?
+- `22/08 10:12` **prompt** — I need a sequence diagram for my project I had one but the FUCKING program didn't save my modififications I did with my teacher, she's gonna kill me
+- `22/08 12:54` **prompt** — Legendary! Can you make our background a bit darker and with more dots? I need the dithering to look high-res also tell me the requirements for this background we created and how it works
+- `22/08 12:54` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 12:57` **prompt** — wait... let's forget the dithering, make the shapes clear make it spin a little bit faster
+- `22/08 12:57` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 12:58` **prompt** — OH MY GOD NONONONO GO BACK DON'T CHANGE THE SHAPE JUST REMOVE THE DITHERING OMG NO
+- `22/08 12:59` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:00` **prompt** — nooooooo nooo undo UNDOOO
+- `22/08 13:03` **prompt** — HERE DO IT AGAIN recreate it only with laravel blades and vite in mind
+- `22/08 13:04` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:08` **prompt** — OOoooh Looks cool! But I think the dithering is too aggressive XD Make the black hole center bigger please the colors a bit more to a dark orange and forget the dithering, keep the exact same sharp shapes with flat colors but without all the dots
+- `22/08 13:08` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:11` **prompt** — nothing renders now, it's black
+- `22/08 13:11` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:17` **prompt** — Nice! but I still need the effect to be more on the corners and... it seems... blurry at some areas? please re-vise the way you are rendering this I want it to be simple, sharp and lightweight I don't dithering anymore but I also don't want cheap smoothing filters on the gradient
+- `22/08 13:17` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:20` **prompt** — Cool! make the shapes thicker and make the big black center bigger
+- `22/08 13:21` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:34` **prompt** — Perfect! just push the effect a little bit more to the corners for better contrast with our text and make our gif position a bit higher to the right please -> + up
+- `22/08 13:35` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `22/08 13:36` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/layouts/app.blade.php`
+- `22/08 13:47` **prompt** — Push the logo a tiiiny bit higher pls
+- `22/08 13:48` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/home.css`
+- `22/08 14:01` **prompt** — Good now please add this end details on the homepage and apply the glossy/glass effect on it too
+- `22/08 14:03` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/components/footer.css`
+- `22/08 14:05` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/home.blade.php`
+- `22/08 14:08` **prompt** — make a transition between those colors righ here please make the gray background translucent black
+- `22/08 14:10` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/about.css` (2×)
+- `22/08 14:17` **prompt** — nah, forget it... blend those backgrounds into one
+- `22/08 14:18` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/about.css` (3×)
+- `22/08 15:15` **prompt** — Wait... let's play with translunt colors add a dark orange behind the first half and then a slight black on the lower one please try to improve responsiveness for mobiel as well stuff are breaking on it
+- `22/08 15:16` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/about.css` (5×)
+- `22/08 15:29` **prompt** — oh! the page is laggy now... why?
+- `22/08 15:30` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/components/header.css`
+- `22/08 15:33` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/components/footer.css` (2×)
+- `22/08 15:38` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/about.css`
+- `22/08 23:42` **prompt** — this diagram is for what kind of use case in our project do "Navegação pelo sistema" next please
+- `22/08 23:48` **prompt** — I now need two "Diagramas de Estado" for those 2 use cases HELP
+- `31/08 00:22` **prompt** — can you add a admin page on our project?
+- `31/08 00:50` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/app/Http/Controllers/AdminController.php`
+- `31/08 00:50` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/routes/web.php` (2×)
+- `31/08 01:11` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/views/admin/index.blade.php`
+- `31/08 14:09` **prompt** — AWESOME can you refresh me on what we were doing? my biggest issue is: I "vibecoded" the full code and documentation and now I don't understand it's flow properly
+- `04/09 13:32` **prompt** — See those diagrams? can you update the sequence and classes one with the following requirements: - - Revisão do diagrama Gerenciar Projetos Pessoais FALTA UM CRUD COMPLETO - Métodos dos objetos nos diagramas, revisão total those diagrams represent our project of Impacta Store feel free to warn me if they are incorrect along our code currently my boss complained about the sequence diagram and the …
+- `04/09 13:34` **prompt** — please verify if your diagrams are following our code project at /home/giroto/DevFaculdade/Estagio/ImpactaStore
+- `04/09 13:36` **prompt** — My teacher said the last one at the sequence diagram "database" isn't necessary please remove it
+- `04/09 13:40` **prompt** — The sequence on plantuml is using 1 to 34 instead of 1.1.1.1. 2.2.2.2. 3.3.3.3.3. 4.4.4.4. fix that (4 procedures, CRUD)
+- `04/09 13:42` **prompt** — In a scale of zero to 10 how wrong was this diagram?
+- `04/09 13:44` **prompt** — Oh! please forgive me here is the full one (my teacher wants me to use 11.1.1.1.1.1.1..1.1 for some reason though) now tell me from 0 to 10 how wrong (or not) this is compared to this new diagram from plantUml you made me
+- `04/09 13:47` **prompt** — I am scared this is 100% to our code real flow when submitting a new project, editing it and stuff to postgres? I wanted you to make a test and prooving (teaching me quickly) if this is accurate I am stuttering too much when I speak to her (Due to my vibecoding, I don't properly dominate the project)
+- `04/09 13:55` **prompt** — Should I update the class diagram first? I mean, my teacher told me that Astah was supposed to autofill the methods from the classes right? I am trying to add the GET to my sequence diagram but it's getting empty
+- `04/09 13:59` **prompt** — OK then.... I will recreate this diagram on Astah after fixing the diagram class verify if my code and postgres insertions make sense with those documents here
+- `04/09 14:02` **prompt** — I have a "HomeController" only for the homepage?
+- `04/09 14:04` **prompt** — Does that really make sense? I have an empty controller
+- `04/09 14:08` **prompt** — <?php namespace App\Http\Controllers; abstract class Controller { // } this is it's content can I delete it? or is it some kind of super class mandatory to exist
+- `04/09 14:20` **prompt** — we have a user class but we have no login system yet I can't mod the workflow too heavily, I don't have enough time for doing this properly now how can we proceed?
+- `04/09 14:21` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/app/Http/Controllers/GameController.php`
+- `04/09 14:26` **prompt** — what is the password for our postgres? our Impacta Store
+- `04/09 14:30` **prompt** — add this to .txt file at /home/giroto/DevFaculdade/Estagio
+- `04/09 14:30` edita outro `/home/giroto/DevFaculdade/Estagio/postgres_credentials.txt`
+- `04/09 14:37` **prompt** — tell me if this diagram still makes sense after your modifications: Let's update GameController@store so that whenever a game is uploaded, it automatically assigns a default user_id (creating a default user if none exists in the database). This requires zero login screens, keeps your database relationship 100% valid, and satisfies your college requirements instantly! Let's use edit on app/Http/Co…
+- `04/09 14:41` **prompt** — My stakeholder wants to use google authentication with @edu emails in a near future is my database prepared for that? (is that user table usefull?)
+- `04/09 14:43` **prompt** — my biggest issue here is I have to prepare for a pre-presentation (half-way to end mandatory temp presentation in my college) and not having a login system makes me feel weak at arguments my teacher doesn't seem to trust me yet if I creat a login system (even if BASIC now, stuff might fully break)
+- `04/09 14:53` **prompt** — my current diagram class doesn't seem to match yours (I am recreating my old one to update with yours) (my teacher told me to keep the relationships simple, very simple so there is only one type of "arrow") please check again which methods do we really have and use
+- `04/09 15:08` **prompt** — what it means to be a foreign key?
+- `04/09 15:22` **prompt** — I can't find those (/games/upload) and (/games/upload create())
+- `04/09 15:37` **prompt** — Hey wasn't I supposed to be using the methods from Astah? I am doing it by hand
+- `04/09 15:37` **prompt** — please give me an updated plantuml following THIS
+- `04/09 15:47` **prompt** — Nooo dude I need a sequence diagram I am currently adding the methods by hand like this one can I utilize the mehtods from the class diagram safely?
+- `04/09 15:47` **prompt** — how? see the way I was doing it and correct me please
+- `04/09 15:52` **prompt** — help me bro this isn't making much sense I need a SEQUENCE diagram that USES MY METHODES ON THE DIAGRAM
+- `04/09 16:01` **prompt** — Is it normal to have "void" like that?
+- `04/09 16:02` **prompt** — nooo mate those methods are talking do my database!!! are they really null???? is this right??
+- `04/09 16:02` **prompt** — please verify if that makes sense along my code I don't trust you
+- `04/09 16:20` **prompt** — About my navigation diagram now my teacher told me that my flow system was pretty incomplete please help
+- `04/09 16:28` **prompt** — this doesn't seem right my teacher expected loop areas segments where the user might keep being thrown back
+- `04/09 16:31` **prompt** — I don't properly know what my teacher wants I just know she wants loops on the navigation area and that it made sense when she explained it to me ...I feel so much brain fog ;-;
+- `04/09 16:32` **prompt** — nooo no it's a navigation ONLY system, focused on visitors with no login I think option 1 and 2 make sense
+- `16/09 12:57` **prompt** — I need the projects to be uploaded by default as REJECTED
+- `16/09 12:59` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/app/Http/Controllers/GameController.php`
+- `16/09 13:06` **prompt** — at our games project, please make it look like clean like in the example (no "degradê effects, currently the banner image is darkened out, and we lack the "orange degradê" underneath it) removing the animated backgrounds ONLY for that page too
+- `16/09 13:11` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/games-index.css`
+- `16/09 13:12` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/games-show.css`
+- `16/09 13:13` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/games-index.css`
+- `16/09 13:13` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/games-show.css`
+- `16/09 13:17` **prompt** — Can you add drop shadows to the elements above the banner to improve readibility?
+- `16/09 13:19` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/games-show.css`
+- `16/09 13:34` **prompt** — nooo this is wrong no undo this and add a small fade/darkening effect on the lower area of the image instead, it's probably easier to visualize
+- `16/09 13:35` edita código `/home/giroto/DevFaculdade/Estagio/ImpactaStore/resources/css/pages/games-show.css`
+- `16/09 13:49` **prompt** — PERFECT now please to finish everything, make our game page show the screenshots alternating left and right like in the example

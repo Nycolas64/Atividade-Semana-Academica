@@ -1,0 +1,213 @@
+{
+ "info": {
+  "id": "ses_f35566c95ffeqmzhUDMFUF01O6",
+  "slug": "brave-squid",
+  "projectID": "global",
+  "directory": "/home/giroto/Documents/Default Project",
+  "path": "home/giroto/Documents/Default Project",
+  "title": "Test message",
+  "agent": "build",
+  "model": {
+   "id": "muse-spark-1.2-contributor-free",
+   "providerID": "opencode",
+   "variant": "default"
+  },
+  "version": "1.18.32",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "reasoning": 0,
+   "cache": {
+    "read": 0,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1790106506090,
+   "updated": 1790106525459
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790106506416
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "ling-3.0-flash-fin-free",
+     "variant": "high"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0caa99463001JbMVmQBiEA7Ls1",
+    "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "teste",
+     "id": "prt_0caa99465001CqGOu4iUFIjjT0",
+     "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6",
+     "messageID": "msg_0caa99463001JbMVmQBiEA7Ls1"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0caa99463001JbMVmQBiEA7Ls1",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "variant": "high",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "ling-3.0-flash-fin-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790106506450
+    },
+    "id": "msg_0caa994d2001nIhyIeGlSbxogD",
+    "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6"
+   },
+   "parts": []
+  },
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790106512420
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "muse-spark-1.2-contributor-free",
+     "variant": "high"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0caa9ac0100173cyIr0CVpkyqZ",
+    "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "eaaa",
+     "id": "prt_0caa9ac06001imKeofxmrOns4c",
+     "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6",
+     "messageID": "msg_0caa9ac0100173cyIr0CVpkyqZ"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0caa9ac0100173cyIr0CVpkyqZ",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "variant": "high",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "muse-spark-1.2-contributor-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790106512430
+    },
+    "id": "msg_0caa9ac2e001kb7m5HXR1wU6XY",
+    "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6"
+   },
+   "parts": []
+  },
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790106525440
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "muse-spark-1.2-contributor-free"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0caa9dedf001LeVC863Zy6Uk7b",
+    "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "aaaa",
+     "id": "prt_0caa9dee3001owxwJYbZ4oRnDp",
+     "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6",
+     "messageID": "msg_0caa9dedf001LeVC863Zy6Uk7b"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0caa9dedf001LeVC863Zy6Uk7b",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "muse-spark-1.2-contributor-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790106525454
+    },
+    "id": "msg_0caa9df0e001inCDKI0iKrhv6Y",
+    "sessionID": "ses_f35566c95ffeqmzhUDMFUF01O6"
+   },
+   "parts": []
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "info": {
+  "id": "ses_f3559c0f6ffexrXHbCw5WGBkMj",
+  "slug": "quick-engine",
+  "projectID": "global",
+  "directory": "/home/giroto/Documents/Default Project",
+  "path": "home/giroto/Documents/Default Project",
+  "title": "M2 Inscrições e lista de espera — rodada 1 grilling e confirmação de testes",
+  "agent": "build",
+  "model": {
+   "id": "ling-3.0-flash-fin-free",
+   "providerID": "opencode",
+   "variant": "high"
+  },
+  "version": "1.18.28",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "reasoning": 0,
+   "cache": {
+    "read": 0,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1790106287881,
+   "updated": 1790106366938
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790106366876
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "ling-3.0-flash-fin-free",
+     "variant": "high"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0caa77369001w29DAGTQBZ3gPU",
+    "sessionID": "ses_f3559c0f6ffexrXHbCw5WGBkMj"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "Continue o repositório /home/giroto/DevFaculdade/Atividade-Semana-Academica. Leia AGENTS.md e api/AGENTS.md. Estou começando o M2 — Inscrições e lista de espera (sou dono: Gabriel Girotin). Rodada 1 da entrevista com a skill grilling, gravando em entrevistas/M2-inscricoes.md. Ainda NÃO consultar o documento de requisitos (só rodada 2). Antes, confirme npm test verde (24 testes).",
+     "id": "prt_0caa7736d0013zLhH23Mj8ltzq",
+     "sessionID": "ses_f3559c0f6ffexrXHbCw5WGBkMj",
+     "messageID": "msg_0caa77369001w29DAGTQBZ3gPU"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0caa77369001w29DAGTQBZ3gPU",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "variant": "high",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "ling-3.0-flash-fin-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790106366904
+    },
+    "id": "msg_0caa773b7001pMHo7gioUERiCK",
+    "sessionID": "ses_f3559c0f6ffexrXHbCw5WGBkMj"
+   },
+   "parts": []
+  }
+ ]
+}

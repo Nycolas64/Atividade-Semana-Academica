@@ -1,0 +1,95 @@
+{
+ "info": {
+  "id": "ses_f35538efdffefL15k6vG5LOpZi",
+  "slug": "swift-forest",
+  "projectID": "global",
+  "directory": "/home/giroto",
+  "path": "home/giroto",
+  "title": "New session - 2026-09-22T19:51:33.890Z",
+  "agent": "build",
+  "model": {
+   "id": "gemini-3-pro-image-preview",
+   "providerID": "google"
+  },
+  "version": "1.18.32",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 0,
+   "output": 0,
+   "reasoning": 0,
+   "cache": {
+    "read": 0,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1790106693890,
+   "updated": 1790106693977
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790106693911
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "google",
+     "modelID": "gemini-3-pro-image-preview"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0caac7117001i7A9jxYvTcuhf0",
+    "sessionID": "ses_f35538efdffefL15k6vG5LOpZi"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "teste",
+     "id": "prt_0caac711a0017IzfFC798DpgRZ",
+     "sessionID": "ses_f35538efdffefL15k6vG5LOpZi",
+     "messageID": "msg_0caac7117001i7A9jxYvTcuhf0"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0caac7117001i7A9jxYvTcuhf0",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "/home/giroto",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "input": 0,
+     "output": 0,
+     "reasoning": 0,
+     "cache": {
+      "read": 0,
+      "write": 0
+     }
+    },
+    "modelID": "gemini-3-pro-image-preview",
+    "providerID": "google",
+    "time": {
+     "created": 1790106693938,
+     "completed": 1790106734907
+    },
+    "id": "msg_0caac7132001YkJ1d3io4c1pH8",
+    "sessionID": "ses_f35538efdffefL15k6vG5LOpZi"
+   },
+   "parts": []
+  }
+ ]
+}

@@ -1,0 +1,262 @@
+# Implementação M2 inscricoes com TDD
+
+| | |
+|---|---|
+| Sessão | `ses_f351c863affeA88MnBDatxcB47` |
+| Pasta | Documents/Default Project |
+| Período | 22/09 17:51 → 22/09 21:31 |
+| Modelo | opencode/mimo-v2.6-flash-free |
+| Requisições ao modelo | 309 |
+| Tokens de entrada / saída | 2.510.393 / 305.730 |
+| Skills | customize-opencode, tdd |
+| Subagentes | revisor-de-contrato |
+| Execuções de teste | 37 vermelhas, 66 verdes |
+| TDD | 32 ciclo(s) vermelho → verde · 24 teste(s) que já nasceram verdes · 0 vez(es) teste e código juntos |
+| Arquivos editados | 61 de teste, 92 de código, 0 de entrevista, 0 de spec, 2 de contexto, 2 de auditoria |
+| Alertas | — |
+
+## Linha do tempo
+
+- `22/09 17:51` **prompt** — Faça a implementação do módulo M2 — Inscrições e lista de espera no repo /home/giroto/DevFaculdade/Atividade-Semana-Academica, seguindo a skill .opencode/skills/tdd/SKILL.md. Contexto: Spec fechada: specs/M2-inscricoes.md (R1–R16, 42 critérios, 5 fatias) — fonte das decisões, etapa encerrada, não reabra nem entreviste de novo. A ordem de entrega é a §8 (fatias de entrega). Entrevista (só para con…
+- `22/09 17:51` carrega a skill **customize-opencode**
+- `22/09 17:52` roda `npm test 2>&1 | tail -20` → verde (24 passaram)
+- `22/09 18:03` **prompt** — em que ponto paramos?
+- `22/09 18:08` **prompt** — voce consegue detectar um novo subagente?
+- `22/09 18:09` **prompt** — acabei de reiniciar o opencode consegue usa-lo?
+- `22/09 18:10` chama o subagente **revisor-de-contrato** — Testa subagente revisor
+- `22/09 18:11` **prompt** — Reiniciar no caso, uma nova sessão?
+- `22/09 18:12` **prompt** — estou usando o opencode desktop no Fedora kkkk
+- `22/09 18:12` **prompt** — faça a emulação
+- `22/09 18:14` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:15` roda `npm test 2>&1 | grep -E '^(# |not ok|ok [0-9]+ - Crit|.*Critério)' | head -40` → verde — _teste novo já nasceu verde_
+- `22/09 18:15` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/app.js`
+- `22/09 18:15` roda `npm test 2>&1 | tail -12` → verde (25 passaram)
+- `22/09 18:15` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:16` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (25 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:16` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:16` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:16` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/app.js` (2×)
+- `22/09 18:16` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (26 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:17` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:17` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (26 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:17` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:17` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (27 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:17` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js` (2×)
+- `22/09 18:17` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (27 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:17` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:17` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/testeController.js`
+- `22/09 18:18` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (3×)
+- `22/09 18:18` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (28 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:18` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:18` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (28 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:18` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (2×)
+- `22/09 18:18` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (29 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:18` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:18` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (29 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:18` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (3×)
+- `22/09 18:19` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (30 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:19` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:19` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (31 passaram) — _teste novo já nasceu verde_
+- `22/09 18:19` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:19` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (31 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:19` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (2×)
+- `22/09 18:20` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (32 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:20` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:20` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (32 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:20` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:20` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:20` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/app.js` (2×)
+- `22/09 18:20` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (33 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:20` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:20` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (33 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:20` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:20` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:20` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/app.js` (2×)
+- `22/09 18:21` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass|# duration'` → verde (34 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:22` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:22` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (34 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:22` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:22` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (35 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:22` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:22` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (36 passaram) — _teste novo já nasceu verde_
+- `22/09 18:23` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js` (2×)
+- `22/09 18:23` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (36 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:23` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (2×)
+- `22/09 18:23` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (37 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:23` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:23` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (38 passaram) — _teste novo já nasceu verde_
+- `22/09 18:24` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:24` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (39 passaram) — _teste novo já nasceu verde_
+- `22/09 18:24` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:24` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → **vermelho** (39 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:24` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (2×)
+- `22/09 18:24` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (40 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:24` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:25` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (41 passaram) — _teste novo já nasceu verde_
+- `22/09 18:25` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:25` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (42 passaram) — _teste novo já nasceu verde_
+- `22/09 18:25` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:25` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (43 passaram) — _teste novo já nasceu verde_
+- `22/09 18:25` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:26` roda `npm test 2>&1 | grep -E 'not ok|# tests|# fail|# pass'` → verde (44 passaram) — _teste novo já nasceu verde_
+- `22/09 18:33` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:33` roda `npm test 2>&1 | tail -40` → **vermelho** (44 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:34` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:34` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:34` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/app.js` (2×)
+- `22/09 18:34` roda `npm test 2>&1 | tail -12` → verde (45 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:34` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:34` roda `npm test 2>&1 | grep -E "Critério 24|not ok|# (tests|pass|fail)" | head -20` → **vermelho** (45 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:34` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:34` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (46 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:34` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:35` roda `npm test 2>&1 | grep -E "Critério 2[56]|# (tests|pass|fail)"` → **vermelho** (46 passaram, 2 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:35` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (3×)
+- `22/09 18:35` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:35` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:35` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (48 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:35` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:35` roda `npm test 2>&1 | grep -E "Critério 27|# (tests|pass|fail)"` → **vermelho** (48 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:36` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:36` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/atividadeService.js` (2×)
+- `22/09 18:36` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (49 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:36` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:36` roda `npm test 2>&1 | grep -E "Critério 15|# (tests|pass|fail)"` → verde (50 passaram) — _teste novo já nasceu verde_
+- `22/09 18:36` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:36` roda `npm test 2>&1 | grep -E "Critério 28 \(R12\).*cancelamento|# (tests|pass|fail)|…` → **vermelho** (50 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:36` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:36` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (51 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:37` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:37` roda `npm test 2>&1 | grep -E "Critério 29 \(R12\)|Critério 30 \(R12\): POST|# (tests…` → **vermelho** (52 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:37` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:37` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:37` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (53 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:37` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:37` roda `npm test 2>&1 | grep -E "Critério 13|# (tests|pass|fail)"` → verde (54 passaram) — _teste novo já nasceu verde_
+- `22/09 18:38` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:38` roda `npm test 2>&1 | grep -E "Critério 11 parcial|# (tests|pass|fail)"` → verde (55 passaram) — _teste novo já nasceu verde_
+- `22/09 18:38` roda `npm test 2>&1 | tail -15` → verde (55 passaram)
+- `22/09 18:39` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:39` roda `npm test 2>&1 | grep -E "Critério 16|# (tests|pass|fail)"` → **vermelho** (55 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:40` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (3×)
+- `22/09 18:40` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → **vermelho** (55 passaram, 1 falharam)
+- `22/09 18:40` roda `npm test 2>&1 | grep -B2 -A25 "not ok.*Critério 16 (R7a)"` → **vermelho**
+- `22/09 18:40` roda `npm test 2>&1 | grep -E "^\s*not ok"` → verde
+- `22/09 18:41` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:41` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (56 passaram) — _teste novo já nasceu verde_
+- `22/09 18:41` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:41` roda `npm test 2>&1 | grep -E "Critério 19|# (tests|pass|fail)"` → verde (57 passaram) — _teste novo já nasceu verde_
+- `22/09 18:42` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:42` roda `npm test 2>&1 | grep -E "Critério 20|# (tests|pass|fail)"` → verde (58 passaram) — _teste novo já nasceu verde_
+- `22/09 18:42` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:42` roda `npm test 2>&1 | grep -E "Critério 21|# (tests|pass|fail)"` → **vermelho** (58 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:42` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:42` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (59 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:43` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:43` roda `npm test 2>&1 | grep -E "Critério 17|# (tests|pass|fail)"` → **vermelho** (59 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:43` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (2×)
+- `22/09 18:43` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/atividadeService.js` (2×)
+- `22/09 18:43` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (60 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:44` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:44` roda `npm test 2>&1 | grep -E "Critério 11 \(R4\)|# (tests|pass|fail)"` → verde (61 passaram) — _teste novo já nasceu verde_
+- `22/09 18:44` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:44` roda `npm test 2>&1 | grep -E "Critério 37|# (tests|pass|fail)"` → **vermelho** (61 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:45` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (2×)
+- `22/09 18:45` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js`
+- `22/09 18:45` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/app.js` (2×)
+- `22/09 18:45` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (62 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:45` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:45` roda `npm test 2>&1 | grep -E "Critério 40|# (tests|pass|fail)"` → verde (63 passaram) — _teste novo já nasceu verde_
+- `22/09 18:46` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:46` roda `npm test 2>&1 | grep -E "Critério 18|# (tests|pass|fail)"` → **vermelho** (63 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:46` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:46` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (64 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:47` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:47` roda `npm test 2>&1 | grep -E "Critério 6 \(R2\)|# (tests|pass|fail)"` → **vermelho** (64 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:47` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:47` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (65 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:47` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:47` roda `npm test 2>&1 | grep -E "Critério 38|# (tests|pass|fail)"` → **vermelho** (65 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:47` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js`
+- `22/09 18:48` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (66 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:48` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:48` roda `npm test 2>&1 | grep -E "Critério 39|# (tests|pass|fail)"` → verde (67 passaram) — _teste novo já nasceu verde_
+- `22/09 18:48` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:48` roda `npm test 2>&1 | grep -E "Critério 41|# (tests|pass|fail)"` → verde (68 passaram) — _teste novo já nasceu verde_
+- `22/09 18:48` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:49` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (70 passaram) — _teste novo já nasceu verde_
+- `22/09 18:49` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:49` roda `npm test 2>&1 | grep -E "Critério 22|# (tests|pass|fail)"` → **vermelho** (70 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 18:49` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/services/inscricaoService.js` (4×)
+- `22/09 18:49` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/inscricaoController.js` (4×)
+- `22/09 18:50` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/src/controllers/atividadeController.js` (2×)
+- `22/09 18:50` roda `npm test 2>&1 | grep -E "# (tests|pass|fail)"` → verde (71 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 18:50` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/inscricoes.spec.js`
+- `22/09 18:50` roda `npm test 2>&1 | grep -E "Critério 10 \(R3|Critério 23 \(R10\): cancelar inscriç…` → verde (73 passaram) — _teste novo já nasceu verde_
+- `22/09 18:51` roda `npm test 2>&1 | tail -12` → verde (73 passaram)
+- `22/09 18:51` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/index.html` (2×)
+- `22/09 18:52` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js` (4×)
+- `22/09 18:52` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/styles.css`
+- `22/09 18:52` roda `npm test 2>&1 | tail -10` → verde (73 passaram)
+- `22/09 18:54` roda `npm test 2>&1 | tail -10` → verde (73 passaram)
+- `22/09 19:16` **prompt** — sim
+- `22/09 20:40` **prompt** — o que consta atualmente em /home/giroto/DevFaculdade/Atividade-Semana-Academica
+- `22/09 20:40` **prompt** — quero testar
+- `22/09 20:40` roda `npm test 2>&1 | tail -15` → verde (73 passaram)
+- `22/09 20:40` **prompt** — faça o push
+- `22/09 20:54` **prompt** — Estou fechando o módulo M2 (Inscrições e lista de espera) da Semana Acadêmica. Meu escopo é só o M2 — não toque em nada do M1 (Nycolas). Trabalhe nesta ordem, um passo de cada vez, e me mostre o resultado de cada passo antes de seguir para o próximo: 1. TELAS — Use a skill tdd. No detalhe da atividade (M2), adicione as ações de inscrever/cancelar que hoje só existem no card. Em "minhas inscrições…
+- `22/09 20:54` carrega a skill **tdd**
+- `22/09 21:06` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-harness.js`
+- `22/09 21:06` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:06` roda `npm test 2>&1 | tail -30` → **vermelho** (73 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:06` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js`
+- `22/09 21:06` roda `npm test 2>&1 | tail -8` → verde (74 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:07` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:07` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok.*Inscrever no detalhe|clic…` → **vermelho** (74 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:07` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js`
+- `22/09 21:07` roda `npm test 2>&1 | tail -8` → verde (75 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:07` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:07` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok.*Inscrição ativa|deve expo…` → **vermelho** (75 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:07` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js` (2×)
+- `22/09 21:07` roda `npm test 2>&1 | tail -8` → verde (76 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:08` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:08` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok.*Cancelar no detalhe|deve …` → **vermelho** (76 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:08` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js`
+- `22/09 21:08` roda `npm test 2>&1 | tail -8` → verde (77 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:08` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:09` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok.*contagem regressiva até|e…` → **vermelho** (77 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:09` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js` (2×)
+- `22/09 21:09` roda `npm test 2>&1 | tail -8` → verde (78 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:09` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:09` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok.*atualiza a cada segundo|a…` → **vermelho** (78 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:09` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js` (3×)
+- `22/09 21:09` roda `npm test 2>&1 | tail -8` → verde (79 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:10` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:10` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok.*prazo vence|relógio da co…` → **vermelho** (79 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:10` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js`
+- `22/09 21:10` roda `npm test 2>&1 | tail -8` → verde (80 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:11` **prompt** — Pode começar
+- `22/09 21:13` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:13` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok 8|card da listagem" | head…` → verde (81 passaram) — _teste novo já nasceu verde_
+- `22/09 21:13` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:13` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok 9|card da listagem oferece…` → **vermelho** (81 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:13` roda `node --test verificacoes/interface-m2.spec.js 2>&1 | sed -n '/not ok 9/,/^ \.\.…` → **vermelho** (8 passaram, 1 falharam)
+- `22/09 21:14` edita código `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/public/app.js`
+- `22/09 21:14` roda `npm test 2>&1 | tail -8` → verde (82 passaram) — _fecha um ciclo vermelho → verde_
+- `22/09 21:14` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:14` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok 10|oferece Confirmar" | he…` → verde (83 passaram) — _teste novo já nasceu verde_
+- `22/09 21:14` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-m2.spec.js`
+- `22/09 21:14` roda `npm test 2>&1 | grep -E "^# (tests|pass|fail)|not ok 11|posição na fila de cada…` → **vermelho** (83 passaram, 1 falharam) — _teste novo falhando, como deve ser_
+- `22/09 21:14` roda `node --test verificacoes/interface-m2.spec.js 2>&1 | sed -n '/not ok 11/,/stack…` → verde
+- `22/09 21:14` edita teste `/home/giroto/DevFaculdade/Atividade-Semana-Academica/verificacoes/interface-harness.js`
+- `22/09 21:14` roda `npm test 2>&1 | tail -8` → verde (84 passaram) — _teste novo já nasceu verde_
+- `22/09 21:16` **prompt** — pode seguir
+- `22/09 21:17` roda `npm test 2>&1 | tail -10` → verde (84 passaram)
+- `22/09 21:20` edita auditoria `/home/giroto/DevFaculdade/Atividade-Semana-Academica/auditorias/M2-2026-09-22.md`
+- `22/09 21:20` **prompt** — pode seguir
+- `22/09 21:28` edita auditoria `/home/giroto/DevFaculdade/Atividade-Semana-Academica/auditorias/M2-revisor-2026-09-22.md`
+- `22/09 21:28` **prompt** — sim
+- `22/09 21:28` edita contexto `/home/giroto/DevFaculdade/Atividade-Semana-Academica/AGENTS.md`
+- `22/09 21:28` edita contexto `/home/giroto/DevFaculdade/Atividade-Semana-Academica/api/AGENTS.md`
+- `22/09 21:29` **prompt** — o caminho local é /home/giroto/DevFaculdade/Atividade-Semana-Academica na verdade como estamos atualmente?
+- `22/09 21:30` **prompt** — O projeto final está em /home/giroto/DevFaculdade/Atividade-Semana-Academica não em Default Project pode seguir

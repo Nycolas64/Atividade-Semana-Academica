@@ -1,0 +1,162 @@
+{
+ "info": {
+  "id": "ses_f354bb42fffePtAwlswyV972n3",
+  "slug": "stellar-rocket",
+  "projectID": "global",
+  "directory": "/home/giroto/Documents/Default Project",
+  "path": "home/giroto/Documents/Default Project",
+  "title": "Resposta simples: ok",
+  "agent": "build",
+  "model": {
+   "id": "ling-3.0-flash-fin-free",
+   "providerID": "opencode",
+   "variant": "default"
+  },
+  "version": "1.18.32",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 6121,
+   "output": 6,
+   "reasoning": 39,
+   "cache": {
+    "read": 1920,
+    "write": 0
+   }
+  },
+  "permission": [
+   {
+    "permission": "question",
+    "pattern": "*",
+    "action": "deny"
+   },
+   {
+    "permission": "plan_enter",
+    "pattern": "*",
+    "action": "deny"
+   },
+   {
+    "permission": "plan_exit",
+    "pattern": "*",
+    "action": "deny"
+   }
+  ],
+  "time": {
+   "created": 1790107208656,
+   "updated": 1790107211436
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790107208732
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "ling-3.0-flash-fin-free"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0cab44c1c0017lW85XEbhdd3kW",
+    "sessionID": "ses_f354bb42fffePtAwlswyV972n3"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "\"Responda apenas: ok\"",
+     "id": "prt_0cab44c240014vSg4o8ME2mZwF",
+     "sessionID": "ses_f354bb42fffePtAwlswyV972n3",
+     "messageID": "msg_0cab44c1c0017lW85XEbhdd3kW"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0cab44c1c0017lW85XEbhdd3kW",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "total": 8086,
+     "input": 6121,
+     "output": 6,
+     "reasoning": 39,
+     "cache": {
+      "write": 0,
+      "read": 1920
+     }
+    },
+    "modelID": "ling-3.0-flash-fin-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790107209276,
+     "completed": 1790107211414
+    },
+    "finish": "stop",
+    "id": "msg_0cab44e3c001J9dwpG4as04RWq",
+    "sessionID": "ses_f354bb42fffePtAwlswyV972n3"
+   },
+   "parts": [
+    {
+     "type": "step-start",
+     "id": "prt_0cab455f8001Qc7RpI6BUoxHKP",
+     "sessionID": "ses_f354bb42fffePtAwlswyV972n3",
+     "messageID": "msg_0cab44e3c001J9dwpG4as04RWq"
+    },
+    {
+     "type": "reasoning",
+     "text": "The user is asking me to respond with just \"ok\" in Portuguese. They said \"Responda apenas: ok\" which means \"Just answer: ok\". I'll just respond with \"ok\".",
+     "time": {
+      "start": 1790107211264,
+      "end": 1790107211342
+     },
+     "id": "prt_0cab45600001n7ltAQAZTz0hyv",
+     "sessionID": "ses_f354bb42fffePtAwlswyV972n3",
+     "messageID": "msg_0cab44e3c001J9dwpG4as04RWq"
+    },
+    {
+     "type": "text",
+     "text": "ok",
+     "time": {
+      "start": 1790107211345,
+      "end": 1790107211402
+     },
+     "id": "prt_0cab45651001RvDPQQxiW7heOm",
+     "sessionID": "ses_f354bb42fffePtAwlswyV972n3",
+     "messageID": "msg_0cab44e3c001J9dwpG4as04RWq"
+    },
+    {
+     "reason": "stop",
+     "type": "step-finish",
+     "tokens": {
+      "total": 8086,
+      "input": 6121,
+      "output": 6,
+      "reasoning": 39,
+      "cache": {
+       "write": 0,
+       "read": 1920
+      }
+     },
+     "cost": 0,
+     "id": "prt_0cab4568e001jKMMBt2S4qB0aa",
+     "sessionID": "ses_f354bb42fffePtAwlswyV972n3",
+     "messageID": "msg_0cab44e3c001J9dwpG4as04RWq"
+    }
+   ]
+  }
+ ]
+}

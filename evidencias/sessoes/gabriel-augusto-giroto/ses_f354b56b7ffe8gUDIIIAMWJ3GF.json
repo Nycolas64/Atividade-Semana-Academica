@@ -1,0 +1,162 @@
+{
+ "info": {
+  "id": "ses_f354b56b7ffe8gUDIIIAMWJ3GF",
+  "slug": "crisp-lagoon",
+  "projectID": "global",
+  "directory": "/home/giroto/Documents/Default Project",
+  "path": "home/giroto/Documents/Default Project",
+  "title": "New session - 2026-09-22T20:00:32.585Z",
+  "agent": "build",
+  "model": {
+   "id": "mimo-v2.6-flash-free",
+   "providerID": "opencode",
+   "variant": "default"
+  },
+  "version": "1.18.32",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 1522,
+   "output": 9,
+   "reasoning": 38,
+   "cache": {
+    "read": 6144,
+    "write": 0
+   }
+  },
+  "permission": [
+   {
+    "permission": "question",
+    "pattern": "*",
+    "action": "deny"
+   },
+   {
+    "permission": "plan_enter",
+    "pattern": "*",
+    "action": "deny"
+   },
+   {
+    "permission": "plan_exit",
+    "pattern": "*",
+    "action": "deny"
+   }
+  ],
+  "time": {
+   "created": 1790107232585,
+   "updated": 1790107240399
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790107232723
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "mimo-v2.6-flash-free"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0cab4a9d3001MBaJnkIInCoxCd",
+    "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "ok",
+     "id": "prt_0cab4a9ed001vbi3STNn9rZXNa",
+     "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF",
+     "messageID": "msg_0cab4a9d3001MBaJnkIInCoxCd"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0cab4a9d3001MBaJnkIInCoxCd",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "total": 7713,
+     "input": 1522,
+     "output": 9,
+     "reasoning": 38,
+     "cache": {
+      "write": 0,
+      "read": 6144
+     }
+    },
+    "modelID": "mimo-v2.6-flash-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790107233330,
+     "completed": 1790107240375
+    },
+    "finish": "stop",
+    "id": "msg_0cab4ac32001X7O42VrZamx3yp",
+    "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF"
+   },
+   "parts": [
+    {
+     "type": "step-start",
+     "id": "prt_0cab4c13d001p23ddFSxOgSfRe",
+     "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF",
+     "messageID": "msg_0cab4ac32001X7O42VrZamx3yp"
+    },
+    {
+     "type": "reasoning",
+     "text": "The user just said \"ok\". This is a very minimal message. I should respond briefly and ask what they'd like help with, or acknowledge. Given the instructions to be concise.",
+     "time": {
+      "start": 1790107239013,
+      "end": 1790107240072
+     },
+     "id": "prt_0cab4c265001DmHIrP9LSHXDM6",
+     "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF",
+     "messageID": "msg_0cab4ac32001X7O42VrZamx3yp"
+    },
+    {
+     "type": "text",
+     "text": "What would you like help with?",
+     "time": {
+      "start": 1790107240075,
+      "end": 1790107240361
+     },
+     "id": "prt_0cab4c68b001euQ532EU59Ok15",
+     "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF",
+     "messageID": "msg_0cab4ac32001X7O42VrZamx3yp"
+    },
+    {
+     "reason": "stop",
+     "type": "step-finish",
+     "tokens": {
+      "total": 7713,
+      "input": 1522,
+      "output": 9,
+      "reasoning": 38,
+      "cache": {
+       "write": 0,
+       "read": 6144
+      }
+     },
+     "cost": 0,
+     "id": "prt_0cab4c7b0001jlJxcGn72d4wKi",
+     "sessionID": "ses_f354b56b7ffe8gUDIIIAMWJ3GF",
+     "messageID": "msg_0cab4ac32001X7O42VrZamx3yp"
+    }
+   ]
+  }
+ ]
+}

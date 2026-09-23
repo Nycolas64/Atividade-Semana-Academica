@@ -1,0 +1,147 @@
+{
+ "info": {
+  "id": "ses_f355562fbffeD0Pb6iNeci0A19",
+  "slug": "jolly-cabin",
+  "projectID": "global",
+  "directory": "/home/giroto/Documents/Default Project",
+  "path": "home/giroto/Documents/Default Project",
+  "title": "Test message or quick check-in",
+  "agent": "build",
+  "model": {
+   "id": "ling-3.0-flash-fin-free",
+   "providerID": "opencode",
+   "variant": "high"
+  },
+  "version": "1.18.32",
+  "summary": {
+   "additions": 0,
+   "deletions": 0,
+   "files": 0
+  },
+  "cost": 0,
+  "tokens": {
+   "input": 6517,
+   "output": 10,
+   "reasoning": 37,
+   "cache": {
+    "read": 1920,
+    "write": 0
+   }
+  },
+  "time": {
+   "created": 1790106574084,
+   "updated": 1790107273164
+  }
+ },
+ "messages": [
+  {
+   "info": {
+    "role": "user",
+    "time": {
+     "created": 1790107268615
+    },
+    "agent": "build",
+    "model": {
+     "providerID": "opencode",
+     "modelID": "ling-3.0-flash-fin-free",
+     "variant": "high"
+    },
+    "summary": {
+     "diffs": []
+    },
+    "id": "msg_0cab535e5001BpnXZWn6NvGdBu",
+    "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19"
+   },
+   "parts": [
+    {
+     "type": "text",
+     "text": "testando",
+     "id": "prt_0cab535e8001tjVNPehH4tgnAt",
+     "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19",
+     "messageID": "msg_0cab535e5001BpnXZWn6NvGdBu"
+    }
+   ]
+  },
+  {
+   "info": {
+    "parentID": "msg_0cab535e5001BpnXZWn6NvGdBu",
+    "role": "assistant",
+    "mode": "build",
+    "agent": "build",
+    "variant": "high",
+    "path": {
+     "cwd": "/home/giroto/Documents/Default Project",
+     "root": "/"
+    },
+    "cost": 0,
+    "tokens": {
+     "total": 8484,
+     "input": 6517,
+     "output": 10,
+     "reasoning": 37,
+     "cache": {
+      "write": 0,
+      "read": 1920
+     }
+    },
+    "modelID": "ling-3.0-flash-fin-free",
+    "providerID": "opencode",
+    "time": {
+     "created": 1790107268630,
+     "completed": 1790107273159
+    },
+    "finish": "stop",
+    "id": "msg_0cab53616001MyT3wwXVA2oSW4",
+    "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19"
+   },
+   "parts": [
+    {
+     "type": "step-start",
+     "id": "prt_0cab54540001vpCMNPCVW8Ndi0",
+     "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19",
+     "messageID": "msg_0cab53616001MyT3wwXVA2oSW4"
+    },
+    {
+     "type": "reasoning",
+     "text": "The user is writing in Portuguese and said \"testando\" which means \"testing\". They seem to be just testing if the system works. I'll respond briefly.",
+     "time": {
+      "start": 1790107272516,
+      "end": 1790107273094
+     },
+     "id": "prt_0cab545440013xPyvGQkx7g5UU",
+     "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19",
+     "messageID": "msg_0cab53616001MyT3wwXVA2oSW4"
+    },
+    {
+     "type": "text",
+     "text": "Tudo certo! Como posso ajudar?",
+     "time": {
+      "start": 1790107273096,
+      "end": 1790107273148
+     },
+     "id": "prt_0cab54788001rFcmchMFZSml53",
+     "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19",
+     "messageID": "msg_0cab53616001MyT3wwXVA2oSW4"
+    },
+    {
+     "reason": "stop",
+     "type": "step-finish",
+     "tokens": {
+      "total": 8484,
+      "input": 6517,
+      "output": 10,
+      "reasoning": 37,
+      "cache": {
+       "write": 0,
+       "read": 1920
+      }
+     },
+     "cost": 0,
+     "id": "prt_0cab547c1001ZlTPHjGAqyQdu1",
+     "sessionID": "ses_f355562fbffeD0Pb6iNeci0A19",
+     "messageID": "msg_0cab53616001MyT3wwXVA2oSW4"
+    }
+   ]
+  }
+ ]
+}
