@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let salasMap = {};
   let atividadesCache = [];
   let minhasInscricoes = [];
+  let timerContagem = null;
 
   const STATUS_ATIVOS = ['confirmada', 'em_espera', 'convocada'];
 
@@ -175,7 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function formatarPrazo(convocadaAte) {
+    const restante = new Date(convocadaAte).getTime() - Date.now();
+    if (restante <= 0) return 'Prazo vencido';
+    const totalSegundos = Math.floor(restante / 1000);
+    const horas = Math.floor(totalSegundos / 3600);
+    const minutos = Math.floor((totalSegundos % 3600) / 60);
+    const segundos = totalSegundos % 60;
+    const pad = (n) => String(n).padStart(2, '0');
+    return `Prazo: ${pad(horas)}:${pad(minutos)}:${pad(segundos)}`;
+  }
+
   function renderizarMinhasInscricoes() {
+    if (timerContagem !== null) {
+      clearInterval(timerContagem);
+      timerContagem = null;
+    }
     if (minhasInscricoes.length === 0) {
       inscricoesLista.innerHTML = '<p>Você ainda não tem inscrições.</p>';
       return;
@@ -192,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="inscricao-titulo">${escapeHtml(titulo)}</span>
           <span class="badge status-${insc.status}">${insc.status.replace('_', ' ')}</span>
           ${insc.posicaoNaEspera !== null ? `<span class="posicao-espera">Posição na fila: ${insc.posicaoNaEspera}</span>` : ''}
-          ${insc.convocadaAte ? `<span class="convocada-ate">Convocada até: ${new Date(insc.convocadaAte).toLocaleString('pt-BR')}</span>` : ''}
+          ${insc.convocadaAte ? `<span class="contagem-regressiva" data-contagem="${escapeHtml(insc.convocadaAte)}">${formatarPrazo(insc.convocadaAte)}</span>` : ''}
         </div>
         <div class="inscricao-acoes">
           ${insc.status === 'convocada' ? `<button class="btn primary btn-mini" data-confirmar="${insc.id}">Confirmar</button>` : ''}
@@ -207,6 +223,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const btnCancel = item.querySelector('[data-cancelar]');
       if (btnCancel) {
         btnCancel.addEventListener('click', () => cancelarInscricao(insc.id));
+      }
+      const contagem = item.querySelector('[data-contagem]');
+      if (contagem) {
+        timerContagem = setInterval(() => {
+          contagem.textContent = formatarPrazo(insc.convocadaAte);
+          if (contagem.textContent === 'Prazo vencido') {
+            clearInterval(timerContagem);
+            timerContagem = null;
+          }
+        }, 1000);
       }
 
       inscricoesLista.appendChild(item);
